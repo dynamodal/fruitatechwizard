@@ -16,7 +16,7 @@ website:
   repo-url: "https://github.com/dynamodal/dynamodal.github.io"
   repo-actions: [edit, issue]
   navbar:
-    pinned: true
+    pinned: false
     logo: "files/favicon_light.png"
     left:
       - href: index.qmd
@@ -40,7 +40,7 @@ website:
     left: |
       <span class="faux-block">{{< fa brands creative-commons >}} 2024 Dynamodal, LLC </span>
       <span class="faux-block">All content licensed under [{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)</span>
-      <span class="faux-block"> Page style attribution credit: [Andrew Heiss](https://www.andrewheiss.com/)</span>
+      <span class="faux-block"> Theme credit: [Andrew Heiss](https://www.andrewheiss.com/)</span>
 #    center: |
     right: |
       <span class="faux-block">Made with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span>
