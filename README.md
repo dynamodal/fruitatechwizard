@@ -1,1 +1,0 @@
-# dynamodal.github.io
