@@ -1,0 +1,25 @@
+---
+title: "Services"
+---
+
+At Dynamodal, our suite of consulting services is designed to meet the diverse needs of our clients. Here’s how we can help:
+
+:::{layout-ncol="2" layout-valign="top"}
+
+## {{< fa table >}} **Data Science & Analytics**
+
+Developing sophisticated financial models, enabling organizations to assess the potential impact of different strategies, investments, or economic changes, facilitating proactive decision-making.
+
+## {{< fa chart-line >}} **Modeling & Scenario Analysis**
+
+Navigate uncertainty with confidence. Our systems modeling and scenario analysis services equip you with the insights to make strategic decisions.
+
+## {{< fa server >}} **Data-Ops & Infrastructure**
+
+Streamline your processes with our CI/CD practices. We utilize the latest tools and best practices to ensure smooth data pipelines and efficient operations. Our team will help you design and implement infrastructure that scales with you.
+
+## {{< fa people-group >}} **Team Development**
+
+Empower your team with the skills they need to succeed in a data-driven world. We offer training and support to enhance your internal capabilities.
+
+:::

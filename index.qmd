@@ -1,0 +1,18 @@
+---
+---
+
+![](files/logo.svg){height="100" fig-align="center"} 
+
+::: {style="text-align: center"}
+
+# Dynamodal
+
+*Trusted Partner for Data-Driven Insights*
+
+:::
+
+At Dynamodal, we transform complex data challenges into insightful solutions tailored for your business. Specializing in consulting services across various industries, we bring a wealth of expertise in data science, analytics, and dev-ops. Whether you’re an electric utility aiming for energy efficiency or a startup looking to harness the power of data, we’re here to help you thrive. 
+
+Ready to unlock the potential of your data? Let’s embark on this journey together!
+
+[Get Started](/contact.html)
