@@ -28,13 +28,6 @@ website:
         text: "Contact"
 #      - blog.qmd
 #      - projects.qmd
-    tools: 
-      - icon: envelope-at
-        href: mailto:info@dynamodal.com
-      - icon: linkedin
-        href: https://www.linkedin.com/in/thomascwells/
-      - icon: github
-        href: https://github.com/thomascwells
 
   page-footer:
     left: |
