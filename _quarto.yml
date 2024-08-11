@@ -37,7 +37,7 @@ website:
 #    center: |
     right: |
       <span class="faux-block">Made with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span>
-      <span class="faux-block">[View the source at {{< fa brands github >}} GitHub]({{site-url}})</span>
+      <span class="faux-block">[View the source at {{< fa brands github >}} GitHub](https://github.com/dynamodal/dynamodal.github.io)</span>
 
 format:
   html:
