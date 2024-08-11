@@ -1,5 +1,5 @@
 ---
-title: "We love to hear from you!"
+title: "We would love to hear from you!"
 pagetitle: "Contact"
 about: 
   template: jolla
@@ -11,6 +11,9 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/thomascwells
+    - icon: github
+      text: Github
+      href: https://github.com/thomascwells
 ---
 
 We understand that every organization is unique, and that’s why we take a personalized approach to consulting. Our goal is not just to provide solutions but to empower you with the knowledge and tools to make informed decisions. Together, we can unlock the insights you need to succeed.
