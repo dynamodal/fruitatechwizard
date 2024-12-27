@@ -11,8 +11,4 @@
 
 :::
 
-At Dynamodal, we transform complex data challenges into insightful solutions tailored for your business. Specializing in consulting services across various industries, we bring a wealth of expertise in data science, analytics, and dev-ops. Whether you’re an electric utility aiming for energy efficiency or a startup looking to harness the power of data, we’re here to help you thrive. 
-
-Ready to unlock the potential of your data? Let’s embark on this journey together!
-
-[Contact Dynamodal](/contact.html)
+At Dynamodal, we transform complex data challenges into insightful solutions tailored for your team. Specializing in consulting services and temporary staffing, we bring a wealth of expertise in data science, analytics, and DevOps. Whether you’re an electric utility with EM&V needs or a startup looking to harness the power of data, we’re here to help you derive value from your resources. 
