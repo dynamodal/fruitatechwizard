@@ -1,19 +1,14 @@
 ---
-title: "We would love to hear from you!"
+title: "Need Tech Help? Contact FTW!"
 pagetitle: "Contact"
-about: 
-  template: jolla
-  image-shape: round
-  links:
-    - icon: envelope-at
-      text: Email
-      href: mailto:info@dynamodal.com
-    - icon: linkedin
-      text: LinkedIn
-      href: https://www.linkedin.com/in/thomascwells
-    - icon: github
-      text: Github
-      href: https://github.com/thomascwells
 ---
 
-We understand that every organization is unique, and that’s why we take a personalized approach to consulting. Our goal is not just to provide solutions but to empower you with the knowledge and tools to make informed decisions. Together, we can unlock the insights you need to succeed.
+::: {style="text-align: center"}
+### Quick Contact
+
+{{< fa phone >}} **Call or Text**: (720) 213-6374  
+{{< fa envelope >}} **Email**: help@fruitatechwizard.com
+
+### Free Quotes Available
+
+Just reach out with a description of your tech issue, and we'll get back to you promptly with a free quote!
