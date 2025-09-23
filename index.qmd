@@ -1,14 +1,37 @@
----
----
+---::: {style="text-align: center"}
 
-![](files/logo.svg){height="100" fig-align="center"} 
+# Fruita Tech Wizard (FTW)
 
-::: {style="text-align: center"}
-
-# Dynamodal
-
-*Trusted Partner for Data-Driven Insights*
+*Your Local Tech Support Wizard*
 
 :::
 
-At Dynamodal, we transform complex data challenges into insightful solutions tailored for your team. Specializing in consulting services and temporary staffing, we bring a wealth of expertise in data science, analytics, and DevOps. Whether you’re an electric utility with EM&V needs or a startup looking to harness the power of data, we’re here to help you derive value from your resources. 
+Need help with your computer, phone, or home technology? FTW is here to help!
+Based in Fruita, we provide friendly, personalized tech support for local residents and businesses.
+
+### What We Do
+
+- Computer troubleshooting and repairs
+- Phone and tablet support
+- Home WiFi setup and optimization
+- Smart home device installation
+- Small business IT services
+- General tech advice and guidance
+
+### Why Choose FTW?
+
+- Local, trusted service
+- Clear communication
+- Fair pricing
+- Free quotes
+- Within biking distance in Fruita!
+
+::: {style="text-align: center"}
+### Contact Us
+
+{{< fa phone >}} Call or Text: (720) 213-6374  
+{{< fa envelope >}} Email: help@fruitatechwizard.com
+
+*Free quotes available - just call, text, or email!*
+:::iles/logo.svg){height="100" fig-align="center"} 
+

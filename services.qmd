@@ -2,24 +2,63 @@
 title: "Services"
 ---
 
-At Dynamodal, our suite of consulting services is designed to meet the diverse needs of our clients. Here’s how we can help:
+FTW provides a range of technology services to help Fruita residents and businesses with their tech needs:
 
 :::{layout-ncol="2" layout-valign="top"}
 
-### {{< fa table >}} **Data Science & Analytics**
+### {{< fa laptop >}} **Computer Services**
 
-Developing sophisticated financial models, enabling organizations to assess the potential impact of different strategies, investments, or economic changes, facilitating proactive decision-making.
+- Virus and malware removal
+- Software installation and updates
+- Performance optimization
+- Data backup solutions
+- Hardware upgrades
+- General troubleshooting
 
-### {{< fa chart-line >}} **Modeling & Scenario Analysis**
+### {{< fa mobile >}} **Mobile Device Support**
 
-Navigate uncertainty with confidence. Our systems modeling and scenario analysis services equip you with the insights to make strategic decisions.
+- Phone and tablet setup
+- App installation and updates
+- Email configuration
+- Data transfer and backup
+- Basic troubleshooting
 
-### {{< fa server >}} **Data-Ops & Infrastructure**
+### {{< fa wifi >}} **Home Network Services**
 
-Streamline your processes with our CI/CD practices. We utilize the latest tools and best practices to ensure smooth data pipelines and efficient operations. Our team will help you design and implement infrastructure that scales with you.
+- WiFi setup and optimization
+- Network security
+- Internet troubleshooting
+- Router configuration
+- Device connectivity issues
 
-### {{< fa people-group >}} **Team Development**
+### {{< fa house-signal >}} **Smart Home Setup**
 
-Empower your team with the skills they need to succeed in a data-driven world. We offer training and support to enhance your internal capabilities.
+- Smart device installation
+- Home automation setup
+- Smart thermostat configuration
+- Voice assistant setup
 
+### {{< fa building >}} **Small Business IT**
+
+- Network setup and maintenance
+- Basic server management
+- Data backup solutions
+- Security recommendations
+- General tech consultation
+
+### {{< fa graduation-cap >}} **Tech Education**
+
+- One-on-one training
+- Basic computer skills
+- Internet safety
+- Email management
+- Software basics
+:::
+
+::: {style="text-align: center"}
+## Get a Free Quote
+Contact us to discuss your tech needs and get a free quote:
+
+{{< fa phone >}} Call or Text: (720) 213-6374  
+{{< fa envelope >}} Email: help@fruitatechwizard.com
 :::
