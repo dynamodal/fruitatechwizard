@@ -10,34 +10,23 @@ project:
 freeze: auto
 
 website:
-  title: "Dynamodal"
+  title: "Fruita Tech Wizard"
   favicon: "files/favicon.png"
-  site-url: "https://www.dynamodal.com"
-  repo-url: "https://github.com/dynamodal/dynamodal.github.io"
-  repo-actions: [edit, issue]
+  site-url: "https://fruitatechwizard.com"
   navbar:
     pinned: false
     logo: "files/favicon_light.png"
     left:
       - href: index.qmd
         text: Home
-      - href: about.qmd
-        text: "About"
       - href: services.qmd
+        text: "Services"
       - href: contact.qmd
         text: "Contact"
-#      - blog.qmd
-#      - projects.qmd
 
   page-footer:
     left: |
-      <span class="faux-block">{{< fa brands creative-commons >}} 2024 Dynamodal, LLC </span>
-      <span class="faux-block">All content licensed under [{{< fa brands creative-commons >}} {{< fa brands creative-commons-by >}} Creative Commons CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)</span>
-      <span class="faux-block"> Theme credit: [Andrew Heiss](https://www.andrewheiss.com/)</span>
-#    center: |
-    right: |
-      <span class="faux-block">Made with {{< fa brands r-project >}} and [Quarto](https://quarto.org/)</span>
-      <span class="faux-block">[View the source at {{< fa brands github >}} GitHub](https://github.com/dynamodal/dynamodal.github.io)</span>
+      <span class="faux-block">© 2025 Fruita Tech Wizard </span>
 
 format:
   html:
