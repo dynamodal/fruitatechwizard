@@ -9,6 +9,6 @@ pagetitle: "Contact"
 {{< fa phone >}} **Call or Text**: (720) 213-6374  
 {{< fa envelope >}} **Email**: help@fruitatechwizard.com
 
-### Free Quotes Available
+### Free Quotes
 
-Just reach out with a description of your tech issue, and we'll get back to you promptly with a free quote!
+Just reach out with a description of your tech issue, and we'll get back to you with a free quote!
