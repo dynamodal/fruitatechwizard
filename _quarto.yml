@@ -27,12 +27,14 @@ website:
   page-footer:
     left: |
       <span class="faux-block">© 2025 Fruita Tech Wizard </span>
+    right: | 
+      help@fruitatechwizard.com | 1.720.213.6374
 
 format:
   html:
     theme: 
       - lux
-      # - html/styles.scss
+      - html/styles.scss
 #    grid: 
 #      body-width: 900px
     toc: false
