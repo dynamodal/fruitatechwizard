@@ -25,6 +25,9 @@ website:
         text: "Contact"
       - href: about.qmd
         text: "About"
+      - href: https://fruita.com/wtf-welcome-to-fruita/
+        text: "WTF?"
+        target: _blank
 
   page-footer:
     left: |
