@@ -20,7 +20,15 @@ Based in Fruita, we provide friendly, personalized tech support for local reside
 - Home WiFi setup and optimization
 - Smart home device installation
 - Small business IT services
+- AI and ChatGPT training
 - General tech advice and guidance
+
+::: {.callout-note appearance="simple"}
+## New: AI Training Services!
+
+Learn how to use ChatGPT, LLMs, Generative AI (GenAI) and other AI tools effectively and safely.
+Whether you're curious about AI for personal use or want to integrate it into your business, we offer friendly, hands-on training tailored to your needs.
+:::
 
 ### Why Choose FTW?
 
