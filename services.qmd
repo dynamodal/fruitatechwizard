@@ -53,6 +53,22 @@ FTW provides a range of technology services to help Fruita residents and busines
 - Internet safety
 - Email management
 - Software basics
+
+### {{< fa brain >}} **AI & ChatGPT Training**
+
+- Introduction to AI tools
+- ChatGPT / LLM setup and basics
+- Prompt writing workshops
+- AI safety and ethics
+- Practical AI applications
+
+### {{< fa building-user >}} **Business AI Solutions**
+
+- AI tools assessment
+- ChatGPT / LLMs for business
+- Staff AI training
+- Workflow automation
+- Custom AI integration
 :::
 
 ::: {style="text-align: center"}
