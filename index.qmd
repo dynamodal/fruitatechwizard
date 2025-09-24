@@ -1,13 +1,9 @@
 ---
-title: "Home"
+title: ""
 ---
 
 ::: {style="text-align: center"}
-![](files/logo.png){fig-align="center" height="150"}
-
-# Fruita Tech Wizard (FTW)
-
-*Your Local Tech Support Wizard*
+![](files/logo.png){fig-align="center" height="400"}
 :::
 
 Need help with your computer, phone, or home technology? FTW is here to help!
