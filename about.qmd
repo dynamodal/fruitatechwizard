@@ -9,7 +9,7 @@ about:
 
 Hi, I'm Thomas! 
 
-I'm an independent consultant based in Fruita. My [main gig](https://dynamodal.com/) is working with utilities and energy companies across the nation on energy effficiency and data analysis projects. I enjoy that work, but I also want do something to help my *local* community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and businesses.
+I'm an independent consultant based in Fruita. My [main gig (Dynamodal)](https://dynamodal.com/) is working with utilities and energy companies across the nation on energy effficiency and data analysis projects. I enjoy that work, but I also want do something to help my *local* community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and businesses.
 
 I've always been the go-to tech person for my family, friends and coworkers, and I love helping people solve their tech problems. Whether it's fixing a slow computer, sorting out errors after the latest Windows upgarde, setting up a new phone, or optimizing a WiFi network, I'm here to help.
 
