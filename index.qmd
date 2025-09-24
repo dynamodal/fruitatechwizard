@@ -3,11 +3,14 @@
 
 ::: {style="text-align: center"}
 ![](files/logo.png){fig-align="center" height="350"}
+
 :::
 
-### Welcome to FTW
+### Fruita Tech Wizard
 
-Need help with your computer, phone, or home technology? Fruita Tech Wizard (#FTW) is here to help!
+*Fruita's home-town tech support!*
+
+Need help with your computer, phone, or home technology? Fruita Tech Wizard, `#FTW`, is here to help!
 
 Based in Fruita, we provide friendly, personalized tech support for local residents and businesses.
 
