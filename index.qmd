@@ -6,8 +6,11 @@ title: ""
 ![](files/logo.png){fig-align="center" height="400"}
 :::
 
-Need help with your computer, phone, or home technology? FTW is here to help!
+Need help with your computer, phone, or home technology? Fruita Tech Wizard is here to help!
+
 Based in Fruita, we provide friendly, personalized tech support for local residents and businesses.
+
+Yes, we do house calls!
 
 ### What We Do
 
@@ -20,10 +23,11 @@ Based in Fruita, we provide friendly, personalized tech support for local reside
 - General tech advice and guidance
 
 ::: {.callout-note appearance="simple"}
-## New: AI Training Services!
+## New: AI Training and Demystifying!
 
 Learn how to use ChatGPT, LLMs, Generative AI (GenAI) and other AI tools effectively and safely.
-Whether you're curious about AI for personal use or want to integrate it into your business, we offer friendly, hands-on training tailored to your needs.
+
+Whether you're curious about AI for personal use or want to integrate it into your business, we offer friendly, hands-on training and advice tailored to your needs.
 :::
 
 ### Why Choose FTW?
@@ -35,11 +39,11 @@ Whether you're curious about AI for personal use or want to integrate it into yo
 - Within biking distance in Fruita!
 
 ::: {style="text-align: center"}
-### Contact Us
+### Contact
 
-{{< fa phone >}} Call or Text: (720) 213-6374  
-{{< fa envelope >}} Email: help@fruitatechwizard.com
+{{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
+{{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
 
-*Free quotes available - just call, text, or email!*
+*Free quotes - just call, text, or email!*
 :::
 
