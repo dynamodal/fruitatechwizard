@@ -1,16 +1,17 @@
 ---
-title: ""
 ---
 
 ::: {style="text-align: center"}
-![](files/logo.png){fig-align="center" height="400"}
+![](files/logo.png){fig-align="center" height="350"}
 :::
 
-Need help with your computer, phone, or home technology? Fruita Tech Wizard is here to help!
+### Welcome to FTW
+
+Need help with your computer, phone, or home technology? Fruita Tech Wizard (#FTW) is here to help!
 
 Based in Fruita, we provide friendly, personalized tech support for local residents and businesses.
 
-Yes, we do house calls!
+Yes, we make house calls!
 
 ### What We Do
 

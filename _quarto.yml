@@ -10,7 +10,7 @@ project:
 freeze: auto
 
 website:
-  title: "Fruita Tech Wizard"
+  title: "FTW"
   favicon: "files/favicon.png"
   site-url: "https://fruitatechwizard.com"
   navbar:
