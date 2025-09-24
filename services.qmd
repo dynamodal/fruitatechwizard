@@ -69,7 +69,18 @@ FTW provides a range of technology services to help Fruita residents and busines
 - Staff AI training
 - Workflow automation
 - Custom AI integration
+
+### {{< fa stethoscope >}} **Tech Life Support**
+
+- Help with old tech
+- Extend device lifespan
+- Troubleshooting legacy systems
+- Advice on upgrades and replacements
+- Reduce e-waste & save money
+
 :::
+
+
 
 ::: {style="text-align: center"}
 ## Get a Free Quote
