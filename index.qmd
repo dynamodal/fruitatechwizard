@@ -26,6 +26,7 @@ Yes, we make house calls!
 - Small business IT services
 - AI and ChatGPT training
 - General tech advice and guidance
+- Help you keep old tech working longer
 
 Check out the [services](services.qmd) page for more details.
 
