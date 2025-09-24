@@ -16,3 +16,8 @@ I've always been the go-to tech person for my family, friends and coworkers, and
 I studied Physics and Electrical Engineering at the Colorado School of Mines. After a few years in the Alaskan oil fields, I moved back to Colorado and started working as a data science consultant. 
 
 When I'm not working, I enjoy biking, running, and exploring the trails and rivers around Fruita. 
+
+### Why FTW ?
+
+I think it's a fun nod to Fruita's "memorable" [WTF (Welcome to Fruita)](https://fruita.com/wtf-welcome-to-fruita/) stickers. And of course, `FTW` is internet slang for "For The Win", which is exactly what I want to help you do with your technology!
+
