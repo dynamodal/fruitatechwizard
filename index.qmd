@@ -1,9 +1,13 @@
----::: {style="text-align: center"}
+---
+title: "Home"
+---
+
+::: {style="text-align: center"}
+![](files/logo.png){fig-align="center" height="150"}
 
 # Fruita Tech Wizard (FTW)
 
 *Your Local Tech Support Wizard*
-
 :::
 
 Need help with your computer, phone, or home technology? FTW is here to help!
@@ -33,5 +37,5 @@ Based in Fruita, we provide friendly, personalized tech support for local reside
 {{< fa envelope >}} Email: help@fruitatechwizard.com
 
 *Free quotes available - just call, text, or email!*
-:::iles/logo.svg){height="100" fig-align="center"} 
+:::
 
