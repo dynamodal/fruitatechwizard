@@ -15,7 +15,7 @@ website:
   site-url: "https://fruitatechwizard.com"
   navbar:
     pinned: false
-    logo: "files/favicon.png"
+    # logo: "files/favicon.png"
     left:
       - href: index.qmd
         text: Home
@@ -23,12 +23,15 @@ website:
         text: "Services"
       - href: contact.qmd
         text: "Contact"
+      - href: about.qmd
+        text: "About"
 
   page-footer:
     left: |
       <span class="faux-block">© 2025 Fruita Tech Wizard </span>
     right: | 
-      help@fruitatechwizard.com | 1.720.213.6374
+      {{< fa phone >}} [(720) 213-6374](tel:+17202136374) {{< fa envelope >}} [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
+
 
 format:
   html:
