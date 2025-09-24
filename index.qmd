@@ -27,12 +27,15 @@ Yes, we make house calls!
 - AI and ChatGPT training
 - General tech advice and guidance
 
-::: {.callout-note appearance="simple"}
-## New: AI Training and Demystifying!
+Check out the [services](services.qmd) page for more details.
 
-Learn how to use ChatGPT, LLMs, Generative AI (GenAI) and other AI tools effectively and safely.
+::: {.callout-tip}
+## AI Training and Consulting
+
+There's a lot of hype around AI tools like ChatGPT, and the landscape is changing rapidly. We can help you navigate this new world while protecting your privacy and security.
 
 Whether you're curious about AI for personal use or want to integrate it into your business, we offer friendly, hands-on training and advice tailored to your needs.
+
 :::
 
 ### Why Choose FTW?
