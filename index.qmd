@@ -4,11 +4,12 @@
 ::: {style="text-align: center"}
 ![](files/logo.png){fig-align="center" height="350"}
 
-:::
 
 ### Fruita Tech Wizard
 
 *Fruita's local tech support!*
+
+:::
 
 Need help with your computer, phone, or home technology? Fruita Tech Wizard, `#FTW`, is here to help!
 
@@ -40,7 +41,7 @@ Whether you're curious about AI for personal use or want to integrate it into yo
 - Clear communication
 - Fair pricing
 - Free quotes
-- Within biking distance in Fruita!
+- Decades of experience
 
 ::: {style="text-align: center"}
 ### Contact
