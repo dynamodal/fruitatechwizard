@@ -4,6 +4,10 @@ title: "Contact"
 
 ::: {style="text-align: center"}
 
+![](files/logo-bike.png){fig-align="center" height="350"}
+
+
+
 ### Free Quotes !
 
 Leave a voicemail if we miss your call, or send a text or email.

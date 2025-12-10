@@ -2,7 +2,8 @@
 ---
 
 ::: {style="text-align: center"}
-![](files/logo.png){fig-align="center" height="350"}
+
+![](files/logo-ftw.png){fig-align="center" width="60%"}
 
 
 ### Fruita Tech Wizard
@@ -51,6 +52,7 @@ Whether you're curious about AI for personal use or want to integrate it into yo
 ### Contact
 
 {{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
+
 {{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
 
 *Free quotes - just call, text, or email!*

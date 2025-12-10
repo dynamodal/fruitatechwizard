@@ -11,11 +11,11 @@ freeze: auto
 
 website:
   title: "FTW"
-  favicon: "files/favicon.png"
+  favicon: "files/favicon-ftw.png"
   site-url: "https://fruitatechwizard.com"
   navbar:
     pinned: false
-    # logo: "files/favicon.png"
+    # logo: "files/favicon-bike.png"
     left:
       - href: index.qmd
         text: Home
