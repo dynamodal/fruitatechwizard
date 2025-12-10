@@ -25,7 +25,7 @@ website:
         text: "Contact"
       - href: about.qmd
         text: "About"
-      - href: https://fruita.com/wtf-welcome-to-fruita/
+      - href: https://www.westword.com/opinion/wtf-fruita-controversial-slogan-wears-out-its-welcome-5826454/
         text: "WTF?"
         target: _blank
 
