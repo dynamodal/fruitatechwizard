@@ -9,15 +9,23 @@ about:
 
 Hi, I'm Thomas! 
 
-I'm an independent consultant based in Fruita. My [main gig (Dynamodal)](https://dynamodal.com/) is working with utilities and energy companies across the nation on energy effficiency and data analysis projects. I enjoy that work, but I also want do something to help my *local* community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and businesses.
+I'm an independent consultant based in Fruita.
+My main work at [Dynamodal](https://dynamodal.com/) involves supporting utilities and energy companies with efficiency and data analysis projects.
+I enjoy that work, and I also wanted to do something to support my local community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and small businesses.
 
-I've always been the go-to tech person for my family, friends and coworkers, and I love helping people solve their tech problems. Whether it's fixing a slow computer, sorting out errors after the latest Windows upgarde, setting up a new phone, or optimizing a WiFi network, I'm here to help.
 
-I [studied](https://www.linkedin.com/in/thomascwells/) Physics and Electrical Engineering at the Colorado School of Mines. After a few years in the Alaskan oil fields, I moved back to Colorado and started working as a data science consultant. 
+I've always been the go-to tech person for my family, friends, and coworkers, and I enjoy helping people solve tech problems.
+Whether it's fixing a slow computer, resolving errors after a Windows upgrade, setting up a new phone, or optimizing a WiFi network, I'm here to help.
 
-When I'm not working, I enjoy biking, running, and exploring the trails and rivers around Fruita. 
 
-### Why FTW ?
+I [studied](https://www.linkedin.com/in/thomascwells/) Physics and Electrical Engineering at the Colorado School of Mines.
+After a few years in the Alaskan oil fields, I moved back to Colorado and began working as a data science consultant. 
 
-I think it's a fun nod to Fruita's "memorable" (infamous?) [WTF (Welcome to Fruita)](https://fruita.com/wtf-welcome-to-fruita/) stickers. And of course, `FTW` is internet slang for "For The Win", which is exactly what I want to help you do with your technology!
+
+When I'm not working, I enjoy biking, running, and exploring the trails and rivers around Fruita.
+
+### Why FTW?
+
+I picked "FTW" as a fun nod to Fruita's [WTF (Welcome to Fruita)](https://fruita.com/wtf-welcome-to-fruita/) stickers.
+It also stands for "For The Win," which is what I aim to help you do with your technology.
 

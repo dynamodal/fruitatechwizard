@@ -2,7 +2,7 @@
 title: "Services"
 ---
 
-FTW provides a range of technology services to help Fruita residents and businesses with their tech needs:
+I provide a range of technology services to help Fruita residents and businesses with their tech needs:
 
 :::{layout-ncol="2" layout-valign="top"}
 
@@ -83,8 +83,8 @@ FTW provides a range of technology services to help Fruita residents and busines
 
 
 ::: {style="text-align: center"}
-## Get a Free Quote
-Contact us to discuss your tech needs and get a free quote:
+## Get a free quote
+Contact me to discuss your tech needs and get a free quote:
 
 {{< fa phone >}} Call or Text: (720) 213-6374  
 {{< fa envelope >}} Email: help@fruitatechwizard.com
