@@ -12,17 +12,17 @@
 
 :::
 
-Need help with your computer, phone, or home technology? Fruita Tech Wizard, `#FTW`, is here to help!
+Need help with your computer, phone, or home technology? Fruita Tech Wizard, `FTW`, is here to help.
 
-Based in Fruita,I provide friendly, personalized tech support for local residents and businesses.
+Based in Fruita, I provide friendly, personalized tech support to local residents and businesses.
 
-Yes, I make house calls!
+I make house calls.
 
 ::: {.callout-important}
 ## Windows 10 to 11 upgrade
 
-If you have a Windows 10 computer that is "end of life" or can no longer receive upgrades, give me a call before your toss it out!
-There's a good chance I can help you get at least a few more years out of that computer or find a new home for it with someone who could use it.
+If you have a Windows 10 computer that is at end-of-life or no longer receiving updates, give me a call before you toss it out.
+I can often help you get a few more years out of it, or help find a new home for someone who can use it.
 
 :::
 
@@ -34,18 +34,19 @@ There's a good chance I can help you get at least a few more years out of that c
 - Home WiFi setup and optimization
 - Smart home device installation
 - Small business IT services
-- AI, ChatGPT, LLM training
-- General tech advice and guidance
-- Help you keep old tech working longer
+ - AI, ChatGPT / LLM training
+ - General tech advice and guidance
+ - Help keep older tech working longer
 
 Check out the [services](services.qmd) page for more details.
 
 ::: {.callout-tip}
 ## AI Training and Consulting
 
-There's a lot of hype around AI tools like ChatGPT, and the landscape is changing rapidly. I can help you navigate this new world while protecting your privacy and security.
+There's a lot of hype around AI tools like ChatGPT, and the landscape is changing rapidly.
+I can help you navigate this new world while protecting your privacy and security.
 
-Whether you're curious about AI for personal use or want to integrate it into your business, I offer friendly, hands-on training and advice tailored to your needs.
+Whether you're curious about AI for personal use or want to integrate it into your business, I offer hands-on training and practical advice tailored to your needs.
 
 :::
 
