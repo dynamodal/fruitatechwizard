@@ -7,10 +7,8 @@ pagetitle: Contact
 ![](files/logo-bike.png){fig-align="center" height="350"}
 
 
-
-### Free quotes
-
 If I miss your call, leave a voicemail or send a text or email.
+
 {{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
 
 {{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)

@@ -55,13 +55,8 @@ Whether you're curious about AI for personal use or want to integrate it into yo
 - Free quotes
 - Decades of experience
 
-::: {style="text-align: center"}
-### Contact
+### Free Quotes
 
 {{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
 
 {{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
-
-*Free quotes - just call, text, or email!*
-:::
-
