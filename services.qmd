@@ -84,8 +84,11 @@ I provide a range of technology services to help Fruita residents and businesses
 
 ::: {style="text-align: center"}
 ## Get a free quote
+
 Contact me to discuss your tech needs and get a free quote:
 
-{{< fa phone >}} Call or Text: (720) 213-6374  
-{{< fa envelope >}} Email: help@fruitatechwizard.com
+{{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
+
+{{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
+
 :::
