@@ -1,14 +1,11 @@
 ---
 ---
 
-::: {style="text-align: center"}
-
 ![](files/logo-ftw.png){fig-align="center" width="60%"}
 
+::: {style="text-align: center"}
 
-### Fruita Tech Wizard
-
-*Fruita's local tech support*
+[Fruita Tech Wizard]{.ftw-title}
 
 :::
 

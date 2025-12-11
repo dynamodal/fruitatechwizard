@@ -35,6 +35,15 @@ $navbar-hl: $light-orange !default;
   padding-bottom: 0.4em;
 }
 
+
+/* FTW site title style */
+.ftw-title {
+    font-size: 400%;
+    font-weight: 700; /* bold */
+    line-height: 1;
+    color: $black;
+}
+
 .nav-footer {
   align-items: flex-start;  // Align all flex items to the top
   flex-wrap: wrap;
