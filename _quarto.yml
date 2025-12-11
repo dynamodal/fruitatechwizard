@@ -33,7 +33,7 @@ website:
     left: |
       <span class="faux-block">© 2025 Fruita Tech Wizard </span>
     right: | 
-      {{< fa phone >}} [(720) 213-6374](tel:+17202136374) {{< fa envelope >}} [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
+      {{< fa phone >}} [(720) 213-6374](tel:+17202136374) </br> {{< fa envelope >}} [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
 
 
 format:
