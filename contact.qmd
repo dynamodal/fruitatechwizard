@@ -1,5 +1,5 @@
 ---
-title: "Contact"
+pagetitle: Contact
 ---
 
 ::: {style="text-align: center"}
@@ -10,7 +10,7 @@ title: "Contact"
 
 ### Free Quotes !
 
-Leave a voicemail if we miss your call, or send a text or email.
+Leave a voicemail if I miss your call, or send a text or email.
 
 {{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
 
