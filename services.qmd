@@ -41,7 +41,7 @@ Ask anyway.
 - "Is this a scam?" checks
 - Cleanup after a scam
 - Password managers and two-step login
-- Ad blockers and antivirus
+- Ad blockers and antivirus ([tools I like](tools.qmd))
 - Helping families protect parents and grandparents
 - [More on scam help →](scams.qmd)
 :::
@@ -93,7 +93,7 @@ Part-time, as-needed IT for small offices like medical, dental, and other profes
 
 ## How I help
 
-I make house calls around Fruita, and I can help by phone or screen share too.
+I'll come to your home or business in Fruita, meet you at a coffee shop or the library, or help by phone or screen share.
 Pricing is flexible: I have a typical hourly rate, a bit higher for businesses, but if money's tight we'll work something out, trades included.
 
 ::: {.ftw-not}

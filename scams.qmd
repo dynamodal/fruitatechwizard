@@ -61,6 +61,8 @@ It happens to smart, careful people every day.
 
 ## Protecting yourself ahead of time
 
+See my [favorite safety tools](tools.qmd) for the apps I recommend.
+
 ::: {.ftw-grid}
 
 ::: {.ftw-card}

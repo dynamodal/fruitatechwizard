@@ -11,7 +11,7 @@ freeze: auto
 
 website:
   title: "Fruita Tech Wizard"
-  description: "Friendly, local tech help in Fruita, Colorado. Computers, phones, WiFi, scams, AI, smart homes, and small business IT. House calls, phone, or screen share."
+  description: "Friendly, local tech help in Fruita, Colorado. Computers, phones, WiFi, scams, AI, smart homes, and small business IT. In person, by phone, or screen share."
   favicon: "files/favicon-dino.png"
   site-url: "https://fruitatechwizard.com"
   search: false
@@ -31,6 +31,8 @@ website:
         text: "Services"
       - href: scams.qmd
         text: "Scam help"
+      - href: tools.qmd
+        text: "Tools"
       - href: about.qmd
         text: "About"
       - href: contact.qmd
