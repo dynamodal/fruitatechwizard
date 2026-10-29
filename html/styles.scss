@@ -1,107 +1,177 @@
-//
-// Color system
-//
+/*-- scss:defaults --*/
 
-$white:    #ffffff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
-$gray-600: #868e96 !default;
-$gray-700: #495057 !default;
-$gray-800: #373a3c !default;
-$gray-900: #212529 !default;
-$black:    #000000 !default;
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
 
-$blue:    #2780e3 !default;
-$indigo:  #6610f2 !default;
-$purple:  #170C3A !default;
-$pink:    #A52C60 !default;
-$red:     #CF4446 !default;
-$orange:  #EE6A24 !default;
-$light-orange:  #FB9E07 !default;
-$yellow:  #F6D645 !default;
-$green:   #118230 !default;
-$teal:    #20c997 !default;
-$cyan:    #3093CF !default;
+// Palette pulled from the wizard dino
+$cream:   #fbf6ea;
+$sand:    #f3e8ce;
+$ink:     #2b2a33;
+$purple:  #4b3f9e;   // wizard hat
+$purple-dk: #382f7a;
+$green:   #3f7d1f;   // dino (darkened for contrast)
+$red:     #a8401f;   // desert / Monument red
+$line:    #e6dcc3;
 
-$navbar-hl: $light-orange !default;
+$white: #ffffff;
+$primary: $purple;
+$body-bg: $cream;
+$body-color: $ink;
+$headings-color: $ink;
+$link-color: $purple;
+$link-hover-color: $purple-dk;
+
+$font-family-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+$font-size-root: 19px;    // larger text for easier reading
+$line-height-base: 1.6;
+$headings-font-weight: 800;
+
+$navbar-bg: $cream;
+$navbar-fg: $ink;
+$navbar-hl: $purple;
+$footer-bg: $sand;
+$footer-fg: $ink;
+
+$border-radius: 1rem;
 
 /*-- scss:rules --*/
 
-.faux-block {
-  display: block;
-  padding-bottom: 0.4em;
+.navbar {
+  border-bottom: 1px solid $line;
+  .navbar-brand { font-weight: 800; @media (max-width: 575.98px) { font-size: 0.95rem; } }
+  .navbar-logo { max-height: 40px; border-radius: 50%; @media (max-width: 575.98px) { max-height: 32px; margin-right: 0.4rem; } }
+  .nav-link { font-weight: 600; font-size: 1.05rem; }
 }
 
+.ftw-wrap { max-width: 1040px; margin: 0 auto; padding: 0 1rem; }
+.ftw-section { padding: 2.75rem 0; @media (max-width: 767.98px) { padding: 2rem 0; } }
+.ftw-sand { background: $sand; }
 
-/* FTW site title style */
-.ftw-title {
-    font-size: 400%;
-    font-weight: 700; /* bold */
-    line-height: 1;
-    color: $black;
+// ---- Hero ----
+.ftw-hero {
+  padding: 2.5rem 0 2rem;
+  @media (max-width: 767.98px) { padding-top: 1rem; }
+  .ftw-hero-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    @media (max-width: 767.98px) { grid-template-columns: 1fr; gap: 1rem; text-align: center; }
+  }
+  h1 { font-size: clamp(2rem, 6vw, 3.1rem); line-height: 1.1; margin: 0 0 1rem; }
+  .ftw-lead { font-size: 1.2rem; }
+  img.ftw-oval { width: 210px; max-width: 60%; margin-bottom: 1rem; }
+  img.ftw-dino { width: 100%; max-width: 380px; height: auto; }
+  @media (max-width: 767.98px) {
+    img.ftw-dino { max-width: 230px; }
+    .ftw-buttons { justify-content: center; }
+  }
 }
+
+// ---- Big friendly buttons ----
+.ftw-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0.75rem;
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 1.4rem;
+    min-height: 3.2rem;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border: 2px solid $purple;
+    background: $white;
+    color: $purple;
+    @media (max-width: 575.98px) { flex: 1 1 100%; justify-content: center; }
+  }
+  a:first-child { background: $purple; color: $white; }
+  a:first-child:hover { background: $purple-dk; border-color: $purple-dk; }
+  a:not(:first-child):hover { background: rgba($purple, 0.08); }
+}
+
+.ftw-note {
+  font-size: 0.98rem;
+  color: lighten($ink, 18%);
+}
+
+// ---- Cards ----
+.ftw-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.ftw-card {
+  background: $white;
+  border: 1px solid $line;
+  border-radius: $border-radius;
+  padding: 1.35rem 1.4rem;
+  h3 {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  h3 .bi { color: $green; font-size: 1.5rem; }
+  ul { padding-left: 1.15rem; margin-bottom: 0; }
+  li { margin-bottom: 0.25rem; }
+  p:last-child { margin-bottom: 0; }
+}
+
+// ---- Callouts ----
+.ftw-callout {
+  border-radius: $border-radius;
+  padding: 1.4rem 1.5rem;
+  margin: 1.5rem 0;
+  border: 2px solid;
+  h2, h3 { margin-top: 0; font-size: 1.35rem; }
+  p:last-child { margin-bottom: 0; }
+}
+.ftw-callout-scam { background: #fbeee8; border-color: rgba($red, 0.45); h2, h3 { color: $red; } }
+.ftw-callout-info { background: #eeecf8; border-color: rgba($purple, 0.35); }
+.ftw-callout-green { background: #eef5e8; border-color: rgba($green, 0.35); }
+
+.ftw-not {
+  ul { list-style: none; padding: 0; }
+  li::before { content: "✗"; color: $red; font-weight: 800; margin-right: 0.5rem; }
+}
+
+h1, h2, h3, .h1, .h2, .h3 { font-weight: 800; }
+h2 { margin-top: 0.5rem; }
+.ftw-grid + h2, .ftw-grid ~ h2 { margin-top: 2.25rem; }
+.quarto-title-block .description { display: none; }
+.quarto-title-block .title { font-size: clamp(2rem, 5vw, 2.7rem); }
+
+// About page: left-align body text in the jolla template
+.quarto-about-jolla {
+  main p, main ul, main h2, main h3 { text-align: left; }
+  .quarto-title, .about-links { text-align: center; }
+}
+
+// Keep the full site name visible on phones
+@media (max-width: 575.98px) {
+  .navbar-brand-container { max-width: calc(100% - 64px) !important; }
+  .navbar-title { font-size: 1.05rem !important; }
+}
+
+// ---- Footer ----
+.faux-block { display: block; padding-bottom: 0.35em; }
 
 .nav-footer {
-  align-items: flex-start;  // Align all flex items to the top
+  align-items: flex-start;
   flex-wrap: wrap;
-  border: 0 !important;
-  min-height: 3em;
-  // font-family: $footer-font-family;
-
-  // a {
-  //     color: $light-orange;
-  // }
-
-  .faux-block {
-      display: block;
-      padding-bottom: 0.4em;
-  }
-
-  .fingerprint {
-      font-family: $font-family-monospace;
-      font-size: 0.8em;
-  }
-
-  // In the default Quarto template, .nav-footer-center has position: absolute 
-  // turned on, which makes the div not be a flex item
-  // This changes that so that it *is* a flex item
-  .nav-footer-center {
-      text-align: center;
-      position: inherit;
-      margin-top: 0;
-
-      @media (max-width: map-get($grid-breakpoints, md)) {
-          margin-top: 0.5em;
-          margin-bottom: 1.5em;
-      }
-  }
-
-  // When the screen is medium or smaller, make each footer chunk be 100% width 
-  // and centered; otherwise make them be 33% width and left/right/centerd
-  .nav-footer-left,
-  .nav-footer-right,
-  .nav-footer-center {
-      text-align: center;
-      width: 100%;
-      min-height: 2em;
-  }
-
-  @media (min-width: map-get($grid-breakpoints, md)) {
-      .nav-footer-left {
-          text-align: left;
-      }
-
-      .nav-footer-right {
-          text-align: right;
-      }
-
-      .nav-footer-left,
-      .nav-footer-right,
-      .nav-footer-center {
-          flex: 1 1 33%;
-      }
+  border-top: 1px solid $line !important;
+  font-size: 0.95rem;
+  padding: 1.5rem 1rem;
+  .nav-footer-left, .nav-footer-right, .nav-footer-center { text-align: center; width: 100%; }
+  @media (min-width: 768px) {
+    .nav-footer-left { text-align: left; flex: 1 1 50%; }
+    .nav-footer-right { text-align: right; flex: 1 1 50%; }
   }
 }
