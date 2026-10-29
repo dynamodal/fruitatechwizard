@@ -1,94 +1,108 @@
 ---
 title: "Services"
+description: "Tech help for Fruita residents and small businesses: computers, phones, WiFi, scams and online safety, AI, smart homes, and small business IT."
 ---
 
-I provide a range of technology services to help Fruita residents and businesses with their tech needs:
+Here's what I help Fruita folks and small businesses with.
+Don't see your problem?
+Ask anyway.
 
-:::{layout-ncol="2" layout-valign="top"}
+::: {.ftw-grid}
 
-### {{< fa laptop >}} **Computer Services**
+::: {.ftw-card}
+### <i class="bi bi-laptop" aria-hidden="true"></i> Computers
+- Slow or frozen computers
+- Virus and malware cleanup
+- Updates and Windows 10 options
+- Backups, so you never lose your photos
+- New computer setup and moving your files
+- Advice before you buy
+:::
 
-- Virus and malware removal
-- Software installation and updates
-- Performance optimization
-- Data backup solutions
-- Hardware upgrades
-- General troubleshooting
+::: {.ftw-card}
+### <i class="bi bi-phone" aria-hidden="true"></i> Phones & tablets
+- New phone or tablet setup
+- Moving contacts and photos
+- Email, apps, and settings
+- Storage full? Let's clear it up
+- Basic how-to lessons
+:::
 
-### {{< fa mobile >}} **Mobile Device Support**
-
-- Phone and tablet setup
-- App installation and updates
-- Email configuration
-- Data transfer and backup
-- Basic troubleshooting
-
-### {{< fa wifi >}} **Home Network Services**
-
-- WiFi setup and optimization
-- Network security
+::: {.ftw-card}
+### <i class="bi bi-wifi" aria-hidden="true"></i> WiFi & internet
+- WiFi setup and dead spots
+- Router and network security
+- Printers and devices that won't connect
 - Internet troubleshooting
-- Router configuration
-- Device connectivity issues
+:::
 
-### {{< fa house-signal >}} **Smart Home Setup**
+::: {.ftw-card}
+### <i class="bi bi-shield-check" aria-hidden="true"></i> Scams & online safety
+- "Is this a scam?" checks
+- Cleanup after a scam
+- Password managers and two-step login
+- Ad blockers and antivirus
+- Helping families protect parents and grandparents
+- [More on scam help →](scams.qmd)
+:::
 
-- Smart device installation
-- Home automation setup
-- Smart thermostat configuration
-- Voice assistant setup
+::: {.ftw-card}
+### <i class="bi bi-stars" aria-hidden="true"></i> AI for everyday life
+- What AI is, in plain English
+- Setting up ChatGPT, Claude, and similar tools
+- Using AI safely and keeping your info private
+- Automating everyday tasks
+- Spotting AI voice-clone and deepfake scams
+:::
 
-### {{< fa building >}} **Small Business IT**
+::: {.ftw-card}
+### <i class="bi bi-house-gear" aria-hidden="true"></i> Smart home
+- Smart thermostats, lights, and speakers
+- Voice assistants
+- Home Assistant setup and configuration
+- Making your devices work together
+:::
 
-- Network setup and maintenance
-- Basic server management
-- Data backup solutions
-- Security recommendations
-- General tech consultation
+::: {.ftw-card}
+### <i class="bi bi-shop" aria-hidden="true"></i> Small business IT
+Part-time, as-needed IT for small offices like medical, dental, and other professional services.
 
-### {{< fa graduation-cap >}} **Tech Education**
+- Computers, network, and backups
+- Email, accounts, and security
+- Understanding AI for your business
+- Staff training
+:::
 
-- One-on-one training
-- Basic computer skills
-- Internet safety
-- Email management
-- Software basics
+::: {.ftw-card}
+### <i class="bi bi-mortarboard" aria-hidden="true"></i> Lessons
+- One-on-one, at your pace
+- Computer and phone basics
+- Email, video calls, and photos
+- Staying safe online
+:::
 
-### {{< fa brain >}} **AI & ChatGPT Training**
-
-- Introduction to AI tools
-- ChatGPT / LLM setup and basics
-- Prompt writing workshops
-- AI safety and ethics
-- Practical AI applications
-
-### {{< fa building-user >}} **Business AI Solutions**
-
-- AI tools assessment
-- ChatGPT / LLMs for business
-- Staff AI training
-- Workflow automation
-- Custom AI integration
-
-### {{< fa stethoscope >}} **Tech Life Support**
-
-- Help with old tech
-- Extend device lifespan
-- Troubleshooting legacy systems
-- Advice on upgrades and replacements
-- Reduce e-waste & save money
+::: {.ftw-card}
+### <i class="bi bi-recycle" aria-hidden="true"></i> Keeping old tech going
+- Extending the life of older devices
+- Honest upgrade-or-replace advice
+- Finding a new home for old computers
+- Less e-waste, more money in your pocket
+:::
 
 :::
 
+## How I help
 
+I make house calls around Fruita, and I can help by phone or screen share too.
+Pricing is flexible: I have a typical hourly rate, a bit higher for businesses, but if money's tight we'll work something out, trades included.
 
-::: {style="text-align: center"}
-## Get a free quote
+::: {.ftw-not}
+**Not my thing:** cracked screens and most hardware repair, running network cable, or installing security cameras.
+I'm happy to point you to someone who does those.
+:::
 
-Contact me to discuss your tech needs and get a free quote:
-
-{{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
-
-{{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
-
+::: {.ftw-buttons}
+[<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
+[<i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Text](sms:+17202136374)
+[<i class="bi bi-envelope-fill" aria-hidden="true"></i> Email](mailto:help@fruitatechwizard.com)
 :::

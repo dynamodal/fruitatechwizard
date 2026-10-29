@@ -1,31 +1,33 @@
 ---
-title: "Thomas Wells"
+title: "Hi, I'm Thomas!"
 pagetitle: "About"
+description: "Thomas Wells is the Fruita local behind Fruita Tech Wizard."
 image: files/headshot.jpg
-about: 
+about:
   template: jolla
   image-shape: round
+  image-width: 12em
 ---
 
-Hi, I'm Thomas! 
+I'm the person behind Fruita Tech Wizard, and I live right here in Fruita.
 
-I'm an independent consultant based in Fruita.
-My main work at [Dynamodal](https://dynamodal.com/) involves supporting utilities and energy companies with efficiency and data analysis projects.
-I enjoy that work, and I also wanted to do something to support my local community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and small businesses.
+My day job is [Dynamodal](https://www.dynamodal.com/), where I do data, AI, and energy analysis work for consulting teams.
+I enjoy that work, and I also wanted to do something for my own community, so I started FTW to offer friendly, personal tech help to my neighbors and local businesses.
 
+I've always been the go-to tech person for family, friends, and coworkers.
+I studied physics and electrical engineering at the Colorado School of Mines, worked a few years in the Alaskan oil fields, and have spent the last couple of decades working with computers, data, and all the tech in between.
+I love explaining things in plain English and helping people feel more confident with their technology.
 
-I've always been the go-to tech person for my family, friends, and coworkers, and I enjoy helping people solve tech problems.
-Whether it's fixing a slow computer, resolving errors after a Windows upgrade, setting up a new phone, or optimizing a WiFi network, I'm here to help.
+When I'm not working, I'm usually biking, running, or exploring the trails and rivers around Fruita.
 
+### Why FTW? {#why-ftw}
 
-I [studied](https://www.linkedin.com/in/thomascwells/) Physics and Electrical Engineering at the Colorado School of Mines.
-After a few years in the Alaskan oil fields, I moved back to Colorado and began working as a data science consultant. 
+If you've spent any time in Fruita, you've probably seen the [WTF stickers](https://fruita.com/wtf-welcome-to-fruita/).
+Officially it stands for "Welcome to Fruita."
+Unofficially... well, you know.
+(It even [stirred up a little controversy](https://www.westword.com/opinion/wtf-fruita-controversial-slogan-wears-out-its-welcome-5826454/).)
 
-
-When I'm not working, I enjoy biking, running, and exploring the trails and rivers around Fruita.
-
-### Why FTW?
-
-I picked "FTW" as a fun nod to Fruita's [WTF (Welcome to Fruita)](https://fruita.com/wtf-welcome-to-fruita/) stickers.
-It also stands for "For The Win," which is what I aim to help you do with your technology.
-
+FTW is my nod to those stickers.
+It stands for Fruita Tech Wizard, and also "For The Win," which is what I hope you'll feel once your tech is working again.
+And the dino on a bike?
+That's Fruita: dinosaurs and bikes.

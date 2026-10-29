@@ -1,62 +1,149 @@
 ---
+pagetitle: "Fruita Tech Wizard | Friendly local tech help in Fruita, CO"
+page-layout: full
 ---
 
-![](files/logo-ftw.png){fig-align="center" width="60%"}
+::: {.ftw-hero}
+::: {.ftw-wrap}
+::: {.ftw-hero-grid}
 
-::: {style="text-align: center"}
+::: {}
+![](files/logo-ftw-600.png){.ftw-oval fig-alt="FTW oval sticker logo"}
 
-[Fruita Tech Wizard]{.ftw-title}
+# Friendly tech help from your Fruita neighbor.
+
+[Computers, phones, WiFi, scams, AI, and everything in between.
+I make house calls around Fruita, and I can help by phone or screen share too.]{.ftw-lead}
+
+::: {.ftw-buttons}
+[<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
+[<i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Text](sms:+17202136374)
+[<i class="bi bi-envelope-fill" aria-hidden="true"></i> Email](mailto:help@fruitatechwizard.com)
+:::
+
+[FTW is a one-person side gig, so leave a message, text, or email.
+I usually get back to you within a day.]{.ftw-note}
+:::
+
+![](files/dino-bike.webp){.ftw-dino fig-alt="A green dinosaur in a wizard hat riding a bicycle"}
+
+:::
+:::
+:::
+
+::: {.ftw-section}
+::: {.ftw-wrap}
+
+## What I can help with
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-laptop" aria-hidden="true"></i> Computers
+Slow, stuck, or acting strange?
+Updates, viruses, backups, and setting up a new one.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-phone" aria-hidden="true"></i> Phones & tablets
+Setup, email, photos, moving to a new phone, and figuring out what all those settings do.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-wifi" aria-hidden="true"></i> WiFi & internet
+Spotty WiFi, router setup, printers that won't connect, and devices that keep dropping off.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-shield-check" aria-hidden="true"></i> Scams & online safety
+"Is this a scam?" checks, cleanup if you've been scammed, and setting up protection ahead of time.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-stars" aria-hidden="true"></i> AI, explained
+What ChatGPT and other AI tools are, how to use them safely, and how they can save you time.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-house-gear" aria-hidden="true"></i> Smart homes
+Smart thermostats, speakers, and lights, plus Home Assistant setup for the tinkerers.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-shop" aria-hidden="true"></i> Small business IT
+Part-time, as-needed tech help for small offices that don't need a full-time IT person.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-recycle" aria-hidden="true"></i> Keeping old tech going
+Before you toss it, let's see if we can give it a few more good years.
+:::
 
 :::
 
-Need help with your computer, phone, or home technology? Fruita Tech Wizard, `FTW`, is here to help.
+[See all services →](services.qmd)
 
-Based in Fruita, I provide friendly, personalized tech support to local residents and businesses.
+:::
+:::
 
-I make house calls.
+::: {.ftw-section .ftw-sand}
+::: {.ftw-wrap}
 
-::: {.callout-important}
-## Windows 10 to 11 upgrade
+::: {.ftw-callout .ftw-callout-scam}
+### <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> Worried something's a scam?
 
-If you have a Windows 10 computer that is at end-of-life or no longer receiving updates, give me a call before you toss it out.
-I can often help you get a few more years out of it, or help find a new home for someone who can use it.
+A pop-up says your computer is infected.
+Someone claiming to be your bank, Medicare, or a grandkid needs money right now.
+**Stop, and call me before you click, pay, or call back.**
+Quick "is this a scam?" checks are free, and there's no such thing as a silly question.
+
+[More on scam help →](scams.qmd)
+:::
+
+::: {.ftw-callout .ftw-callout-info}
+### <i class="bi bi-windows" aria-hidden="true"></i> Still on Windows 10?
+
+You don't have to throw it out yet.
+Microsoft has extended security updates for Windows 10 home users who enroll, and some older computers can move to Windows 11.
+I can help you sort out the best option, or help pass the computer on to someone who can use it.
+:::
+
+:::
+:::
+
+::: {.ftw-section}
+::: {.ftw-wrap}
+
+## How it works
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-bicycle" aria-hidden="true"></i> House calls
+I come to you, anywhere in Fruita.
+(If I can get there on my bike, even better.)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-headset" aria-hidden="true"></i> Phone or screen share
+Plenty of problems can be fixed without either of us leaving the house.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-heart" aria-hidden="true"></i> Pay what's fair
+I have a typical hourly rate, but if money's tight, we'll work something out, trades included.
+Cash, check, card, or Venmo.
+:::
 
 :::
 
+::: {.ftw-not}
+**Not my thing:** I'm not the right person for these, but I'm happy to point you to someone who is.
 
-### What I Do
-
-- Computer troubleshooting and repairs
-- Phone and tablet support
-- Home WiFi setup and optimization
-- Smart home device installation
-- Small business IT services
- - AI, ChatGPT / LLM training
- - General tech advice and guidance
- - Help keep older tech working longer
-
-Check out the [services](services.qmd) page for more details.
-
-::: {.callout-tip}
-## AI Training and Consulting
-
-There's a lot of hype around AI tools like ChatGPT, and the landscape is changing rapidly.
-I can help you navigate this new world while protecting your privacy and security.
-
-Whether you're curious about AI for personal use or want to integrate it into your business, I offer hands-on training and practical advice tailored to your needs.
-
+- Cracked screens and most hardware repair
+- Running network cable
+- Installing security cameras
 :::
 
-### Why Choose FTW?
-
-- Local, trusted service
-- Clear communication
-- Fair pricing
-- Free quotes
-- Decades of experience
-
-### Free Quotes
-
-{{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
-
-{{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
+:::
+:::
