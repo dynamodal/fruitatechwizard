@@ -63,16 +63,20 @@ $border-radius: 1rem;
   img.ftw-dino { width: 100%; max-width: 380px; height: auto; }
   @media (max-width: 767.98px) {
     img.ftw-dino { max-width: 230px; }
-    .ftw-buttons { justify-content: center; }
+    .ftw-buttons, .ftw-buttons > p { justify-content: center; }
   }
 }
 
 // ---- Big friendly buttons ----
 .ftw-buttons {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
   margin: 1.25rem 0 0.75rem;
+  // Pandoc wraps the links in a <p>, so that's the flex container
+  &, > p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  > p { margin: 0; }
   a {
     display: inline-flex;
     align-items: center;

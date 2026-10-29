@@ -13,7 +13,7 @@ page-layout: full
 # Friendly tech help from your Fruita neighbor.
 
 [Computers, phones, WiFi, scams, AI, and everything in between.
-I make house calls around Fruita, and I can help by phone or screen share too.]{.ftw-lead}
+I'll come to your home or business in Fruita, meet you around town, or help by phone or screen share.]{.ftw-lead}
 
 ::: {.ftw-buttons}
 [<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
@@ -104,7 +104,7 @@ Quick "is this a scam?" checks are free, and there's no such thing as a silly qu
 ### <i class="bi bi-windows" aria-hidden="true"></i> Still on Windows 10?
 
 You don't have to throw it out yet.
-Microsoft has extended security updates for Windows 10 home users who enroll, and some older computers can move to Windows 11.
+Microsoft has [extended security updates for Windows 10](https://www.microsoft.com/en-us/windows/extended-security-updates) for home users who enroll, and some older computers can move to Windows 11.
 I can help you sort out the best option, or help pass the computer on to someone who can use it.
 :::
 
@@ -119,8 +119,8 @@ I can help you sort out the best option, or help pass the computer on to someone
 ::: {.ftw-grid}
 
 ::: {.ftw-card}
-### <i class="bi bi-bicycle" aria-hidden="true"></i> House calls
-I come to you, anywhere in Fruita.
+### <i class="bi bi-bicycle" aria-hidden="true"></i> In person
+I'll come to your home or business in Fruita, or we can meet at a coffee shop or the library.
 (If I can get there on my bike, even better.)
 :::
 

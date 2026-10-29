@@ -1,0 +1,120 @@
+---
+title: "Tools I like"
+description: "Free and low-cost apps and tools Thomas at Fruita Tech Wizard uses and recommends: password managers, ad blockers, maps, free movies, and more."
+---
+
+These are tools I actually use and recommend to friends and family.
+Most are free.
+I'm not paid to mention any of them.
+If you'd like help setting one up, just ask.
+
+## Staying safe online
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-key" aria-hidden="true"></i> Bitwarden
+A password manager that remembers strong, unique passwords for every site, on your computer and phone.
+Free for most people.
+
+[bitwarden.com](https://bitwarden.com/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-shield-lock" aria-hidden="true"></i> Ente Auth
+An app for the six-digit login codes (two-step login).
+Your codes are backed up, so a lost phone doesn't lock you out.
+
+[ente.io/auth](https://ente.io/auth/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-slash-circle" aria-hidden="true"></i> uBlock Origin
+Blocks ads, pop-ups, and many scam sites in your web browser.
+Works best in Firefox.
+On Chrome, use uBlock Origin Lite.
+
+[ublockorigin.com](https://ublockorigin.com/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-windows" aria-hidden="true"></i> Microsoft Defender
+The antivirus already built into Windows.
+For most home users, it's all you need, so you can skip the paid antivirus subscriptions.
+Look for "Windows Security" in the Start menu.
+:::
+
+:::
+
+## Windows helpers
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-pie-chart" aria-hidden="true"></i> WinDirStat
+Shows what's filling up your hard drive, as a colorful map, so you know what to clean up.
+
+[windirstat.net](https://windirstat.net/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-search" aria-hidden="true"></i> Everything
+Finds any file on your computer instantly as you type.
+Much faster than the built-in Windows search.
+
+[voidtools.com](https://www.voidtools.com/)
+:::
+
+:::
+
+## Phones, maps, and the outdoors
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-signpost-split" aria-hidden="true"></i> COTREX
+Colorado's official, free trail map app, with offline maps and fire alerts.
+Great for our local trails.
+
+[trails.colorado.gov](https://trails.colorado.gov/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-map" aria-hidden="true"></i> CoMaps
+Free offline maps and directions for anywhere in the world, with no ads or tracking.
+
+[comaps.app](https://www.comaps.app/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-android2" aria-hidden="true"></i> F-Droid
+An app store for Android with free, open-source apps and no ads or tracking.
+A little more for the tinkerers.
+
+[f-droid.org](https://f-droid.org/)
+:::
+
+:::
+
+## Reading and watching
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-film" aria-hidden="true"></i> Kanopy
+Free movies and shows with your library card, on your TV, phone, or computer.
+Check whether your library participates.
+
+[kanopy.com](https://www.kanopy.com/)
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-rss" aria-hidden="true"></i> RSS readers
+Follow your favorite news sites and blogs in one place, without algorithms or social media.
+Feedly and Inoreader are easy places to start.
+I use FreshRSS with the FeedMe app.
+
+[What is RSS?](https://en.wikipedia.org/wiki/RSS)
+:::
+
+:::
