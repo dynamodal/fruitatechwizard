@@ -1,37 +1,114 @@
 [
   {
-    "objectID": "services.html",
-    "href": "services.html",
-    "title": "Services",
+    "objectID": "tools.html",
+    "href": "tools.html",
+    "title": "Tools I like",
     "section": "",
-    "text": "I provide a range of technology services to help Fruita residents and businesses with their tech needs:"
+    "text": "These are tools I actually use and recommend to friends and family. Most are free. I’m not paid to mention any of them. If you’d like help setting one up, just ask."
   },
   {
-    "objectID": "services.html#get-a-free-quote",
-    "href": "services.html#get-a-free-quote",
-    "title": "Services",
-    "section": "Get a free quote",
-    "text": "Get a free quote\nContact me to discuss your tech needs and get a free quote:\n Call or Text: (720) 213-6374\n Email: help@fruitatechwizard.com"
+    "objectID": "tools.html#staying-safe-online",
+    "href": "tools.html#staying-safe-online",
+    "title": "Tools I like",
+    "section": "Staying safe online",
+    "text": "Staying safe online\n\n\n Bitwarden\nA password manager that remembers strong, unique passwords for every site, on your computer and phone. Free for most people.\nbitwarden.com\n\n\n Ente Auth\nAn app for the six-digit login codes (two-step login). Your codes are backed up, so a lost phone doesn’t lock you out.\nente.io/auth\n\n\n uBlock Origin\nBlocks ads, pop-ups, and many scam sites in your web browser. Works best in Firefox. On Chrome, use uBlock Origin Lite.\nublockorigin.com\n\n\n Microsoft Defender\nThe antivirus already built into Windows. For most home users, it’s all you need, so you can skip the paid antivirus subscriptions. Look for “Windows Security” in the Start menu."
+  },
+  {
+    "objectID": "tools.html#windows-helpers",
+    "href": "tools.html#windows-helpers",
+    "title": "Tools I like",
+    "section": "Windows helpers",
+    "text": "Windows helpers\n\n\n WinDirStat\nShows what’s filling up your hard drive, as a colorful map, so you know what to clean up.\nwindirstat.net\n\n\n Everything\nFinds any file on your computer instantly as you type. Much faster than the built-in Windows search.\nvoidtools.com"
+  },
+  {
+    "objectID": "tools.html#phones-maps-and-the-outdoors",
+    "href": "tools.html#phones-maps-and-the-outdoors",
+    "title": "Tools I like",
+    "section": "Phones, maps, and the outdoors",
+    "text": "Phones, maps, and the outdoors\n\n\n COTREX\nColorado’s official, free trail map app, with offline maps and fire alerts. Great for our local trails.\ntrails.colorado.gov\n\n\n CoMaps\nFree offline maps and directions for anywhere in the world, with no ads or tracking.\ncomaps.app\n\n\n F-Droid\nAn app store for Android with free, open-source apps and no ads or tracking. A little more for the tinkerers.\nf-droid.org"
+  },
+  {
+    "objectID": "tools.html#reading-and-watching",
+    "href": "tools.html#reading-and-watching",
+    "title": "Tools I like",
+    "section": "Reading and watching",
+    "text": "Reading and watching\n\n\n Kanopy\nFree movies and shows with your library card, on your TV, phone, or computer. Check whether your library participates.\nkanopy.com\n\n\n RSS readers\nFollow your favorite news sites and blogs in one place, without algorithms or social media. Feedly and Inoreader are easy places to start. I use FreshRSS with the FeedMe app.\nWhat is RSS?"
+  },
+  {
+    "objectID": "scams.html",
+    "href": "scams.html",
+    "title": "Scam help",
+    "section": "",
+    "text": "Scams are getting more convincing, especially now that AI can fake voices and write perfect emails. I want everyone in Fruita to have someone local and trustworthy to call when something feels off."
+  },
+  {
+    "objectID": "scams.html#common-warning-signs",
+    "href": "scams.html#common-warning-signs",
+    "title": "Scam help",
+    "section": "Common warning signs",
+    "text": "Common warning signs\n\n\n It’s urgent\n“Act now or your account will be closed.” Real companies give you time.\n\n\n Strange ways to pay\nGift cards, wire transfers, cryptocurrency, or a Bitcoin ATM. Those are almost always a scam.\n\n\n Pop-up “tech support”\nA warning with a phone number to call about a virus. Microsoft and Apple don’t do that.\n\n\n A loved one in trouble\nA call from a grandkid who needs bail money, in a voice that sounds just like them. AI can copy voices now. Hang up and call them back on their real number."
+  },
+  {
+    "objectID": "scams.html#if-you-think-youve-been-scammed",
+    "href": "scams.html#if-you-think-youve-been-scammed",
+    "title": "Scam help",
+    "section": "If you think you’ve been scammed",
+    "text": "If you think you’ve been scammed\nDon’t be embarrassed. It happens to smart, careful people every day.\n\nStop sending money or information, and don’t answer the scammer.\nCall your bank using the number on the back of your card.\nCall me. I can check your computer or phone, change passwords, and help lock things down.\nReport it at ReportFraud.ftc.gov."
+  },
+  {
+    "objectID": "scams.html#protecting-yourself-ahead-of-time",
+    "href": "scams.html#protecting-yourself-ahead-of-time",
+    "title": "Scam help",
+    "section": "Protecting yourself ahead of time",
+    "text": "Protecting yourself ahead of time\nSee my favorite safety tools for the apps I recommend.\n\n\n Better passwords\nSet up a password manager and two-step login, so one leaked password doesn’t open everything.\n\n\n Safer browsing\nAd blockers, antivirus, and settings that stop most scam pop-ups before you see them.\n\n\n For families\nWorried about a parent or grandparent? I can set up their devices, agree on a family “safe word,” and be their local call when something seems off.\n\n\n Group talks\nI’m happy to give a friendly scam-awareness talk for local community groups."
   },
   {
     "objectID": "contact.html",
     "href": "contact.html",
-    "title": "FTW",
+    "title": "Get in touch",
     "section": "",
-    "text": "If I miss your call, leave a voicemail or send a text or email.\n Call or Text: (720) 213-6374\n Email: help@fruitatechwizard.com"
+    "text": "Call, text, or email, whichever is easiest for you. If I don’t pick up, leave a message. FTW is a one-person side gig, so I usually get back to you within a day.\n\n Call (720) 213-6374  Text  Email\n\n\nIt helps to tell me:\n\nWhat’s going on (a photo of the error message is great)\nWhat kind of device it is\nWhether you’d like to meet in person, talk by phone, or share your screen\n\n\nQuotes are always free, and pricing is flexible."
   },
   {
     "objectID": "about.html",
     "href": "about.html",
-    "title": "Thomas Wells",
+    "title": "Hi, I’m Thomas!",
     "section": "",
-    "text": "Hi, I’m Thomas!\nI’m an independent consultant based in Fruita. My main work at Dynamodal involves supporting utilities and energy companies with efficiency and data analysis projects. I enjoy that work, and I also wanted to do something to support my local community, so I started Fruita Tech Wizard to provide friendly, personalized tech support for local residents and small businesses.\nI’ve always been the go-to tech person for my family, friends, and coworkers, and I enjoy helping people solve tech problems. Whether it’s fixing a slow computer, resolving errors after a Windows upgrade, setting up a new phone, or optimizing a WiFi network, I’m here to help.\nI studied Physics and Electrical Engineering at the Colorado School of Mines. After a few years in the Alaskan oil fields, I moved back to Colorado and began working as a data science consultant.\nWhen I’m not working, I enjoy biking, running, and exploring the trails and rivers around Fruita.\n\nWhy FTW?\nI picked “FTW” as a fun nod to Fruita’s WTF (Welcome to Fruita) stickers. It also stands for “For The Win,” which is what I aim to help you do with your technology."
+    "text": "I’m the person behind Fruita Tech Wizard, and I live right here in Fruita.\nMy day job is Dynamodal, where I do data, AI, and energy analysis work for consulting teams. I enjoy that work, and I also wanted to do something for my own community, so I started FTW to offer friendly, personal tech help to my neighbors and local businesses.\nI’ve always been the go-to tech person for family, friends, and coworkers. I studied physics and electrical engineering at the Colorado School of Mines, worked a few years in the Alaskan oil fields, and have spent the last couple of decades working with computers, data, and all the tech in between. I love explaining things in plain English and helping people feel more confident with their technology.\nWhen I’m not working, I’m usually biking, running, or exploring the trails and rivers around Fruita.\n\nWhy FTW?\nIf you’ve spent any time in Fruita, you’ve probably seen the WTF stickers. Officially it stands for “Welcome to Fruita.” Unofficially… well, you know. (It even stirred up a little controversy.)\nFTW is my nod to those stickers. It stands for Fruita Tech Wizard, and also “For The Win,” which is what I hope you’ll feel once your tech is working again. And the dino on a bike? That’s Fruita: dinosaurs and bikes."
   },
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "FTW",
+    "title": "Friendly tech help from your Fruita neighbor.",
     "section": "",
-    "text": "Fruita Tech Wizard\n\nNeed help with your computer, phone, or home technology? Fruita Tech Wizard, FTW, is here to help.\nBased in Fruita, I provide friendly, personalized tech support to local residents and businesses.\nI make house calls.\n\n\n\n\n\n\nImportantWindows 10 to 11 upgrade\n\n\n\nIf you have a Windows 10 computer that is at end-of-life or no longer receiving updates, give me a call before you toss it out. I can often help you get a few more years out of it, or help find a new home for someone who can use it.\n\n\n\nWhat I Do\n\nComputer troubleshooting and repairs\nPhone and tablet support\nHome WiFi setup and optimization\nSmart home device installation\nSmall business IT services\nAI, ChatGPT / LLM training\nGeneral tech advice and guidance\nHelp keep older tech working longer\n\nCheck out the services page for more details.\n\n\n\n\n\n\nTipAI Training and Consulting\n\n\n\nThere’s a lot of hype around AI tools like ChatGPT, and the landscape is changing rapidly. I can help you navigate this new world while protecting your privacy and security.\nWhether you’re curious about AI for personal use or want to integrate it into your business, I offer hands-on training and practical advice tailored to your needs.\n\n\n\n\nWhy Choose FTW?\n\nLocal, trusted service\nClear communication\nFair pricing\nFree quotes\nDecades of experience\n\n\n\nFree Quotes\n Call or Text: (720) 213-6374\n Email: help@fruitatechwizard.com"
+    "text": "Computers, phones, WiFi, scams, AI, and everything in between. I’ll come to your home or business in Fruita, meet you around town, or help by phone or screen share.\n\n Call (720) 213-6374  Text  Email\n\nFTW is a one-person side gig, so leave a message, text, or email. I usually get back to you within a day."
+  },
+  {
+    "objectID": "index.html#what-i-can-help-with",
+    "href": "index.html#what-i-can-help-with",
+    "title": "Friendly tech help from your Fruita neighbor.",
+    "section": "What I can help with",
+    "text": "What I can help with\n\n\n Computers\nSlow, stuck, or acting strange? Updates, viruses, backups, and setting up a new one.\n\n\n Phones & tablets\nSetup, email, photos, moving to a new phone, and figuring out what all those settings do.\n\n\n WiFi & internet\nSpotty WiFi, router setup, printers that won’t connect, and devices that keep dropping off.\n\n\n Scams & online safety\n“Is this a scam?” checks, cleanup if you’ve been scammed, and setting up protection ahead of time.\n\n\n AI, explained\nWhat ChatGPT and other AI tools are, how to use them safely, and how they can save you time.\n\n\n Smart homes\nSmart thermostats, speakers, and lights, plus Home Assistant setup for the tinkerers.\n\n\n Small business IT\nPart-time, as-needed tech help for small offices that don’t need a full-time IT person.\n\n\n Keeping old tech going\nBefore you toss it, let’s see if we can give it a few more good years.\n\n\nSee all services →"
+  },
+  {
+    "objectID": "index.html#how-it-works",
+    "href": "index.html#how-it-works",
+    "title": "Friendly tech help from your Fruita neighbor.",
+    "section": "How it works",
+    "text": "How it works\n\n\n In person\nI’ll come to your home or business in Fruita, or we can meet at a coffee shop or the library. (If I can get there on my bike, even better.)\n\n\n Phone or screen share\nPlenty of problems can be fixed without either of us leaving the house.\n\n\n Pay what’s fair\nI have a typical hourly rate, but if money’s tight, we’ll work something out, trades included. Cash, check, card, or Venmo.\n\n\n\nNot my thing: I’m not the right person for these, but I’m happy to point you to someone who is.\n\nCracked screens and most hardware repair\nRunning network cable\nInstalling security cameras"
+  },
+  {
+    "objectID": "services.html",
+    "href": "services.html",
+    "title": "Services",
+    "section": "",
+    "text": "Here’s what I help Fruita folks and small businesses with. Don’t see your problem? Ask anyway."
+  },
+  {
+    "objectID": "services.html#how-i-help",
+    "href": "services.html#how-i-help",
+    "title": "Services",
+    "section": "How I help",
+    "text": "How I help\nI’ll come to your home or business in Fruita, meet you at a coffee shop or the library, or help by phone or screen share. Pricing is flexible: I have a typical hourly rate, a bit higher for businesses, but if money’s tight we’ll work something out, trades included.\n\nNot my thing: cracked screens and most hardware repair, running network cable, or installing security cameras. I’m happy to point you to someone who does those.\n\n\n Call (720) 213-6374  Text  Email"
   }
 ]
