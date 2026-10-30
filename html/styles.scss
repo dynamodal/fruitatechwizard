@@ -165,15 +165,16 @@ h2 { margin-top: 0.5rem; }
 }
 
 // ---- Footer ----
-.faux-block { display: block; padding-bottom: 0.35em; }
+.faux-block { display: block; padding-bottom: 0.2em; }
 
 .nav-footer {
   align-items: flex-start;
   flex-wrap: wrap;
   border-top: 1px solid $line !important;
   font-size: 0.95rem;
-  padding: 1.5rem 1rem;
-  .nav-footer-left, .nav-footer-right, .nav-footer-center { text-align: center; width: 100%; }
+  padding: 1rem;
+  .nav-footer-center { display: none; }  // unused; hiding it keeps left/right side by side
+  .nav-footer-left, .nav-footer-right { text-align: center; width: 100%; }
   @media (min-width: 768px) {
     .nav-footer-left { text-align: left; flex: 1 1 50%; }
     .nav-footer-right { text-align: right; flex: 1 1 50%; }
