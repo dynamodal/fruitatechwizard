@@ -24,8 +24,8 @@ website:
     card-style: summary_large_image
   navbar:
     pinned: false
-    logo: "files/favicon-dino.png"
-    logo-alt: "Wizard dinosaur"
+    logo: "files/logo-ftw-nav.png"
+    logo-alt: "FTW oval logo"
     right:
       - href: services.qmd
         text: "Services"
