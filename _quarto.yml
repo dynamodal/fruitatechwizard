@@ -4,53 +4,52 @@ project:
   render:
     - "*.qmd"
 
-  resources: 
+  resources:
     - "files/**"
 
 freeze: auto
 
 website:
-  title: "FTW"
-  favicon: "files/favicon-ftw.png"
+  title: "Fruita Tech Wizard"
+  description: "Friendly, local tech help in Fruita, Colorado. Computers, phones, WiFi, scams, AI, smart homes, and small business IT. In person, by phone, or screen share."
+  favicon: "files/favicon-dino.png"
   site-url: "https://fruitatechwizard.com"
+  search: false
+  open-graph:
+    image: files/social-card.png
+    image-width: 1200
+    image-height: 630
+  twitter-card:
+    image: files/social-card.png
+    card-style: summary_large_image
   navbar:
     pinned: false
-    # logo: "files/favicon-bike.png"
-    left:
-      - href: index.qmd
-        text: Home
+    logo: "files/favicon-dino.png"
+    logo-alt: "Wizard dinosaur"
+    right:
       - href: services.qmd
         text: "Services"
-      - href: contact.qmd
-        text: "Contact"
+      - href: scams.qmd
+        text: "Scam help"
+      - href: tools.qmd
+        text: "Tools"
       - href: about.qmd
         text: "About"
-      - href: https://www.westword.com/opinion/wtf-fruita-controversial-slogan-wears-out-its-welcome-5826454/
-        text: "WTF?"
-        target: _blank
+      - href: contact.qmd
+        text: "Contact"
 
   page-footer:
     left: |
-      <span class="faux-block">© 2025 Fruita Tech Wizard </span>
-    right: | 
-      {{< fa phone >}} [(720) 213-6374](tel:+17202136374) </br> {{< fa envelope >}} [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
-
+      <span class="faux-block">© 2026 Fruita Tech Wizard · Fruita, Colorado</span>
+      <span class="faux-block">FTW? It's a nod to our [WTF stickers](about.qmd#why-ftw).</span>
+    right: |
+      <span class="faux-block"><i class="bi bi-telephone" aria-hidden="true"></i> [(720) 213-6374](tel:+17202136374)</span>
+      <span class="faux-block"><i class="bi bi-envelope" aria-hidden="true"></i> [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)</span>
 
 format:
   html:
-    theme: 
-      - lux
+    theme:
+      - default
       - html/styles.scss
-#    grid: 
-#      body-width: 900px
     toc: false
-    code-link: true
-    anchor-sections: true
-    fig-cap-location: margin
-    reference-location: margin
-    footnotes-hover: true
-#    highlight-style: monokai
-
-  
-  
-  
+    anchor-sections: false

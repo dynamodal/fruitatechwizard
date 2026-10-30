@@ -1,16 +1,29 @@
 ---
+title: "Get in touch"
 pagetitle: Contact
+description: "Call, text, or email Fruita Tech Wizard for friendly local tech help."
 ---
 
 ::: {style="text-align: center"}
-
-![](files/logo-bike.png){fig-align="center" height="350"}
-
-
-If I miss your call, leave a voicemail or send a text or email.
-
-{{< fa phone >}} **Call or Text**: [(720) 213-6374](tel:+17202136374)
-
-{{< fa envelope >}} **Email**: [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)
-
+![](files/dino-bike.webp){width="220" fig-alt="A green dinosaur in a wizard hat riding a bicycle"}
 :::
+
+Call, text, or email, whichever is easiest for you.
+If I don't pick up, leave a message.
+FTW is a one-person side gig, so I usually get back to you within a day.
+
+::: {.ftw-buttons}
+[<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
+[<i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Text](sms:+17202136374)
+[<i class="bi bi-envelope-fill" aria-hidden="true"></i> Email](mailto:help@fruitatechwizard.com)
+:::
+
+::: {.ftw-callout .ftw-callout-green}
+### It helps to tell me:
+
+- What's going on (a photo of the error message is great)
+- What kind of device it is
+- Whether you'd like to meet in person, talk by phone, or share your screen
+:::
+
+Quotes are always free, and pricing is flexible.

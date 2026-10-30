@@ -1,0 +1,89 @@
+---
+title: "Scam help"
+description: "Worried about a scam? Call a local, trusted person in Fruita before you click, pay, or call back. Scam checks, cleanup, and protection for you and your family."
+---
+
+Scams are getting more convincing, especially now that AI can fake voices and write perfect emails.
+I want everyone in Fruita to have someone local and trustworthy to call when something feels off.
+
+::: {.ftw-callout .ftw-callout-scam}
+### <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> Not sure? Stop and call me first.
+
+Before you click a link, pay anyone, or call back a number, give me a call or text.
+A quick "is this a scam?" call or text is always free.
+
+::: {.ftw-buttons}
+[<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
+[<i class="bi bi-chat-dots-fill" aria-hidden="true"></i> Text](sms:+17202136374)
+:::
+:::
+
+## Common warning signs
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-alarm" aria-hidden="true"></i> It's urgent
+"Act now or your account will be closed."
+Real companies give you time.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-gift" aria-hidden="true"></i> Strange ways to pay
+Gift cards, wire transfers, cryptocurrency, or a Bitcoin ATM.
+Those are almost always a scam.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-display" aria-hidden="true"></i> Pop-up "tech support"
+A warning with a phone number to call about a virus.
+Microsoft and Apple don't do that.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-telephone-inbound" aria-hidden="true"></i> A loved one in trouble
+A call from a grandkid who needs bail money, in a voice that sounds just like them.
+AI can copy voices now.
+Hang up and call them back on their real number.
+:::
+
+:::
+
+## If you think you've been scammed
+
+Don't be embarrassed.
+It happens to smart, careful people every day.
+
+1. **Stop** sending money or information, and don't answer the scammer.
+2. **Call your bank** using the number on the back of your card.
+3. **Call me.** I can check your computer or phone, change passwords, and help lock things down.
+4. **Report it** at [ReportFraud.ftc.gov](https://reportfraud.ftc.gov/).
+
+## Protecting yourself ahead of time
+
+See my [favorite safety tools](tools.qmd) for the apps I recommend.
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-key" aria-hidden="true"></i> Better passwords
+Set up a password manager and two-step login, so one leaked password doesn't open everything.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-shield-check" aria-hidden="true"></i> Safer browsing
+Ad blockers, antivirus, and settings that stop most scam pop-ups before you see them.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-people" aria-hidden="true"></i> For families
+Worried about a parent or grandparent?
+I can set up their devices, agree on a family "safe word," and be their local call when something seems off.
+:::
+
+::: {.ftw-card}
+### <i class="bi bi-megaphone" aria-hidden="true"></i> Group talks
+I'm happy to give a friendly scam-awareness talk for local community groups.
+:::
+
+:::
