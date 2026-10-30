@@ -10,7 +10,7 @@ I want everyone in Fruita to have someone local and trustworthy to call when som
 ### <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i> Not sure? Stop and call me first.
 
 Before you click a link, pay anyone, or call back a number, give me a call or text.
-Quick "is this a scam?" checks are free.
+A quick "is this a scam?" call or text is always free.
 
 ::: {.ftw-buttons}
 [<i class="bi bi-telephone-fill" aria-hidden="true"></i> Call (720) 213-6374](tel:+17202136374)
@@ -83,7 +83,7 @@ I can set up their devices, agree on a family "safe word," and be their local ca
 
 ::: {.ftw-card}
 ### <i class="bi bi-megaphone" aria-hidden="true"></i> Group talks
-I'm happy to give a friendly scam-awareness talk for your club, church, library, or senior group.
+I'm happy to give a friendly scam-awareness talk for local community groups.
 :::
 
 :::
