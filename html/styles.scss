@@ -38,7 +38,7 @@ $border-radius: 1rem;
 .navbar {
   border-bottom: 1px solid $line;
   .navbar-brand { font-weight: 800; @media (max-width: 575.98px) { font-size: 0.95rem; } }
-  .navbar-logo { max-height: 40px; border-radius: 50%; @media (max-width: 575.98px) { max-height: 32px; margin-right: 0.4rem; } }
+  .navbar-logo { max-height: 42px; width: auto; @media (max-width: 575.98px) { max-height: 28px; margin-right: 0.35rem; } }
   .nav-link { font-weight: 600; font-size: 1.05rem; }
 }
 
@@ -161,19 +161,24 @@ h2 { margin-top: 0.5rem; }
 // Keep the full site name visible on phones
 @media (max-width: 575.98px) {
   .navbar-brand-container { max-width: calc(100% - 64px) !important; }
-  .navbar-title { font-size: 1.05rem !important; }
+  .navbar-title { font-size: 0.98rem !important; }
+  .navbar-logo { padding-right: 0 !important; }
+}
+@media (max-width: 375px) {
+  .navbar-title { font-size: 0.9rem !important; }
 }
 
 // ---- Footer ----
-.faux-block { display: block; padding-bottom: 0.35em; }
+.faux-block { display: block; padding-bottom: 0.2em; }
 
 .nav-footer {
   align-items: flex-start;
   flex-wrap: wrap;
   border-top: 1px solid $line !important;
   font-size: 0.95rem;
-  padding: 1.5rem 1rem;
-  .nav-footer-left, .nav-footer-right, .nav-footer-center { text-align: center; width: 100%; }
+  padding: 1rem;
+  .nav-footer-center { display: none; }  // unused; hiding it keeps left/right side by side
+  .nav-footer-left, .nav-footer-right { text-align: center; width: 100%; }
   @media (min-width: 768px) {
     .nav-footer-left { text-align: left; flex: 1 1 50%; }
     .nav-footer-right { text-align: right; flex: 1 1 50%; }
