@@ -2,15 +2,22 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap');
 
-// Palette pulled from the wizard dino
-$cream:   #fbf6ea;
-$sand:    #f3e8ce;
-$ink:     #2b2a33;
-$purple:  #4b3f9e;   // wizard hat
-$purple-dk: #382f7a;
-$green:   #3f7d1f;   // dino (darkened for contrast)
-$red:     #a8401f;   // desert / Monument red
-$line:    #e6dcc3;
+// Palette pulled from the wizard dino (light). html/dark.scss overrides
+// these for dark mode, so every value here is !default.
+$cream:     #fbf6ea !default;   // page
+$sand:      #f3e8ce !default;   // bands, footer
+$ink:       #2b2a33 !default;   // text
+$muted:     #555460 !default;   // small print
+$purple:    #4b3f9e !default;   // wizard hat
+$purple-dk: #382f7a !default;   // hover
+$on-purple: #ffffff !default;   // text on purple buttons
+$green:     #3f7d1f !default;   // dino (darkened for contrast)
+$red:       #a8401f !default;   // desert / Monument red
+$line:      #e6dcc3 !default;
+$surface:   #ffffff !default;   // cards, secondary buttons
+$scam-bg:   #fbeee8 !default;
+$info-bg:   #eeecf8 !default;
+$green-bg:  #eef5e8 !default;
 
 $white: #ffffff;
 $primary: $purple;
@@ -88,18 +95,18 @@ $border-radius: 1rem;
     font-size: 1.1rem;
     text-decoration: none;
     border: 2px solid $purple;
-    background: $white;
+    background: $surface;
     color: $purple;
     @media (max-width: 575.98px) { flex: 1 1 100%; justify-content: center; }
   }
-  a:first-child { background: $purple; color: $white; }
+  a:first-child { background: $purple; color: $on-purple; }
   a:first-child:hover { background: $purple-dk; border-color: $purple-dk; }
   a:not(:first-child):hover { background: rgba($purple, 0.08); }
 }
 
 .ftw-note {
   font-size: 0.98rem;
-  color: lighten($ink, 18%);
+  color: $muted;
 }
 
 // ---- Cards ----
@@ -111,7 +118,7 @@ $border-radius: 1rem;
 }
 
 .ftw-card {
-  background: $white;
+  background: $surface;
   border: 1px solid $line;
   border-radius: $border-radius;
   padding: 1.35rem 1.4rem;
@@ -137,9 +144,9 @@ $border-radius: 1rem;
   h2, h3 { margin-top: 0; font-size: 1.35rem; }
   p:last-child { margin-bottom: 0; }
 }
-.ftw-callout-scam { background: #fbeee8; border-color: rgba($red, 0.45); h2, h3 { color: $red; } }
-.ftw-callout-info { background: #eeecf8; border-color: rgba($purple, 0.35); }
-.ftw-callout-green { background: #eef5e8; border-color: rgba($green, 0.35); }
+.ftw-callout-scam { background: $scam-bg; border-color: rgba($red, 0.45); h2, h3 { color: $red; } }
+.ftw-callout-info { background: $info-bg; border-color: rgba($purple, 0.35); }
+.ftw-callout-green { background: $green-bg; border-color: rgba($green, 0.35); }
 
 .ftw-not {
   ul { list-style: none; padding: 0; }
@@ -184,3 +191,16 @@ h2 { margin-top: 0.5rem; }
     .nav-footer-right { text-align: right; flex: 1 1 50%; }
   }
 }
+
+// ---- Dark mode ----
+// Light/dark toggle in the navbar
+.quarto-color-scheme-toggle { opacity: 0.8; margin-left: 0.4rem; &:hover { opacity: 1; } }
+
+// Below the desktop breakpoint the navbar collapses into a menu. Search and
+// the light/dark switch move into that menu (html/mobile-menu.html) instead
+// of crowding the site name.
+@media (max-width: 991.98px) {
+  .quarto-navbar-tools .quarto-color-scheme-toggle,
+  .navbar #quarto-search { display: none !important; }
+}
+.mobile-menu-item .bi { margin-right: 0.35rem; }

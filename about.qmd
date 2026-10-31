@@ -11,7 +11,7 @@ about:
 
 I'm the person behind Fruita Tech Wizard, and I live right here in Fruita.
 
-My day job is [Dynamodal](https://www.dynamodal.com/), where I do data, AI, and energy analysis work for consulting teams.
+My day job is [Dynamodal](https://dynamodal.com/), where I do data, AI, and energy analysis work for consulting teams.
 I enjoy that work, and I also wanted to do something for my own community, so I started FTW to offer friendly, personal tech help to my neighbors and local businesses.
 
 I've always been the go-to tech person for family, friends, and coworkers.

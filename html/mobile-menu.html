@@ -1,0 +1,58 @@
+<!-- Phones and tablets: put search and the light/dark switch inside the menu
+     instead of squeezing them into the top bar next to the site name.
+     (Desktop keeps the usual icons in the navbar.) -->
+<script>
+(function () {
+  var nav = document.querySelector("#navbarCollapse .navbar-nav");
+  if (!nav) return;
+
+  function addItem(onClick) {
+    var li = document.createElement("li");
+    li.className = "nav-item d-lg-none mobile-menu-item";
+    var a = document.createElement("a");
+    a.className = "nav-link";
+    a.href = "#";
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      onClick(a);
+    });
+    li.appendChild(a);
+    return li;
+  }
+
+  function closeMenu() {
+    var collapse = document.getElementById("navbarCollapse");
+    if (collapse && collapse.classList.contains("show") && window.bootstrap) {
+      window.bootstrap.Collapse.getOrCreateInstance(collapse).hide();
+    }
+  }
+
+  // Search: opens the same search overlay as the desktop icon
+  if (document.getElementById("quarto-search")) {
+    var search = addItem(function () {
+      closeMenu();
+      var button = document.querySelector("#quarto-search .aa-DetachedSearchButton");
+      if (button) button.click();
+    });
+    search.firstChild.innerHTML =
+      '<i class="bi bi-search" aria-hidden="true"></i> <span class="menu-text">Search</span>';
+    nav.insertBefore(search, nav.firstChild);
+  }
+
+  // Light/dark switch
+  if (window.quartoToggleColorScheme) {
+    var theme = addItem(function (a) {
+      window.quartoToggleColorScheme();
+      label(a);
+    });
+    var label = function (a) {
+      var dark = document.body.classList.contains("quarto-dark");
+      a.innerHTML = dark
+        ? '<i class="bi bi-sun" aria-hidden="true"></i> <span class="menu-text">Light mode</span>'
+        : '<i class="bi bi-moon" aria-hidden="true"></i> <span class="menu-text">Dark mode</span>';
+    };
+    label(theme.firstChild);
+    nav.appendChild(theme);
+  }
+})();
+</script>

@@ -14,7 +14,9 @@ website:
   description: "Friendly, local tech help in Fruita, Colorado. Computers, phones, WiFi, scams, AI, smart homes, and small business IT. In person, by phone, or screen share."
   favicon: "files/favicon-dino.png"
   site-url: "https://fruitatechwizard.com"
-  search: false
+  search:
+    location: navbar
+    type: overlay
   open-graph:
     image: files/social-card.png
     image-width: 1200
@@ -27,6 +29,8 @@ website:
     logo: "files/logo-ftw-nav.png"
     logo-alt: "FTW oval logo"
     right:
+      - href: index.qmd
+        text: "Home"
       - href: services.qmd
         text: "Services"
       - href: scams.qmd
@@ -49,7 +53,15 @@ website:
 format:
   html:
     theme:
-      - default
-      - html/styles.scss
+      light:
+        - default
+        - html/styles.scss
+      dark:
+        - default
+        - html/styles.scss
+        - html/dark.scss
+    respect-user-color-scheme: true
+    include-in-header: html/structured-data.html
+    include-after-body: html/mobile-menu.html
     toc: false
     anchor-sections: false
