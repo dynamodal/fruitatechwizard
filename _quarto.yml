@@ -49,7 +49,14 @@ website:
 format:
   html:
     theme:
-      - default
-      - html/styles.scss
+      light:
+        - default
+        - html/styles.scss
+      dark:
+        - default
+        - html/styles.scss
+        - html/dark.scss
+    respect-user-color-scheme: true
+    include-in-header: html/structured-data.html
     toc: false
     anchor-sections: false
