@@ -28,7 +28,7 @@ $link-color: $purple;
 $link-hover-color: $purple-dk;
 
 $font-family-sans-serif: "Nunito", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-$font-size-root: 19px;    // larger text for easier reading
+$font-size-root: 118.75%;  // 19px at the default 16px (larger text for easier reading); a percentage respects the reader's browser text size
 $line-height-base: 1.6;
 $headings-font-weight: 800;
 
@@ -112,7 +112,7 @@ $border-radius: 1rem;
 // ---- Cards ----
 .ftw-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 1rem;
   margin-top: 1.25rem;
 }
@@ -204,3 +204,76 @@ h2 { margin-top: 0.5rem; }
   .navbar #quarto-search { display: none !important; }
 }
 .mobile-menu-item .bi { margin-right: 0.35rem; }
+
+// ---- Phones: use the width for content ----
+// Quarto's page grid already adds a 1.5em gutter, so on phones the wrappers
+// add no padding of their own, cards and callouts get slimmer padding, and
+// the shaded band runs edge to edge.
+@media (max-width: 575.98px) {
+  .ftw-wrap { padding: 0; }
+  .ftw-card { padding: 1.1rem 1rem; }
+  .ftw-callout { padding: 1.1rem 1rem; }
+  .ftw-sand {
+    margin-left: -1.5em;
+    margin-right: -1.5em;
+    padding-left: 1.5em;
+    padding-right: 1.5em;
+  }
+}
+
+// ---- Very narrow screens (large text on phones zooms the page, so the
+// screen acts ~200-300px wide). Drop the logo mark and let the site name
+// wrap instead of cutting it off.
+@media (max-width: 340px) {
+  .navbar .navbar-logo { display: none; }
+  .navbar .navbar-brand-container { max-width: calc(100% - 64px) !important; }
+  .navbar .navbar-brand, .navbar .navbar-title {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    line-height: 1.15;
+    text-align: center;
+  }
+}
+
+// ---- Long words and links never push the page sideways ----
+main a, .nav-footer a { overflow-wrap: anywhere; }
+.dm-card, .ftw-card, .ftw-callout { overflow-wrap: anywhere; min-width: 0; }
+.dm-card h3, .ftw-card h3 { min-width: 0; }
+h1, h2, h3 { overflow-wrap: break-word; }
+.about-image { max-width: min(100%, 70vw); height: auto !important; aspect-ratio: 1; object-fit: cover; }
+
+// ---- Mobile menu: easy to tell apart from the page, with a close (X) button ----
+@media (max-width: 991.98px) {
+  .navbar-collapse.show,
+  .navbar-collapse.collapsing {
+    background: $sand;
+    border-top: 1px solid $line;
+    border-bottom: 1px solid $line;
+    box-shadow: 0 10px 18px rgba(0, 0, 0, 0.12);
+    margin: 0.5rem -1rem 0;
+    padding: 0.25rem 1rem 0.75rem;
+  }
+}
+.navbar-toggler {
+  border: 0;
+  padding: 0.35rem;
+  &:focus { box-shadow: none; }
+  &:focus-visible { outline: 2px solid $ink; outline-offset: 2px; }
+}
+$x-color: "%23" + str-slice(inspect($ink), 2);
+.navbar-toggler[aria-expanded="true"] .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='#{$x-color}' stroke-linecap='round' stroke-width='2.5' d='M7 7l16 16M23 7L7 23'/%3e%3c/svg%3e");
+}
+
+// Very narrow screens: smaller site name so it fits beside the menu button
+@media (max-width: 340px) {
+  .navbar .navbar-title { font-size: 1rem !important; }
+}
+@media (max-width: 340px) {
+  // Icon sits inline with the heading text instead of in its own column
+  .dm-card h3, .ftw-card h3 { display: block; }
+  h1, h2, h3 { hyphens: auto; }  // only when space is really tight
+  .dm-card h3 .bi, .ftw-card h3 .bi { margin-right: 0.35rem; }
+  .dm-card, .ftw-card, .ftw-callout { padding: 0.9rem 0.8rem; }
+}
