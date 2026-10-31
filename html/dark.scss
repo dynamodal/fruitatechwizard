@@ -16,3 +16,12 @@ $surface:   #2a2733;
 $scam-bg:   #3a2621;
 $info-bg:   #2b2843;
 $green-bg:  #24301e;
+
+/*-- scss:rules --*/
+
+// Search: Quarto darkens the primary color to highlight matches, which is
+// too harsh on a dark background
+.aa-DetachedOverlay li.aa-Item[aria-selected=false] .search-item mark.search-match {
+  color: inherit;
+  background-color: rgba($primary, 0.28);
+}

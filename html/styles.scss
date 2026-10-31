@@ -196,9 +196,11 @@ h2 { margin-top: 0.5rem; }
 // Light/dark toggle in the navbar
 .quarto-color-scheme-toggle { opacity: 0.8; margin-left: 0.4rem; &:hover { opacity: 1; } }
 
-// Below the desktop breakpoint the navbar collapses into a menu. The toggle
-// moves into that menu (html/theme-menu.html) instead of crowding the site name.
+// Below the desktop breakpoint the navbar collapses into a menu. Search and
+// the light/dark switch move into that menu (html/mobile-menu.html) instead
+// of crowding the site name.
 @media (max-width: 991.98px) {
-  .quarto-navbar-tools .quarto-color-scheme-toggle { display: none !important; }
+  .quarto-navbar-tools .quarto-color-scheme-toggle,
+  .navbar #quarto-search { display: none !important; }
 }
-.theme-menu-item .bi { margin-right: 0.35rem; }
+.mobile-menu-item .bi { margin-right: 0.35rem; }
