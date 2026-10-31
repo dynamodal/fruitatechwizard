@@ -1,0 +1,27 @@
+<!-- Phones and tablets: put the light/dark switch inside the menu instead of
+     squeezing it into the top bar next to the site name -->
+<script>
+(function () {
+  var nav = document.querySelector("#navbarCollapse .navbar-nav");
+  if (!nav || !window.quartoToggleColorScheme) return;
+  var li = document.createElement("li");
+  li.className = "nav-item d-lg-none theme-menu-item";
+  var a = document.createElement("a");
+  a.className = "nav-link";
+  a.href = "#";
+  function label() {
+    var dark = document.body.classList.contains("quarto-dark");
+    a.innerHTML = dark
+      ? '<i class="bi bi-sun" aria-hidden="true"></i> <span class="menu-text">Light mode</span>'
+      : '<i class="bi bi-moon" aria-hidden="true"></i> <span class="menu-text">Dark mode</span>';
+  }
+  a.addEventListener("click", function (e) {
+    e.preventDefault();
+    window.quartoToggleColorScheme();
+    label();
+  });
+  li.appendChild(a);
+  nav.appendChild(li);
+  label();
+})();
+</script>

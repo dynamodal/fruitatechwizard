@@ -195,8 +195,10 @@ h2 { margin-top: 0.5rem; }
 // ---- Dark mode ----
 // Light/dark toggle in the navbar
 .quarto-color-scheme-toggle { opacity: 0.8; margin-left: 0.4rem; &:hover { opacity: 1; } }
-// On phones there's no room beside the site name, so phones just follow
-// the system light/dark setting (respect-user-color-scheme)
-@media (max-width: 575.98px) {
-  .quarto-navbar-tools { display: none !important; }
+
+// Below the desktop breakpoint the navbar collapses into a menu. The toggle
+// moves into that menu (html/theme-menu.html) instead of crowding the site name.
+@media (max-width: 991.98px) {
+  .quarto-navbar-tools .quarto-color-scheme-toggle { display: none !important; }
 }
+.theme-menu-item .bi { margin-right: 0.35rem; }

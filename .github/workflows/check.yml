@@ -1,0 +1,21 @@
+on:
+  pull_request:
+  workflow_dispatch:
+
+name: Check site
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+
+      - name: Render site
+        run: quarto render
+
+      - name: Check internal links and structured data
+        run: python3 .github/scripts/check_site.py _site https://fruitatechwizard.com https://www.fruitatechwizard.com

@@ -27,6 +27,8 @@ website:
     logo: "files/logo-ftw-nav.png"
     logo-alt: "FTW oval logo"
     right:
+      - href: index.qmd
+        text: "Home"
       - href: services.qmd
         text: "Services"
       - href: scams.qmd
@@ -58,5 +60,6 @@ format:
         - html/dark.scss
     respect-user-color-scheme: true
     include-in-header: html/structured-data.html
+    include-after-body: html/theme-menu.html
     toc: false
     anchor-sections: false
