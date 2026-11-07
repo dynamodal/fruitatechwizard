@@ -11,7 +11,14 @@
     "href": "tools.html#staying-safe-online",
     "title": "Tools I like",
     "section": "Staying safe online",
-    "text": "Staying safe online\n\n\n Bitwarden\nA password manager that remembers strong, unique passwords for every site, on your computer and phone. Free for most people.\nbitwarden.com\n\n\n Ente Auth\nAn app for the six-digit login codes (two-step login). Your codes are backed up, so a lost phone doesn’t lock you out.\nente.io/auth\n\n\n uBlock Origin\nBlocks ads, pop-ups, and many scam sites in your web browser. Works best in Firefox. On Chrome, use uBlock Origin Lite.\nublockorigin.com\n\n\n Microsoft Defender\nThe antivirus already built into Windows. For most home users, it’s all you need, so you can skip the paid antivirus subscriptions. Look for “Windows Security” in the Start menu."
+    "text": "Staying safe online\n\n\n Bitwarden\nA password manager that remembers strong, unique passwords for every site, on your computer and phone. It also stores passkeys, the newer way to log in without a password that scammers can’t phish. Free for most people.\nbitwarden.com\n\n\n Ente Auth\nAn app for the six-digit login codes (two-step login). Your codes are backed up, so a lost phone doesn’t lock you out.\nente.io/auth\n\n\n uBlock Origin\nBlocks ads, pop-ups, and many scam sites in your web browser. Works best in Firefox. On Chrome, use uBlock Origin Lite.\nublockorigin.com\n\n\n Microsoft Defender\nThe antivirus already built into Windows. For most home users, it’s all you need, so you can skip the paid antivirus subscriptions. Look for “Windows Security” in the Start menu."
+  },
+  {
+    "objectID": "tools.html#search-and-ai",
+    "href": "tools.html#search-and-ai",
+    "title": "Tools I like",
+    "section": "Search and AI",
+    "text": "Search and AI\n\n\n Kagi\nA search engine with no ads and no tracking, so the results are about what you searched for, not who paid to be on top. It’s paid, but worth it. It includes Kagi Assistant, an AI chat assistant.\nkagi.com"
   },
   {
     "objectID": "tools.html#windows-helpers",
@@ -19,6 +26,27 @@
     "title": "Tools I like",
     "section": "Windows helpers",
     "text": "Windows helpers\n\n\n WinDirStat\nShows what’s filling up your hard drive, as a colorful map, so you know what to clean up.\nwindirstat.net\n\n\n Everything\nFinds any file on your computer instantly as you type. Much faster than the built-in Windows search.\nvoidtools.com"
+  },
+  {
+    "objectID": "tools.html#backups",
+    "href": "tools.html#backups",
+    "title": "Tools I like",
+    "section": "Backups",
+    "text": "Backups\n\n\n Backrest\nAutomatic, scheduled backups of your files to an external drive or cloud storage. A simple web page shows that your backups ran and lets you browse and restore old files. Works on Windows, Mac, and Linux. A little more for the tinkerers, and I’m happy to set it up for you.\nBackrest"
+  },
+  {
+    "objectID": "tools.html#remote-help",
+    "href": "tools.html#remote-help",
+    "title": "Tools I like",
+    "section": "Remote help",
+    "text": "Remote help\n\n\n RustDesk\nLets someone see and control your computer from afar, so I can help without a visit. Free, and works on Windows, Mac, Linux, and phones.\nOnly let someone connect if you know and trust them. Scammers use apps like this too. If a stranger calls and asks you to install one, hang up.\nrustdesk.com"
+  },
+  {
+    "objectID": "tools.html#smart-homes",
+    "href": "tools.html#smart-homes",
+    "title": "Tools I like",
+    "section": "Smart homes",
+    "text": "Smart homes\n\n\n Home Assistant\nBrings smart lights, thermostats, locks, and sensors from different brands together in one app, with automations like “turn on the porch light at sunset.” It runs in your home, so it keeps working when the internet or a company’s cloud goes down. A project for the tinkerers, and I’m happy to help set it up.\nhome-assistant.io"
   },
   {
     "objectID": "tools.html#phones-maps-and-the-outdoors",
@@ -32,7 +60,7 @@
     "href": "tools.html#reading-and-watching",
     "title": "Tools I like",
     "section": "Reading and watching",
-    "text": "Reading and watching\n\n\n Kanopy\nFree movies and shows with your library card, on your TV, phone, or computer. Check whether your library participates.\nkanopy.com\n\n\n RSS readers\nFollow your favorite news sites and blogs in one place, without algorithms or social media. Feedly and Inoreader are easy places to start. I use FreshRSS with the FeedMe app.\nWhat is RSS?"
+    "text": "Reading and watching\n\n\n Kanopy\nFree movies and shows with your library card, on your TV, phone, or computer. Mesa County Libraries offers it, so you can sign up with your Mesa County library card.\nkanopy.com\n\n\n RSS readers\nFollow your favorite news sites and blogs in one place, without algorithms or social media. Feedly and Inoreader are easy places to start. I use FreshRSS with the FeedMe app.\nWhat is RSS?"
   },
   {
     "objectID": "scams.html",
