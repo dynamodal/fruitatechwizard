@@ -1,6 +1,6 @@
 ---
 title: "Tools I like"
-description: "Free and low-cost apps and tools Thomas at Fruita Tech Wizard uses and recommends: password managers, ad blockers, maps, free movies, and more."
+description: "Free and low-cost apps and tools Thomas at Fruita Tech Wizard uses and recommends: password managers, ad blockers, search, backups, remote help, smart homes, maps, free movies, and more."
 ---
 
 These are tools I actually use and recommend to friends and family.
@@ -15,6 +15,7 @@ If you'd like help setting one up, just ask.
 ::: {.ftw-card}
 ### <i class="bi bi-key" aria-hidden="true"></i> Bitwarden
 A password manager that remembers strong, unique passwords for every site, on your computer and phone.
+It also stores passkeys, the newer way to log in without a password that scammers can't phish.
 Free for most people.
 
 [bitwarden.com](https://bitwarden.com/)
@@ -46,6 +47,21 @@ Look for "Windows Security" in the Start menu.
 
 :::
 
+## Search and AI
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-search-heart" aria-hidden="true"></i> Kagi
+A search engine with no ads and no tracking, so the results are about what you searched for, not who paid to be on top.
+It's paid, but worth it.
+It includes Kagi Assistant, an AI chat assistant.
+
+[kagi.com](https://kagi.com/)
+:::
+
+:::
+
 ## Windows helpers
 
 ::: {.ftw-grid}
@@ -63,6 +79,55 @@ Finds any file on your computer instantly as you type.
 Much faster than the built-in Windows search.
 
 [voidtools.com](https://www.voidtools.com/)
+:::
+
+:::
+
+## Backups
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-cloud-arrow-up" aria-hidden="true"></i> Backrest
+Automatic, scheduled backups of your files to an external drive or cloud storage.
+A simple web page shows that your backups ran and lets you browse and restore old files.
+Works on Windows, Mac, and Linux.
+A little more for the tinkerers, and I'm happy to set it up for you.
+
+[Backrest](https://garethgeorge.github.io/backrest/)
+:::
+
+:::
+
+## Remote help
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-display" aria-hidden="true"></i> RustDesk
+Lets someone see and control your computer from afar, so I can help without a visit.
+Free, and works on Windows, Mac, Linux, and phones.
+
+**Only let someone connect if you know and trust them.**
+Scammers use apps like this too.
+If a stranger calls and asks you to install one, hang up.
+
+[rustdesk.com](https://rustdesk.com/)
+:::
+
+:::
+
+## Smart homes
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-house-gear" aria-hidden="true"></i> Home Assistant
+Brings smart lights, thermostats, locks, and sensors from different brands together in one app, with automations like "turn on the porch light at sunset."
+It runs in your home, so it keeps working when the internet or a company's cloud goes down.
+A project for the tinkerers, and I'm happy to help set it up.
+
+[home-assistant.io](https://www.home-assistant.io/)
 :::
 
 :::
@@ -103,7 +168,7 @@ A little more for the tinkerers.
 ::: {.ftw-card}
 ### <i class="bi bi-film" aria-hidden="true"></i> Kanopy
 Free movies and shows with your library card, on your TV, phone, or computer.
-Check whether your library participates.
+Mesa County Libraries offers it, so you can sign up with your Mesa County library card.
 
 [kanopy.com](https://www.kanopy.com/)
 :::
