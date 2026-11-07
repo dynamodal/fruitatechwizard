@@ -1,6 +1,6 @@
 ---
 title: "Tools I like"
-description: "Free and low-cost apps and tools Thomas at Fruita Tech Wizard uses and recommends: password managers, ad blockers, maps, free movies, and more."
+description: "Free and low-cost apps and tools Thomas at Fruita Tech Wizard uses and recommends: password managers, ad blockers, backups, maps, free movies, and more."
 ---
 
 These are tools I actually use and recommend to friends and family.
@@ -63,6 +63,22 @@ Finds any file on your computer instantly as you type.
 Much faster than the built-in Windows search.
 
 [voidtools.com](https://www.voidtools.com/)
+:::
+
+:::
+
+## Backups
+
+::: {.ftw-grid}
+
+::: {.ftw-card}
+### <i class="bi bi-cloud-arrow-up" aria-hidden="true"></i> Backrest
+Automatic, scheduled backups of your files to an external drive or cloud storage.
+A simple web page shows that your backups ran and lets you browse and restore old files.
+Works on Windows, Mac, and Linux.
+A little more for the tinkerers, and I'm happy to set it up for you.
+
+[Backrest](https://garethgeorge.github.io/backrest/)
 :::
 
 :::
