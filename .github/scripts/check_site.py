@@ -6,6 +6,9 @@ Usage: python3 .github/scripts/check_site.py _site https://example.com
 - Every internal href/src (relative, root-relative, or on the site's own
   domain) must point to a file that exists in the rendered site.
 - Every <script type="application/ld+json"> block must be valid JSON.
+- Standalone explorers (community/*/v*/index.html) use #tab links for their
+  own routing, so their same-page #anchors aren't checked. Their links to
+  other files still are.
 
 External links are not fetched, so the check never fails because some
 other website is slow or blocks bots.
@@ -13,8 +16,10 @@ other website is slow or blocks bots.
 import json
 import sys
 from html.parser import HTMLParser
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlparse
+
+STANDALONE = "community/*/v*/index.html"
 
 
 class PageParser(HTMLParser):
@@ -57,6 +62,7 @@ def main():
 
     for page, parser in pages.items():
         rel = page.relative_to(site)
+        standalone = PurePosixPath(rel.as_posix()).match(STANDALONE)
         for i, block in enumerate(parser.jsonld):
             try:
                 json.loads(block)
@@ -78,6 +84,8 @@ def main():
                 path = u.path
                 base = site if path.startswith("/") else page.parent
             if not path:
+                if standalone:
+                    continue  # hash route inside the explorer, not an anchor
                 target = page  # same-page anchor
             else:
                 target = (base / unquote(path).lstrip("/")).resolve()
