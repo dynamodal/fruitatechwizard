@@ -1,0 +1,41 @@
+---
+title: "Fruita's 2027 budget explorer"
+description: "An independent, interactive explorer of the City of Fruita's draft 2027 budget, with every version kept so you can see what changed. Not produced by the City of Fruita."
+---
+
+The City of Fruita's draft budget for 2027 is a 332-page PDF.
+This explorer lets you tap through it instead: where the money comes from, where it goes, what changes on your bills, and answers to common questions.
+Every number shows the budget page it came from.
+
+::: {.ftw-buttons}
+[<i class="bi bi-bar-chart-fill" aria-hidden="true"></i> Open the explorer](v1/)
+:::
+
+::: {.ftw-callout .ftw-callout-info}
+### <i class="bi bi-pencil-square" aria-hidden="true"></i> This is a draft
+
+The explorer is based on the City Manager's Recommended 2027 Budget, a draft dated November 12, 2026.
+City Council usually adopts the budget in early December and may change it.
+I'll post new versions as the budget changes.
+
+It isn't made by or for the City of Fruita.
+For official figures and the budget documents themselves, see the city's [2027 Annual Budget page](https://www.fruita.org/810/2027-Annual-Budget).
+:::
+
+This isn't one of my Fruita Tech Wizard services, just a side project for my neighbors.
+If you spot a mistake, please [email me](mailto:help@fruitatechwizard.com).
+
+## Versions
+
+Each version stays here, so you can see how the numbers changed.
+The newest is at the top.
+
+::: {.ftw-card .ftw-version}
+### Version 1 (latest)
+
+Posted November 15, 2026.
+Based on the draft budget dated November 12, 2026.
+The first version.
+
+[Open version 1](v1/)
+:::

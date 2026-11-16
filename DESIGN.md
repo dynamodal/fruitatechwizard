@@ -45,7 +45,7 @@ Dynamodal (dynamodal/dynamodal.github.io) follows the same technical rules with 
 Most visitors are on phones, and many use very large text.
 Android and iOS large text zooms the page, so a 390px phone acts like a 240px or even 200px wide screen.
 
-- Every page must fit at 200px wide with no sideways scrolling. Check with the `check-layout` skill (`.claude/skills/check-layout/`).
+- Every page must fit at 200px wide with no sideways scrolling, including community project files. Check with the `check-layout` skill (`.claude/skills/check-layout/`).
 - Grids use `minmax(min(260px, 100%), 1fr)`, never a bare `minmax(260px, 1fr)`, which overflows narrow screens.
 - On phones, don't stack padding. Quarto's page grid already adds a 1.5em gutter, so `ftw-wrap` adds none below 576px, and cards and callouts use about 1rem of padding.
 - The `ftw-sand` band runs edge to edge on phones by cancelling the gutter with `margin: 0 -1.5em`.
@@ -58,6 +58,23 @@ Android and iOS large text zooms the page, so a 390px phone acts like a 240px or
 - Below 992px the navbar collapses into a menu. Search and the light/dark switch move into that menu (`html/mobile-menu.html`) so the top bar holds only the menu button and the full site name.
 - The open menu has its own background, border and shadow so it doesn't blend into the page, and the menu button becomes an X.
 - Hide individual tools in the top bar, not the whole `.quarto-navbar-tools` box. That empty box keeps the site name centered.
+
+## Community projects
+
+`community/` holds side projects for Fruita neighbors, such as the 2027 budget explorer.
+They are not FTW services: keep them out of the navbar, Services page and structured data, and say so on the page.
+The footer links to `community/index.qmd`.
+
+- Each project has a page (`community/<project>/index.qmd`) that explains it, says plainly if it's a draft, and lists every version, newest first.
+- Each version is a self-contained HTML file in its own folder: `community/<project>/v1/index.html`, `v2/index.html`, and so on. Old versions are never edited or deleted, so links people shared keep working.
+- `scripts/explorer_banners.py` runs after every render. It adds a slim bar to each version's copy in `_site` with its version number and a link back to the project page. Older versions also link to the latest. The files in the repo stay untouched.
+- The explorers use `#tab` links for their own routing, so `check_site.py` skips same-page anchors in them.
+
+To post a new version:
+
+1. Save the new HTML as `community/<project>/v<N>/index.html` (the next number).
+2. On the project page, point "Open the explorer" at `v<N>/`, move "(latest)" to the new version, and add a card at the top of Versions: date posted, which draft or adopted budget it's based on, and what changed.
+3. Render and run the checks below.
 
 ## Dark mode
 

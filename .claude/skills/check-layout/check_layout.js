@@ -36,7 +36,10 @@ const server = http.createServer((req, res) => {
 (async () => {
   await new Promise((r) => server.listen(0, r));
   const base = `http://localhost:${server.address().port}`;
-  const pages = fs.readdirSync(SITE).filter((f) => f.endsWith(".html"));
+  // Every page, including ones in subfolders (community/...). Skip site_libs.
+  const pages = fs.readdirSync(SITE, { recursive: true })
+    .map((f) => f.split(path.sep).join("/"))
+    .filter((f) => f.endsWith(".html") && !f.startsWith("site_libs/"));
   fs.mkdirSync(OUT, { recursive: true });
   const browser = await chromium.launch();
   let problems = 0;
@@ -61,7 +64,7 @@ const server = http.createServer((req, res) => {
           console.log(`✗ ${name} at ${width}px (${scheme}): page is ${result.scroll}px wide`);
           result.culprits.forEach((c) => console.log(`    ${c}`));
         }
-        await page.screenshot({ path: path.join(OUT, `${name.replace(".html", "")}-${width}-${scheme}.png`) });
+        await page.screenshot({ path: path.join(OUT, `${name.replace(".html", "").replaceAll("/", "_")}-${width}-${scheme}.png`) });
       }
       await ctx.close();
     }

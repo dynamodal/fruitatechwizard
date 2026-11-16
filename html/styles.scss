@@ -135,6 +135,9 @@ $border-radius: 1rem;
   p:last-child { margin-bottom: 0; }
 }
 
+// Versions of a community project, newest first (community/*/index.qmd)
+.ftw-version { margin: 1rem 0; }
+
 // ---- Callouts ----
 .ftw-callout {
   border-radius: $border-radius;
