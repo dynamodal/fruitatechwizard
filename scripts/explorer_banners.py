@@ -6,8 +6,8 @@ Quarto runs this after every render (post-render in _quarto.yml).
 Standalone explorers are self-contained HTML files kept as-is in the repo,
 one folder per version:
 
-    community/<project>/v1/index.html
-    community/<project>/v2/index.html
+    projects/<project>/v1/index.html
+    projects/<project>/v2/index.html
     ...
 
 The highest number is the latest. Each copy in _site gets a slim bar at the
@@ -15,7 +15,7 @@ top that names its version and links to the project page (with all versions).
 Older versions also link to the latest, so a shared old link doesn't pass for
 the current numbers. The files in the repo are never changed.
 
-If the project has a community/<project>/banner-note.txt, its text (one or two
+If the project has a projects/<project>/banner-note.txt, its text (one or two
 plain sentences, such as how it was made and who hasn't reviewed it) is shown
 first in the bar, on every version.
 """
@@ -57,7 +57,7 @@ def banner(n, latest, note):
 
 def main():
     site = Path(os.environ.get("QUARTO_PROJECT_OUTPUT_DIR", "_site"))
-    for project in sorted(p for p in site.glob("community/*") if p.is_dir()):
+    for project in sorted(p for p in site.glob("projects/*") if p.is_dir()):
         versions = {}
         for page in project.glob("v*/index.html"):
             m = re.fullmatch(r"v(\d+)", page.parent.name)

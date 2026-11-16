@@ -1,6 +1,9 @@
 ---
 title: "Fruita's 2027 budget explorer"
 description: "An independent, AI-built interactive explorer of the City of Fruita's draft 2027 budget, with every version kept so you can see what changed. Not reviewed or endorsed by the City of Fruita."
+aliases:
+  - ../../community/fruita-2027-budget/index.html
+  - ../../community/fruita-2027-budget/v1/index.html
 ---
 
 The City of Fruita's draft budget for 2027 is a 332-page PDF.

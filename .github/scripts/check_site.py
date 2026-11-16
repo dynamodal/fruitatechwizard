@@ -6,7 +6,7 @@ Usage: python3 .github/scripts/check_site.py _site https://example.com
 - Every internal href/src (relative, root-relative, or on the site's own
   domain) must point to a file that exists in the rendered site.
 - Every <script type="application/ld+json"> block must be valid JSON.
-- Standalone explorers (community/*/v*/index.html) use #tab links for their
+- Standalone explorers (projects/*/v*/index.html) use #tab links for their
   own routing, so their same-page #anchors aren't checked. Their links to
   other files still are.
 
@@ -19,7 +19,7 @@ from html.parser import HTMLParser
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlparse
 
-STANDALONE = "community/*/v*/index.html"
+STANDALONE = "projects/*/v*/index.html"
 
 
 class PageParser(HTMLParser):

@@ -36,7 +36,7 @@ const server = http.createServer((req, res) => {
 (async () => {
   await new Promise((r) => server.listen(0, r));
   const base = `http://localhost:${server.address().port}`;
-  // Every page, including ones in subfolders (community/...). Skip site_libs.
+  // Every page, including ones in subfolders (projects/...). Skip site_libs.
   const pages = fs.readdirSync(SITE, { recursive: true })
     .map((f) => f.split(path.sep).join("/"))
     .filter((f) => f.endsWith(".html") && !f.startsWith("site_libs/"));

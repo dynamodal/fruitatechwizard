@@ -6,8 +6,8 @@ project:
 
   resources:
     - "files/**"
-    # Standalone explorers, one folder per version (see DESIGN.md, Community projects)
-    - "community/*/v*/index.html"
+    # Standalone explorers, one folder per version (see DESIGN.md, Projects)
+    - "projects/*/v*/index.html"
 
   # Adds the version banner to each explorer copy in _site
   post-render: scripts/explorer_banners.py
@@ -42,6 +42,8 @@ website:
         text: "Scam help"
       - href: tools.qmd
         text: "Tools"
+      - href: projects/index.qmd
+        text: "Projects"
       - href: about.qmd
         text: "About"
       - href: contact.qmd
@@ -51,7 +53,6 @@ website:
     left: |
       <span class="faux-block">© 2026 Fruita Tech Wizard · Fruita, Colorado</span>
       <span class="faux-block">FTW? It's a nod to our [WTF stickers](/about.qmd#why-ftw).</span>
-      <span class="faux-block">[Community projects](/community/index.qmd)</span>
     right: |
       <span class="faux-block"><i class="bi bi-telephone" aria-hidden="true"></i> [(720) 213-6374](tel:+17202136374)</span>
       <span class="faux-block"><i class="bi bi-envelope" aria-hidden="true"></i> [help@fruitatechwizard.com](mailto:help@fruitatechwizard.com)</span>

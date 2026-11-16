@@ -1,10 +1,12 @@
 ---
-title: "Community projects"
+title: "Projects"
 description: "Side projects Thomas at Fruita Tech Wizard made for Fruita neighbors, like an interactive explorer of the city's draft 2027 budget. Not part of FTW's tech help services."
+aliases:
+  - ../community/index.html
 ---
 
-Things I've made for Fruita that aren't part of my tech help services.
-They're side projects for my neighbors.
+Side projects for my Fruita neighbors.
+They aren't part of my tech help services.
 
 ::: {.ftw-grid}
 
