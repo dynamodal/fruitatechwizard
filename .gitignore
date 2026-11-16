@@ -51,3 +51,5 @@ rsconnect/
 /.quarto/
 /_site/
 /_layout-check/
+
+**/*.quarto_ipynb

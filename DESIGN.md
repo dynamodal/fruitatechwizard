@@ -68,12 +68,13 @@ The footer links to `community/index.qmd`.
 - Each project has a page (`community/<project>/index.qmd`) that explains it, says plainly if it's a draft, and lists every version, newest first.
 - Each version is a self-contained HTML file in its own folder: `community/<project>/v1/index.html`, `v2/index.html`, and so on. Old versions are never edited or deleted, so links people shared keep working.
 - `scripts/explorer_banners.py` runs after every render. It adds a slim bar to each version's copy in `_site` with its version number and a link back to the project page. Older versions also link to the latest. The files in the repo stay untouched.
+- `community/<project>/banner-note.txt` (optional) puts one or two plain sentences at the start of that bar on every version. The budget explorer's says it was built with AI and isn't reviewed or endorsed by city staff. Say the same on the project page.
 - The explorers use `#tab` links for their own routing, so `check_site.py` skips same-page anchors in them.
 
 To post a new version:
 
 1. Save the new HTML as `community/<project>/v<N>/index.html` (the next number).
-2. On the project page, point "Open the explorer" at `v<N>/`, move "(latest)" to the new version, and add a card at the top of Versions: date posted, which draft or adopted budget it's based on, and what changed.
+2. On the project page, point "Open the explorer" at `v<N>/`, move "(latest)" to the new version, and add a card at the top of Versions: date posted, which draft or adopted budget it's based on, and what changed (and whether the numbers changed).
 3. Render and run the checks below.
 
 ## Dark mode

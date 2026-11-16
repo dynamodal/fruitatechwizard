@@ -12,6 +12,7 @@ They're side projects for my neighbors.
 ### <i class="bi bi-bar-chart" aria-hidden="true"></i> Fruita's 2027 budget explorer
 Tap through the city's draft 2027 budget: where the money comes from, where it goes, and what changes on your bills.
 Every version is kept as the budget changes.
+Built with AI, and not reviewed or endorsed by the City of Fruita.
 
 [Open the budget explorer →](fruita-2027-budget/index.qmd)
 :::
