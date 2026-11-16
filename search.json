@@ -91,6 +91,20 @@
     "text": "Protecting yourself ahead of time\nSee my favorite safety tools for the apps I recommend.\n\n\n Better passwords\nSet up a password manager and two-step login, so one leaked password doesn’t open everything.\n\n\n Safer browsing\nAd blockers, antivirus, and settings that stop most scam pop-ups before you see them.\n\n\n For families\nWorried about a parent or grandparent? I can set up their devices, agree on a family “safe word,” and be their local call when something seems off.\n\n\n Group talks\nI’m happy to give a friendly scam-awareness talk for local community groups."
   },
   {
+    "objectID": "projects/fruita-2027-budget/index.html",
+    "href": "projects/fruita-2027-budget/index.html",
+    "title": "Fruita’s 2027 budget explorer",
+    "section": "",
+    "text": "The City of Fruita’s draft budget for 2027 is a 332-page PDF. This explorer lets you tap through it instead: where the money comes from, where it goes, what changes on your bills, and answers to common questions. Every number shows the budget page it came from, and the page number opens the city’s PDF.\nThis isn’t one of my Fruita Tech Wizard services, just a side project for my neighbors. If you spot a mistake, please email me."
+  },
+  {
+    "objectID": "projects/fruita-2027-budget/index.html#versions",
+    "href": "projects/fruita-2027-budget/index.html#versions",
+    "title": "Fruita’s 2027 budget explorer",
+    "section": "Versions",
+    "text": "Versions\nEach version stays here, so you can see how the numbers changed. The newest is at the top.\n\nVersion 2 (latest)\nPosted November 16, 2026. Based on the same draft budget, dated November 12, 2026. The budget numbers haven’t changed.\n\nPage numbers now open the city’s budget PDF to that page.\nLinks to the city’s budget page and the full budget PDF.\n“Money in” is now a box chart you can tap into, like “Money out”.\nEasier to read on phones, with “Next” links between tabs.\n\nOpen version 2\n\n\nVersion 1\nPosted November 15, 2026. Based on the draft budget dated November 12, 2026. The first version.\nOpen version 1"
+  },
+  {
     "objectID": "contact.html",
     "href": "contact.html",
     "title": "Get in touch",
@@ -98,32 +112,11 @@
     "text": "Call, text, or email, whichever is easiest for you. If I don’t pick up, leave a message. FTW is a one-person side gig, so I usually get back to you within a day.\n\n Call (720) 213-6374  Text  Email\n\n\nIt helps to tell me:\n\nWhat’s going on (a photo of the error message is great)\nWhat kind of device it is\nWhether you’d like to meet in person, talk by phone, or share your screen\n\n\nQuotes are always free, and pricing is flexible."
   },
   {
-    "objectID": "community/fruita-2027-budget/index.html",
-    "href": "community/fruita-2027-budget/index.html",
-    "title": "Fruita’s 2027 budget explorer",
-    "section": "",
-    "text": "The City of Fruita’s draft budget for 2027 is a 332-page PDF. This explorer lets you tap through it instead: where the money comes from, where it goes, what changes on your bills, and answers to common questions. Every number shows the budget page it came from.\nThis isn’t one of my Fruita Tech Wizard services, just a side project for my neighbors. If you spot a mistake, please email me."
-  },
-  {
-    "objectID": "community/fruita-2027-budget/index.html#versions",
-    "href": "community/fruita-2027-budget/index.html#versions",
-    "title": "Fruita’s 2027 budget explorer",
-    "section": "Versions",
-    "text": "Versions\nEach version stays here, so you can see how the numbers changed. The newest is at the top.\n\nVersion 1 (latest)\nPosted November 15, 2026. Based on the draft budget dated November 12, 2026. The first version.\nOpen version 1"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "Hi, I’m Thomas!",
     "section": "",
     "text": "I’m the person behind Fruita Tech Wizard, and I live right here in Fruita.\nMy day job is Dynamodal, where I do data, AI, and energy analysis work for consulting teams. I enjoy that work, and I also wanted to do something for my own community, so I started FTW to offer friendly, personal tech help to my neighbors and local businesses.\nI’ve always been the go-to tech person for family, friends, and coworkers. I studied physics and electrical engineering at the Colorado School of Mines, worked a few years in the Alaskan oil fields, and have spent the last couple of decades working with computers, data, and all the tech in between. I love explaining things in plain English and helping people feel more confident with their technology.\nWhen I’m not working, I’m usually biking, running, or exploring the trails and rivers around Fruita.\n\nWhy FTW?\nIf you’ve spent any time in Fruita, you’ve probably seen the WTF stickers. Officially it stands for “Welcome to Fruita.” Unofficially… well, you know. (It even stirred up a little controversy.)\nFTW is my nod to those stickers. It stands for Fruita Tech Wizard, and also “For The Win,” which is what I hope you’ll feel once your tech is working again. And the dino on a bike? That’s Fruita: dinosaurs and bikes."
-  },
-  {
-    "objectID": "community/index.html",
-    "href": "community/index.html",
-    "title": "Community projects",
-    "section": "",
-    "text": "Things I’ve made for Fruita that aren’t part of my tech help services. They’re side projects for my neighbors.\n\n\n Fruita’s 2027 budget explorer\nTap through the city’s draft 2027 budget: where the money comes from, where it goes, and what changes on your bills. Every version is kept as the budget changes.\nOpen the budget explorer →"
   },
   {
     "objectID": "index.html",
@@ -145,6 +138,13 @@
     "title": "Friendly tech help from your Fruita neighbor.",
     "section": "How it works",
     "text": "How it works\n\n\n In person\nI’ll come to your home or business in Fruita, or we can meet at a coffee shop or the library. (If I can get there on my bike, even better.)\n\n\n Phone or screen share\nPlenty of problems can be fixed without either of us leaving the house.\n\n\n Pay what’s fair\nI have a typical hourly rate, but if money’s tight, we’ll work something out, trades included. Cash, check, card, or Venmo.\n\n\n\nNot my thing: I’m not the right person for these, but I’m happy to point you to someone who is.\n\nCracked screens and most hardware repair\nRunning network cable\nInstalling security cameras"
+  },
+  {
+    "objectID": "projects/index.html",
+    "href": "projects/index.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Side projects for my Fruita neighbors. They aren’t part of my tech help services.\n\n\n Fruita’s 2027 budget explorer\nTap through the city’s draft 2027 budget: where the money comes from, where it goes, and what changes on your bills. Every version is kept as the budget changes. Built with AI, and not reviewed or endorsed by the City of Fruita.\nOpen the budget explorer →"
   },
   {
     "objectID": "services.html",

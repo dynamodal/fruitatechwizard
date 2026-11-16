@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fruita 2027 Budget Explorer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: an app with tabs. Each tab opens on one big picture (a chart you can tap), with sources and explanations behind "i" buttons and expanders. */
+:root{
+  --paper:#f3f5f4; --card:#fcfcfb; --ink:#14202b; --muted:#56636f; --faint:#8a949c; --line:#dde2e0;
+  --accent:#16656d; --accent-soft:#dcecec; --flag:#9a5b12; --flag-soft:#fbf0e1;
+  --up:#006300; --down:#b4342b;
+  --s0:#9aa3a8; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#008300; --s7:#6250d6;
+  --font:"Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --paper:#0f1418; --card:#1a1f23; --ink:#eef1f2; --muted:#a6b1b9; --faint:#7d8890; --line:#2c353b;
+  --accent:#6cc3c8; --accent-soft:#17353a; --flag:#e8b25e; --flag-soft:#3a2c15; --up:#0ca30c; --down:#f08e80;
+  --s0:#6d777d; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --paper:#0f1418; --card:#1a1f23; --ink:#eef1f2; --muted:#a6b1b9; --faint:#7d8890; --line:#2c353b;
+  --accent:#6cc3c8; --accent-soft:#17353a; --flag:#e8b25e; --flag-soft:#3a2c15; --up:#0ca30c; --down:#f08e80;
+  --s0:#6d777d; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#0ca30c; --s7:#9085e9; color-scheme:dark; }
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 var(--font)}
+h1,h2,h3{margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:clamp(1.35rem,4vw,1.9rem);font-weight:800;letter-spacing:-.015em}
+h3{font-size:1rem;font-weight:700}
+a{color:var(--accent)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+.num,.big{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+/* top bar + tabs */
+.top{background:var(--card);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:10px;justify-content:space-between;padding-top:12px;padding-bottom:10px;flex-wrap:wrap}
+.pill{font-size:.75rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--flag-soft);color:var(--flag);border:1px solid var(--flag);cursor:pointer}
+.tabs{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line)}
+.tabs .wrap{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+.tabs a{flex:none;text-decoration:none;color:var(--muted);font-weight:600;font-size:.92rem;padding:11px 12px;border-bottom:3px solid transparent}
+.tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tabs a:hover{color:var(--ink)}
+main{padding:22px 0 60px}
+.view{display:none}
+.view.on{display:block}
+.lead{font-size:1.05rem;color:var(--muted);margin:6px 0 18px;max-width:60ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.big{font-size:clamp(2rem,6vw,2.8rem);font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.mid{font-size:1.6rem;font-weight:800;letter-spacing:-.01em}
+.cap{font-size:.86rem;color:var(--muted)}
+/* info buttons + tooltip */
+.i{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--faint);color:var(--muted);font:700 12px/1 var(--font);background:transparent;cursor:pointer;vertical-align:middle;margin-left:4px;padding:0}
+.i:hover,.i:focus-visible{border-color:var(--accent);color:var(--accent)}
+#tip{position:fixed;z-index:100;max-width:min(340px,92vw);background:var(--ink);color:var(--paper);border-radius:8px;padding:10px 12px;font-size:.86rem;line-height:1.45;box-shadow:0 6px 24px rgba(0,0,0,.25);pointer-events:none;opacity:0;transition:opacity .12s}
+#tip.on{opacity:1;pointer-events:auto}
+#tip b{color:var(--paper)} #tip .pg{color:var(--paper);opacity:.7;font-size:.78rem;display:block;margin-top:4px}
+#tip .row{display:flex;justify-content:space-between;gap:14px}
+/* waffle */
+.waffle{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;aspect-ratio:1}
+.waffle i{border-radius:3px;background:var(--line);transition:opacity .15s}
+.waffle.dim i:not(.hl){opacity:.18}
+.legend{display:grid;gap:4px;margin-top:12px}
+.lg{all:unset;cursor:pointer;display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;font-size:.9rem;padding:4px 6px;border-radius:6px}
+.lg:hover,.lg:focus-visible,.lg.on{background:var(--accent-soft)}
+.sw{width:12px;height:12px;border-radius:3px}
+.wf{display:grid;gap:14px;justify-items:center}
+.wf .legend{width:100%;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:2px 10px}
+.waffle{width:100%;max-width:280px}
+/* balance bars */
+.bal{display:grid;gap:8px;margin-top:10px}
+.bal .r{display:grid;grid-template-columns:90px 1fr 70px;gap:10px;align-items:center;font-size:.9rem}
+.bal .t{height:22px;background:var(--accent-soft);border-radius:4px;position:relative}
+.bal .f{position:absolute;inset:0 auto 0 0;border-radius:4px}
+/* news cards */
+.news{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.news a{text-decoration:none;color:inherit;display:block}
+.news .card{height:100%;border-top:4px solid var(--accent)}
+.news .card:hover{border-color:var(--accent)}
+.news .k{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--accent)}
+/* treemap */
+.crumb{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:.92rem}
+.crumb button{all:unset;cursor:pointer;color:var(--accent);font-weight:600}
+.tm{position:relative;width:100%;height:440px}
+@media (max-width:560px){.tm{height:480px}}
+.tile{position:absolute;border:2px solid var(--card);border-radius:6px;padding:7px 8px;color:#fff;overflow:hidden;cursor:pointer;font-size:.84rem;line-height:1.25;transition:filter .15s}
+.tile:hover,.tile:focus-visible{filter:brightness(1.08);outline:none}
+.tile b{display:block;font-size:1.05em}
+.tile .v{font-variant-numeric:tabular-nums;opacity:.95}
+.tile.dark-text{color:#0b0b0b}
+.hint{font-size:.82rem;color:var(--muted);margin-top:8px}
+/* hbars */
+.hb{display:grid;gap:8px}
+.hb .r{display:grid;grid-template-columns:minmax(110px,1.1fr) 2fr minmax(64px,auto);gap:10px;align-items:center;font-size:.9rem;cursor:pointer;padding:3px 4px;border-radius:6px}
+.hb .r:hover,.hb .r:focus-visible,.hb .r.on{background:var(--accent-soft);outline:none}
+@media (max-width:520px){.hb .r{grid-template-columns:1fr auto}.hb .tr{grid-column:1/-1;order:3}}
+.tr{height:16px;border-radius:4px;position:relative;background:transparent}
+.tr .f{position:absolute;inset:0 auto 0 0;border-radius:0 4px 4px 0;min-width:2px}
+.tr .g{position:absolute;top:-3px;bottom:-3px;border-right:2px solid var(--ink);opacity:.55}
+/* diverging */
+.dv{display:grid;gap:6px}
+.dv .r{display:grid;grid-template-columns:minmax(120px,1fr) 1.6fr;gap:10px;align-items:center;font-size:.88rem;cursor:pointer;padding:3px 4px;border-radius:6px}
+.dv .r:hover,.dv .r:focus-visible{background:var(--accent-soft);outline:none}
+.dv .ax{position:relative;height:20px}
+.dv .ax::before{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:1px solid var(--faint)}
+.dv .f{position:absolute;top:3px;bottom:3px;border-radius:4px}
+.dv .lab{position:absolute;top:1px;font-size:.78rem;font-variant-numeric:tabular-nums;color:var(--muted);white-space:nowrap}
+/* fee cards */
+.fee .from{color:var(--muted);text-decoration:line-through;font-size:1rem}
+.fee .to{font-size:1.6rem;font-weight:800}
+.delta{display:inline-block;font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent)}
+.delta.up{background:#fbe7e4;color:#9b2c22}
+:root[data-theme="dark"] .delta.up{background:#3a1d19;color:#f2a69c}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .delta.up{background:#3a1d19;color:#f2a69c}}
+/* calculator */
+.calc{display:grid;gap:16px;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+@media (max-width:760px){.calc{grid-template-columns:1fr}}
+.ctl{margin-bottom:16px}
+.ctl label{display:flex;justify-content:space-between;font-weight:600;font-size:.92rem;margin-bottom:6px}
+.ctl output{font-variant-numeric:tabular-nums;color:var(--accent);font-weight:700}
+input[type=range]{width:100%;accent-color:var(--accent);height:28px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden;flex-wrap:wrap}
+.seg button{font:inherit;font-size:.86rem;padding:7px 12px;border:0;background:var(--card);color:var(--ink);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--card)}
+.stack{display:flex;height:34px;border-radius:6px;overflow:hidden;gap:2px;margin:14px 0 8px}
+.stack div{min-width:3px;cursor:pointer}
+/* questions */
+.search{display:flex;gap:8px;align-items:center;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:4px 6px 4px 14px}
+.search:focus-within{border-color:var(--accent)}
+.search input{flex:1;font:inherit;font-size:1.05rem;border:0;background:transparent;color:var(--ink);padding:10px 0;outline:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 0}
+.chips button{font:inherit;font-size:.84rem;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
+.chips button:hover{border-color:var(--accent);color:var(--accent)}
+#results{display:grid;gap:8px;margin-top:10px}
+.res{all:unset;cursor:pointer;display:block;padding:10px 14px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.res:hover,.res:focus-visible{border-color:var(--accent)}
+.res .k{font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--accent);font-weight:700}
+.topics{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));margin-top:18px}
+.tp{all:unset;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;border-left:5px solid var(--c,var(--accent))}
+.tp:hover,.tp:focus-visible,.tp[aria-expanded="true"]{border-color:var(--accent);border-left-color:var(--c,var(--accent));box-shadow:0 0 0 2px var(--accent-soft)}
+.tp b{font-size:.98rem}
+.tp span{font-size:.8rem;color:var(--muted)}
+#topicPanel{margin-top:14px}
+details{border:1px solid var(--line);border-radius:10px;background:var(--card)}
+details+details{margin-top:6px}
+summary{cursor:pointer;list-style:none;padding:12px 14px;font-weight:600;display:flex;gap:10px;align-items:flex-start}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+";color:var(--accent);font-weight:800;width:1ch;flex:none}
+details[open]>summary::before{content:"\2212"}
+details .body{padding:0 16px 14px 36px;color:var(--ink)}
+details .body p{margin:0 0 6px;max-width:66ch}
+.pg{font-size:.78rem;color:var(--muted)}
+.statrow{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 14px}
+.stat{background:var(--paper);border-radius:10px;padding:10px 12px;min-width:150px;flex:1}
+.stat .v{font-weight:800;font-size:1.15rem;font-variant-numeric:tabular-nums}
+.stat .l{font-size:.8rem;color:var(--muted)}
+.flash{animation:fl 1.6s ease-out}
+@keyframes fl{0%{box-shadow:0 0 0 4px var(--accent)}100%{box-shadow:0 0 0 0 transparent}}
+@media (prefers-reduced-motion: reduce){.flash{animation:none}.waffle i,.tile,#tip{transition:none}}
+/* health */
+.kpis{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--flag-soft);color:var(--flag);border:1px solid var(--flag)}
+.item{padding:12px 14px;border:1px solid var(--line);border-left:4px solid var(--flag);border-radius:8px;background:var(--card);margin-top:8px}
+.item p{margin:.2em 0;max-width:70ch}
+.item.coming{border-left-color:var(--accent)}
+svg text{fill:var(--muted);font:12px var(--font)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.btn{font:inherit;font-size:.92rem;padding:9px 14px;border-radius:8px;border:1px solid var(--accent);background:var(--card);color:var(--accent);cursor:pointer;font-weight:600}
+.btn.primary{background:var(--accent);color:var(--card)}
+.status{font-size:.86rem;color:var(--muted);min-height:1.3em;margin-top:8px}
+.next{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.next a{font-weight:600;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+footer{color:var(--muted);font-size:.8rem;padding:18px 0 40px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<!-- ftw-explorer-banner -->
+<style>
+#ftw-explorer-banner{--ftw-b-bg:#eeecf8;--ftw-b-fg:#2b2a33;--ftw-b-link:#4b3f9e;--ftw-b-old-bg:#fbeee8;--ftw-b-old-fg:#a8401f;
+  background:var(--ftw-b-bg);color:var(--ftw-b-fg);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;text-align:center;overflow-wrap:anywhere}
+#ftw-explorer-banner a{color:var(--ftw-b-link);font-weight:700}
+#ftw-explorer-banner .note{flex-basis:100%}
+#ftw-explorer-banner.old{background:var(--ftw-b-old-bg)}
+#ftw-explorer-banner.old b{color:var(--ftw-b-old-fg)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #ftw-explorer-banner{--ftw-b-bg:#2a2733;--ftw-b-fg:#f2ede1;--ftw-b-link:#b4a9ff;--ftw-b-old-bg:#3a2620;--ftw-b-old-fg:#f29470}}
+:root[data-theme="dark"] #ftw-explorer-banner{--ftw-b-bg:#2a2733;--ftw-b-fg:#f2ede1;--ftw-b-link:#b4a9ff;--ftw-b-old-bg:#3a2620;--ftw-b-old-fg:#f29470}
+</style>
+<div id="ftw-explorer-banner" class="old" role="note"><span class="note">Built with AI from the City of Fruita&#x27;s draft 2027 budget. Not reviewed or endorsed by city staff.</span><span><b>Older version (1 of 2)</b></span><a href="../v2/">Open the latest version</a><a href="../">All versions</a></div>
+<!-- /ftw-explorer-banner -->
+
+<div class="top"><div class="wrap">
+  <h1>Fruita's 2027 Budget</h1>
+  <button type="button" class="pill" data-tip="draft">Draft · not yet adopted</button>
+</div></div>
+<nav class="tabs" aria-label="Sections"><div class="wrap">
+  <a href="#overview">Overview</a><a href="#your-bill">Your bill</a><a href="#money-in">Money in</a><a href="#money-out">Money out</a><a href="#whats-new">What's new</a><a href="#questions">Questions</a><a href="#health">Health</a><a href="#data">Data</a>
+</div></nav>
+
+<main><div class="wrap">
+
+<!-- OVERVIEW -->
+<section class="view" id="v-overview">
+  <h2>The city plans to spend <span class="num" id="ovSpend"></span> in 2027 <button class="i" data-tip="netspend" aria-label="About this number">i</button></h2>
+  <p class="lead">Tap or hover a color to see what it is. Tap a name to explore it.</p>
+  <div class="grid g2">
+    <div class="card"><h3>Where each $100 comes from</h3><div class="wf" style="margin-top:12px"><div class="waffle" id="wIn" role="img" aria-label="Revenue sources, 100 squares"></div><div class="legend" id="lIn"></div></div></div>
+    <div class="card"><h3>Where each $100 goes</h3><div class="wf" style="margin-top:12px"><div class="waffle" id="wOut" role="img" aria-label="Spending areas, 100 squares"></div><div class="legend" id="lOut"></div></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Money in vs. money out <button class="i" data-tip="balance" aria-label="About this chart">i</button></h3><div class="bal" id="bal"></div></div>
+  <h3 style="margin:24px 0 10px">What's new in 2027</h3>
+  <div class="news" id="news"></div>
+</section>
+
+<!-- YOUR BILL -->
+<section class="view" id="v-your-bill">
+  <h2>What you pay the city</h2>
+  <p class="lead">Move the sliders to match your household.</p>
+  <div class="calc">
+    <div class="card">
+      <div class="ctl"><label for="home">Home value <output id="homeO"></output></label><input id="home" type="range" min="0" max="1200000" step="10000" value="400000"></div>
+      <div class="ctl"><label for="spend">Monthly shopping in Fruita <output id="spendO"></output></label><input id="spend" type="range" min="0" max="3000" step="50" value="800"></div>
+      <div class="ctl"><label>Sewer</label><div class="seg" data-k="sewer"><button type="button" data-v="std" aria-pressed="true">Standard</button><button type="button" data-v="sen" aria-pressed="false">Senior rate</button><button type="button" data-v="none" aria-pressed="false">None</button></div></div>
+      <div class="ctl"><label>City trash</label><div class="seg" data-k="trash"><button type="button" data-v="y" aria-pressed="true">Yes</button><button type="button" data-v="n" aria-pressed="false">No</button></div></div>
+      <div class="ctl" style="margin-bottom:0"><label>City irrigation water</label><div class="seg" data-k="irr"><button type="button" data-v="n" aria-pressed="true">No</button><button type="button" data-v="y" aria-pressed="false">Yes</button></div></div>
+    </div>
+    <div class="card">
+      <div class="cap">Your estimated payments to the city in 2027 <button class="i" data-tip="calc" aria-label="How this is estimated">i</button></div>
+      <div class="big" id="billTotal"></div>
+      <div id="billDelta" style="margin-top:6px"></div>
+      <div class="stack" id="billStack" role="img" aria-label="Your payments by type"></div>
+      <div class="legend" id="billLegend"></div>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>Where your sales tax goes <button class="i" data-tip="salestax" aria-label="About sales tax">i</button></h3><p class="cap" style="margin:4px 0 0">City rate rises from 3.0% to 3.2% on Jan 1.</p><div class="stack" id="taxStack"></div><div class="legend" id="taxLegend"></div></div>
+    <div class="card"><h3>Who gets your property tax <button class="i" data-tip="proptax" aria-label="About property tax">i</button></h3><p class="cap" style="margin:4px 0 0">The city gets about 13¢ of each property tax dollar.</p><div class="stack" id="propStack"></div><div class="legend" id="propLegend"></div></div>
+  </div>
+</section>
+
+<!-- MONEY IN -->
+<section class="view" id="v-money-in">
+  <h2>Where the money comes from</h2>
+  <p class="lead">Tap a bar to see what's inside it.</p>
+  <div class="grid g2">
+    <div class="card"><h3>2027 revenue by source <button class="i" data-tip="netinc" aria-label="About this chart">i</button></h3><div class="hb" id="inBars" style="margin-top:12px"></div></div>
+    <div class="card" id="inDetail"></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>Sales tax trend: is the city counting on big growth? <button class="i" data-tip="salesgrowth" aria-label="About this chart">i</button></h3><div id="salesChart"></div></div>
+</section>
+
+<!-- MONEY OUT -->
+<section class="view" id="v-money-out">
+  <h2>Where the money goes</h2>
+  <p class="lead">Each box is sized by dollars. Tap a box to look inside, then tap any piece for details.</p>
+  <div class="card">
+    <div class="crumb" id="crumb"></div>
+    <div class="tm" id="tm"></div>
+    <p class="hint" id="tmHint"></p>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>The same money by type of cost <button class="i" data-tip="bytype" aria-label="About this chart">i</button></h3><div class="hb" id="typeBars" style="margin-top:12px"></div></div>
+</section>
+
+<!-- WHAT'S NEW -->
+<section class="view" id="v-whats-new">
+  <h2>What's changing from 2026</h2>
+  <p class="lead">Rates you pay, and the programs growing or shrinking most.</p>
+  <div class="grid g3" id="feeCards"></div>
+  <div class="card" style="margin-top:14px"><h3>Biggest changes in spending <button class="i" data-tip="changes" aria-label="About this chart">i</button></h3><p class="cap" style="margin:4px 0 12px">Tap a bar for the reason.</p><div class="dv" id="dv"></div></div>
+</section>
+
+<!-- QUESTIONS -->
+<section class="view" id="v-questions">
+  <h2>Ask a question</h2>
+  <p class="lead">Type a question or pick a topic. Every answer cites its page in the budget.</p>
+  <div class="search"><input id="q" type="search" placeholder="Why is my sewer bill going up?" autocomplete="off" aria-label="Search the budget"></div>
+  <div class="chips" id="suggest"></div>
+  <div id="results" aria-live="polite"></div>
+  <div class="topics" id="topics"></div>
+  <div id="topicPanel"></div>
+</section>
+
+<!-- HEALTH -->
+<section class="view" id="v-health">
+  <h2>Is the city financially healthy?</h2>
+  <p class="lead">Savings, how fast they're being used, and debt.</p>
+  <div class="kpis" id="kpis"></div>
+  <div class="grid g2" style="margin-top:14px">
+    <div class="card"><h3>General Fund savings: added or used each year <button class="i" data-tip="hist" aria-label="About this chart">i</button></h3><div id="histChart"></div></div>
+    <div class="card"><h3>Debt: when it's paid off <button class="i" data-tip="debt" aria-label="About this chart">i</button></h3><div id="debtChart"></div></div>
+  </div>
+  <div class="card" style="margin-top:14px"><h3>General Fund reserves vs. the recommended minimum <button class="i" data-tip="reserves" aria-label="About this chart">i</button></h3><div id="resChart"></div></div>
+  <details style="margin-top:14px" id="checkBox"><summary><span><span class="badge">Check this</span> <span id="checkCount"></span></span></summary><div class="body" id="checkList"></div></details>
+  <details style="margin-top:8px"><summary>Coming up: things not in this budget</summary><div class="body" id="aheadList"></div></details>
+  <details style="margin-top:8px"><summary>All fund balances (table)</summary><div class="body tw" id="fundTbl"></div></details>
+</section>
+
+<!-- DATA -->
+<section class="view" id="v-data">
+  <h2>Get the data</h2>
+  <p class="lead">Every figure in this tool, with its year and budget page.</p>
+  <div class="card">
+    <div class="btns">
+      <button type="button" class="btn primary" id="dlCsv">Download spreadsheet (CSV)</button>
+      <button type="button" class="btn" id="dlJson">Download JSON</button>
+      <button type="button" class="btn" id="cpCsv">Copy CSV</button>
+      <button type="button" class="btn" id="dlHtml">Save this tool as a file</button>
+    </div>
+    <p class="status" id="dlStatus"></p>
+    <p class="cap" style="margin:0">The saved file works offline in any browser and can be emailed.</p>
+  </div>
+  <details style="margin-top:14px"><summary>How the figures were checked</summary><div class="body"><p>Figures were read from the draft's text by script and an automated check confirmed each appears on its cited page. Totals were reconciled: programs to departments, departments to funds, funds to all-funds totals, and each fund's balance roll-forward. The only gap in the source tables is a $2 rounding difference in 2025 totals.</p><p>"Money in" and "Money out" leave out $2.4 million that city funds pay each other, so nothing is counted twice; those groupings add up to the draft's totals within $225. Staffing counts (pp. 323–324) are images in the PDF and were transcribed by hand. Page numbers are the printed page numbers; in the PDF file, add 4.</p></div></details>
+  <details style="margin-top:8px"><summary>Outside sources</summary><div class="body"><ul id="srcList"></ul></div></details>
+</section>
+
+</div></main>
+<footer><div class="wrap">Independent explainer built from the City Manager's Recommended 2027 Budget (draft dated Nov 12, 2026). Not produced by the City of Fruita.</div></footer>
+<div id="tip" role="tooltip"></div>
+
+<script id="budget-data" type="application/json">{"source":{"doc":"City of Fruita 2027 City Manager's Recommended Budget (draft, last modified Nov 12, 2026)","pdf_offset":4},"years":["2024 Actual","2025 Actual","2026 Budget","2026 Estimated","2027 Budget"],"all_funds":{"revenue":[["Taxes",[14413258,15457142,14352500,14627500,15922500]],["Licenses",[74625,72895,66000,66000,69000]],["Intergovernmental (grants, state shares)",[3765203,3847585,883000,6574500,1159250]],["Charges for services (utility bills, fees)",[8337445,8953587,8801900,8801900,8882375]],["Fines & assessments (incl. impact fees)",[893773,971763,56500,56500,1256500]],["Miscellaneous (interest, rents, donations)",[1740696,1354430,852550,852550,936050]],["Transfers between city funds",[4318171,7959314,2061325,4419725,2402300]],["Other financing sources",[848764,257532,0,0,0]]],"revenue_total":[34391935,38874247,27073775,35398675,30627975],"expense":[["Salaries",[7421758,7684378,8573400,8573400,9501425]],["Benefits",[2676331,2922823,3294800,3294970,3801825]],["Professional services",[1224074,1096531,1383725,1685725,1700050]],["Property services (repairs, maintenance)",[1184935,1586175,1789750,1798950,1407750]],["Other purchased services",[2215964,2273520,2644975,2644975,2706050]],["Supplies",[1673423,1832190,2172075,2185575,2155325]],["Contingency",[0,0,405800,395850,675875]],["Special projects",[321802,373169,396300,396300,926100]],["Capital projects & equipment",[8534637,10847572,3390575,10462375,3903300]],["Land acquisition",[381237,2484691,0,1826800,0]],["Debt service",[2023934,2058578,2110150,2110150,2146700]],["Transfers between city funds",[4318171,7959314,2061325,4419725,2402300]]],"expense_total":[31976266,41118939,28222875,39794795,31326700],"operating_subtotal":[16718287,17768785,20660825,20975745,22874400],"change_in_funds":[2415669,-2244693,-1149100,-4396120,-698725],"page":36},"funds":[{"id":"general","name":"General Fund","kind":"Main operating fund","desc":"Police, streets, parks, planning, administration. Paid mainly by sales, use and property taxes.","begin":{"v":null,"p":44},"rev":{"v":15419300,"p":46},"exp":{"v":16141950,"p":46},"end":{"v":null,"p":54,"note":"Narrative says available funds of $10.9 million at end of 2027."},"exp2026":{"v":14669025,"p":46},"p44":{"begin":7792241,"rev":15419300,"exp":16141950,"end":7069591}},{"id":"fcc","name":"Community Center Fund","kind":"Voter-approved 1% sales tax","desc":"Operates the Fruita Community Center (pool, gym, library building) and pays its bonds.","begin":{"v":4899268,"p":204},"rev":{"v":4286750,"p":204},"exp":{"v":4286750,"p":204},"end":{"v":4899268,"p":204},"exp2026":{"v":4105700,"p":204},"p44":{"begin":3994727,"rev":4286750,"exp":4286750,"end":3994727}},{"id":"sewer","name":"Sewer Fund","kind":"Utility (paid by sewer bills)","desc":"Wastewater collection and the treatment plant, including the plant loan.","begin":{"v":9676374,"p":278},"rev":{"v":5180000,"p":278},"exp":{"v":5180000,"p":278},"end":{"v":9676374,"p":278},"exp2026":{"v":5232225,"p":278},"p44":{"begin":9008156,"rev":5180000,"exp":5180000,"end":9008156}},{"id":"capital","name":"Capital Projects Fund","kind":"Construction projects","desc":"Streets, parks and building projects. 2027: Fremont Street, park and security upgrades.","begin":{"v":4504149,"p":247},"rev":{"v":2195000,"p":247},"exp":{"v":2195000,"p":247},"end":{"v":4504149,"p":247},"exp2026":{"v":765000,"p":247},"p44":{"begin":2393765,"rev":2195000,"exp":2195000,"end":2393765}},{"id":"trash","name":"Trash Fund","kind":"Utility (paid by trash bills)","desc":"Trash and recycling collection, contracted to Waste Management.","begin":{"v":304438,"p":303},"rev":{"v":1403000,"p":303},"exp":{"v":1403000,"p":303},"end":{"v":304438,"p":303},"exp2026":{"v":1340000,"p":303},"p44":{"begin":275857,"rev":1403000,"exp":1403000,"end":275857}},{"id":"debt","name":"Debt Service Fund","kind":"Bond payments","desc":"Pays the Community Center bonds, funded by a transfer from the Community Center Fund.","begin":{"v":770304,"p":257},"rev":{"v":748400,"p":257},"exp":{"v":748400,"p":257},"end":{"v":770304,"p":257},"exp2026":{"v":745600,"p":257},"p44":{"begin":757839,"rev":748400,"exp":748400,"end":757839}},{"id":"fleet","name":"Fleet Maintenance Fund","kind":"Internal service","desc":"Repairs city vehicles; charged back to the departments that use them.","begin":{"v":155682,"p":309},"rev":{"v":416875,"p":309},"exp":{"v":416875,"p":309},"end":{"v":155682,"p":309},"exp2026":{"v":435400,"p":309},"p44":{"begin":126760,"rev":416875,"exp":416875,"end":126760}},{"id":"marketing","name":"Marketing and Promotion Fund","kind":"Lodging tax","desc":"Tourism marketing, visitor guides and events, paid by the lodging tax.","begin":{"v":241745,"p":192},"rev":{"v":207000,"p":192},"exp":{"v":305775,"p":192},"end":{"v":142970,"p":192},"exp2026":{"v":261175,"p":192},"p44":{"begin":254327,"rev":207000,"exp":305975,"end":155352}},{"id":"econdev","name":"Economic Development Fund","kind":"Special revenue","desc":"Small business support and the transfer that funds Housing Authority payments.","begin":{"v":99899,"p":187},"rev":{"v":205000,"p":187},"exp":{"v":242100,"p":187},"end":{"v":62799,"p":187},"exp2026":{"v":232100,"p":187},"p44":{"begin":41417,"rev":215000,"exp":242100,"end":14317}},{"id":"housing","name":"Housing Authority Fund","kind":"Housing","desc":"Affordable housing commitments, including payments to the Oaks project.","begin":{"v":172939,"p":242},"rev":{"v":205100,"p":242},"exp":{"v":205100,"p":242},"end":{"v":172939,"p":242},"exp2026":{"v":255100,"p":242},"p44":{"begin":27114,"rev":205100,"exp":205100,"end":27114}},{"id":"irrigation","name":"Irrigation Water Fund","kind":"Utility","desc":"Untreated irrigation water service in parts of the city ($150 a year per account).","begin":{"v":250900,"p":266},"rev":{"v":136550,"p":266},"exp":{"v":136550,"p":266},"end":{"v":250900,"p":266},"exp2026":{"v":136600,"p":266},"p44":{"begin":271954,"rev":136550,"exp":136550,"end":271954}},{"id":"publicplaces","name":"Public Places Fund","kind":"Lodging tax (newer portion)","desc":"Public art and placemaking projects.","begin":{"v":278503,"p":199},"rev":{"v":65000,"p":199},"exp":{"v":65000,"p":199},"end":{"v":278503,"p":199},"exp2026":{"v":45000,"p":199},"p44":{"begin":257849,"rev":65000,"exp":65000,"end":257849}},{"id":"ctf","name":"Conservation Trust Fund","kind":"State lottery money","desc":"Lottery proceeds restricted to parks, open space and trails. Nothing spent in 2027.","begin":{"v":385359,"p":182},"rev":{"v":150000,"p":182},"exp":{"v":0,"p":182},"end":{"v":535359,"p":182},"exp2026":{"v":0,"p":182},"p44":{"begin":379823,"rev":150000,"exp":0,"end":529823}},{"id":"devils","name":"Devils Canyon Center Fund","kind":"Building lease","desc":"City-owned Dinosaur Journey museum building leased to the Museums of Western Colorado.","begin":{"v":204222,"p":262},"rev":{"v":0,"p":262},"exp":{"v":0,"p":262},"end":{"v":204222,"p":262},"exp2026":{"v":0,"p":262},"p44":{"begin":201536,"rev":0,"exp":0,"end":201536}}],"gf_depts":[{"name":"Police (Public Safety)","summary_page":117,"summary_2027":4601050,"programs":[["Patrol and traffic",2608275,2954025,130],["Administration (incl. 911 dispatch)",987400,1169550,122],["Investigations",278825,311075,127],["Support services",167825,166400,133]]},{"name":"Public Works","summary_page":135,"summary_2027":2331275,"programs":[["Road maintenance",1579775,1199225,144],["Building maintenance",475050,509975,150],["Traffic safety",335475,388675,147],["Administration",268375,198675,141],["Mountain water",35100,34725,153]]},{"name":"Non-Departmental (transfers, insurance, contingency)","summary_page":178,"summary_2027":2240050,"programs":[["Non-departmental",1712000,2240050,180]]},{"name":"Parks and Recreation","summary_page":155,"summary_2027":1654725,"programs":[["Parks",992825,983975,173],["Special events",213400,171250,170],["Open space and trails",185950,176325,176],["Athletics",146900,158425,167],["Administration",136425,157750,161],["Activities",13075,7000,164]]},{"name":"Administration","summary_page":83,"summary_2027":1660575,"programs":[["Finance",769875,858000,91],["Administrative services & HR",297975,377100,97],["Information technology",216150,289000,94],["City Clerk",148825,136475,88]]},{"name":"General Government","summary_page":59,"summary_2027":1737150,"programs":[["City Manager's Office",1221075,833250,69],["Communication and engagement",280075,393875,81],["Legal",135000,155000,75],["Municipal Court",128475,129175,78],["City Council",115100,123350,66],["Elections",30000,0,72]]},{"name":"Community Development","summary_page":104,"summary_2027":1270925,"programs":[["Planning",581675,663825,112],["Building inspections",422275,536575,115],["Code compliance",73425,70525,109]]},{"name":"Engineering","summary_page":99,"summary_2027":748675,"programs":[["Engineering",762425,748675,102]]}],"fcc_programs":[["Administration (incl. $728,400 bond transfer)",1688675,1859425,217],["Aquatics",877450,952700,220],["Building maintenance & capital",989975,862150,240],["Youth activities",221375,229500,223],["Fitness/wellness",88275,144675,232],["Senior programs",140800,128950,235],["Child care",63275,65775,229],["Athletics",35875,43575,226]],"sewer_programs":[["Debt service (plant loan)",1364950,1398700,296],["Treatment",1340325,1327400,293],["Collections (incl. $450K camera van)",659025,1139600,290],["Administration (incl. contingency, transfer)",467925,694300,287],["Capital projects",1400000,620000,301]],"gf_revenue":[["City sales tax (2%)",3720533,4043957,3700000,3700000,4200000,55],["County sales tax (city share)",3453933,3592596,3450000,3450000,3600000,55],["Property tax",2094299,1862704,2100000,2100000,2100000,55],["Use tax on vehicles",794206,823787,750000,750000,800000,55],["City public safety sales tax (new 0.2%)",0,0,0,0,550000,55],["Franchise fees (Xcel, GVRP, cable)",525997,502804,550000,550000,550000,55],["County public safety sales tax",519129,540144,510000,510000,525000,55],["Use tax on building materials",274388,674699,325000,325000,325000,55],["Specific ownership tax",220321,230396,210000,210000,210000,55],["Other taxes (cigarette, penalties)",14349,12852,10000,10000,10000,55],["Licenses and permits",74625,72895,66000,66000,69000,55],["Highway users tax (state)",531192,540057,450000,450000,550000,55],["Grants (ADU, housing, economic development)",5000,32452,85000,291500,250000,55],["Other intergovernmental",254779,154551,123000,123000,123000,55],["Charges for services (permits, rec fees)",442158,739585,477000,477000,544000,56],["Fines and forfeits",68364,49116,56500,56500,56500,56],["Interest on deposits",760405,650919,450000,450000,500000,56],["Rents, donations, miscellaneous",132617,114834,87500,87500,100000,56],["Transfers from utility & rec funds",251125,251125,256125,256125,356800,57],["Sale of property, insurance",848546,245397,0,0,0,57]],"fees":[{"item":"Sewer, single-family home (monthly)","y2026":54.65,"y2027":55.75,"p":279},{"item":"Sewer, senior rate (monthly, age/income qualified)","y2026":21.95,"y2027":22.4,"p":279},{"item":"Sewer, commercial base (monthly)","y2026":62.7,"y2027":63.95,"p":279},{"item":"Trash collection (monthly)","y2026":20.8,"y2027":21.75,"p":38},{"item":"Irrigation water maintenance (yearly)","y2026":150,"y2027":150,"p":38},{"item":"Sewer plant investment fee (new connection, 1-inch tap)","y2026":7000,"y2027":7000,"p":280}],"capital":[["Fremont Street construction, phase 1",2000000,"Capital Projects",251,"$1.2M transportation impact fees + $800K General Fund"],["Sewer camera van replacement",450000,"Sewer",43,""],["Wastewater treatment feasibility study",450000,"Sewer",43,"Needs assessment for the treatment plant"],["Police vehicles (4, fully outfitted)",320000,"General",43,""],["Community Center library roof (partial)",175000,"Community Center",43,""],["Maple Street bridge sewer replacement",150000,"Sewer",43,""],["Sidewalk replacements",100000,"General",43,""],["Building security (card readers)",75000,"Capital Projects",252,""],["Little Salt Wash Park irrigation + water shares",75000,"Capital Projects",253,""],["Pool and hot tub tile resurfacing",60000,"Community Center",43,""],["Treadmill replacements",55000,"Community Center",43,""],["Variable message boards (2)",50000,"General",43,""],["Civic Center & Circle Park electrical",45000,"Capital Projects",250,"For festivals and events"],["Public Works shop evaporative cooler",36500,"General",43,""],["Public Works side-by-side",31500,"General",43,""],["Fremont Street sewer extension",20000,"Sewer",43,""],["Computer equipment (general, police, wastewater)",42100,"Various",43,""],["Flag pole",10000,"General",43,""],["Civic Center floor tile",8200,"General",43,""]],"debt":[{"name":"Community Center bonds (2019 refunding)","principal":7450000,"interest":2248000,"pay2027":748000,"final":2039,"p":[42,257,258],"paid_by":"Community Center 1% sales tax"},{"name":"Wastewater plant loan (CWRPDA, 2010)","principal":9125000,"pay2027":1398700,"final":2032,"p":[42,294],"paid_by":"Sewer bills"}],"staffing":{"years":["2024 Actual","2025 Actual","2026 Budget","2027 Budget"],"general_fund_fte":[69.94,70.3,74.38,77.89],"all_funds_fte":[119.79,117.78,126.3,129.44],"p":[323,324]},"gf_reserves":{"p":54,"restricted":950571,"tabor":400000,"streets":304337,"public_safety":246234,"operating_reserve_text":"$3.4 million","assigned_text":"$2.1 million","unassigned_text":"$4.4 million","operating_reserve":3400000,"assigned":2100000,"unassigned":4400000,"nonspendable":8884,"total_text":"$10.9 million"},"gf_history":{"p":46,"years":["2024 Actual","2025 Actual","2026 Budget","2026 Estimated","2027 Budget"],"revenue":[14985965,15134870,13656125,13862625,15419300],"expense":[14289251,19530830,14669025,18300795,16141950],"change":[696714,-4395961,-1012900,-4438170,-722650],"operating_expense_2027":13767550},"property_tax":{"city_mills":10.146,"total_mills":77.919,"p":47,"av_2026":"$212 million","av_2027":"$209 million","shares":[["School District 51",54],["Mesa County",13],["City of Fruita",13],["Lower Valley Fire",11],["Library",4],["Grand Valley Drainage",2],["Mosquito control",2],["Colorado River Water",1]],"shares_p":48,"assess_rate":0.068,"reduction":0.1,"reduction_cap":700000},"sales_tax":{"city_2026":3.0,"city_2027":3.2,"split_2027":[["General Fund",2.0],["Community Center",1.0],["Police (new)",0.1],["Lower Valley Fire (new)",0.1]],"p":319,"combined_2026":8.27,"combined_2027":8.47,"gj_combined":8.66},"public_safety":{"county_tax_rev":{"v":525000,"p":55},"county_tax_use":{"v":673348,"p":28},"dispatch":{"v":441600,"p":28},"new_officer":{"v":132276,"p":28},"sworn_raise":{"v":99472,"p":28},"reserve_end":{"v":246234,"p":28},"city_tax_budget":{"v":550000,"p":55},"to_fire":{"v":275000,"p":180},"ballot_estimate":975000,"vote_yes":1808,"vote_no":1624},"roads":{"chipseal_2026":{"v":303300,"p":144},"chipseal_2027":{"v":0,"p":144},"overlay_2026":{"v":560000,"p":255},"overlay_2027":{"v":0,"p":255},"road_repair_2027":{"v":99700,"p":144},"fremont":{"v":2000000,"p":251}},"services":[{"id":"utilities","n":"Sewer & trash","c":2,"kids":[{"n":"Sewer: plant loan payments","a":1364950,"v":1398700,"p":296,"note":""},{"n":"Sewer: treatment plant","a":1340325,"v":1327400,"p":293,"note":""},{"n":"Sewer: collection lines (incl. $450K camera van)","a":659025,"v":1139600,"p":290,"note":""},{"n":"Sewer: capital projects (incl. $450K plant study)","a":1400000,"v":620000,"p":301,"note":""},{"n":"Sewer: administration & contingency","a":297925,"v":500900,"p":287,"note":"Excludes transfer to General Fund"},{"n":"Trash: Waste Management contract","a":1270000,"v":1323000,"p":303,"note":""}],"v":6309600,"a":6332225},{"id":"streets","n":"Streets & construction","c":4,"kids":[{"n":"Fremont Street construction","a":0,"v":2000000,"p":251,"note":""},{"n":"Road maintenance","a":1579775,"v":1199225,"p":144,"note":""},{"n":"Engineering","a":762425,"v":748675,"p":102,"note":""},{"n":"Building maintenance","a":475050,"v":509975,"p":150,"note":""},{"n":"Traffic safety (signs, striping)","a":335475,"v":388675,"p":147,"note":""},{"n":"Public Works administration","a":268375,"v":198675,"p":141,"note":""},{"n":"Other construction projects","a":765000,"v":195000,"p":247,"note":"Park electrical, building security, Little Salt Wash irrigation"},{"n":"Mountain water","a":35100,"v":34725,"p":153,"note":""}],"v":5274950,"a":4221200},{"id":"safety","n":"Police & fire","c":1,"kids":[{"n":"Police patrol & traffic","a":2608275,"v":2954025,"p":130,"note":""},{"n":"Police administration (incl. 911 dispatch)","a":987400,"v":1169550,"p":122,"note":""},{"n":"Police investigations","a":278825,"v":311075,"p":127,"note":""},{"n":"Police support services","a":167825,"v":166400,"p":133,"note":""},{"n":"Lower Valley Fire share of new tax","a":0,"v":275000,"p":179,"note":""}],"v":4876050,"a":4042325},{"id":"fcc","n":"Community Center","c":3,"kids":[{"n":"Building maintenance & capital","a":989975,"v":862150,"p":240,"note":""},{"n":"Aquatics","a":877450,"v":952700,"p":220,"note":""},{"n":"Bond payments","a":745600,"v":748400,"p":257,"note":""},{"n":"Administration","a":954575,"v":1047750,"p":217,"note":"Excludes transfers to the debt fund, General Fund and capital fund"},{"n":"Youth activities","a":221375,"v":229500,"p":223,"note":""},{"n":"Fitness & wellness","a":88275,"v":144675,"p":232,"note":""},{"n":"Senior programs","a":140800,"v":128950,"p":235,"note":""},{"n":"Child care","a":63275,"v":65775,"p":229,"note":""},{"n":"Athletics","a":35875,"v":43575,"p":226,"note":""}],"v":4223475,"a":4117200},{"id":"admin","n":"Administration & council","c":6,"kids":[{"n":"Finance","a":769875,"v":858000,"p":91,"note":""},{"n":"Administrative services & HR","a":297975,"v":377100,"p":97,"note":""},{"n":"Information technology","a":216150,"v":289000,"p":94,"note":""},{"n":"City Clerk","a":148825,"v":136475,"p":88,"note":""},{"n":"City Manager's Office","a":1221075,"v":833250,"p":69,"note":""},{"n":"Communication and engagement","a":280075,"v":393875,"p":81,"note":""},{"n":"Legal","a":135000,"v":155000,"p":75,"note":""},{"n":"Municipal Court","a":128475,"v":129175,"p":78,"note":""},{"n":"City Council","a":115100,"v":123350,"p":66,"note":""},{"n":"Elections","a":30000,"v":0,"p":72,"note":""}],"v":3295225,"a":3342550},{"id":"growth","n":"Planning, housing & tourism","c":7,"kids":[{"n":"Planning","a":581675,"v":663825,"p":112,"note":""},{"n":"Building inspections","a":422275,"v":536575,"p":115,"note":""},{"n":"Tourism marketing","a":261175,"v":305775,"p":192,"note":""},{"n":"Housing (Oaks payment)","a":255100,"v":205100,"p":242,"note":""},{"n":"Code compliance","a":73425,"v":70525,"p":109,"note":""},{"n":"Public art & placemaking","a":45000,"v":55000,"p":199,"note":""},{"n":"Small business & economic development","a":27000,"v":37000,"p":187,"note":"Excludes transfer to Housing Authority"}],"v":1873800,"a":1665650},{"id":"parks","n":"Parks & recreation","c":5,"kids":[{"n":"Parks","a":992825,"v":983975,"p":173,"note":""},{"n":"Special events","a":213400,"v":171250,"p":170,"note":""},{"n":"Open space and trails","a":185950,"v":176325,"p":176,"note":""},{"n":"Athletics","a":146900,"v":158425,"p":167,"note":""},{"n":"Administration","a":136425,"v":157750,"p":161,"note":""},{"n":"Activities","a":13075,"v":7000,"p":164,"note":""}],"v":1654725,"a":1688575},{"id":"other","n":"Other","c":0,"kids":[{"n":"Insurance, contingency & shared costs","a":840000,"v":873050,"p":180,"note":"Non-departmental, excluding transfers and the fire district share"},{"n":"Vehicle repair shop","a":435400,"v":416875,"p":309,"note":"Charged back to departments"},{"n":"Irrigation water","a":126475,"v":126425,"p":266,"note":"Excludes transfer to General Fund"}],"v":1416350,"a":1401875}],"income":[{"id":"sales","n":"Sales & use taxes","c":1,"kids":[{"n":"City sales tax (General Fund 2%)","v":4200000,"p":55,"note":""},{"n":"County sales tax (city share)","v":3600000,"p":55,"note":""},{"n":"Community Center 1% sales & use tax","v":2662500,"p":206,"note":""},{"n":"Use tax on vehicles & building materials","v":1125000,"p":55,"note":"Vehicles $800,000 and building materials $325,000 (p. 55)"},{"n":"New city public safety tax (0.2%)","v":550000,"p":55,"note":"Half goes to Lower Valley Fire"},{"n":"County public safety tax","v":525000,"p":55,"note":""}],"v":12662500},{"id":"utility","n":"Utility bills","c":2,"kids":[{"n":"Sewer charges & plant investment fees","v":4975000,"p":278,"note":""},{"n":"Trash charges","v":1403000,"p":303,"note":""},{"n":"Irrigation fees","v":136500,"p":266,"note":""}],"v":6514500},{"id":"property","n":"Property tax","c":3,"kids":[{"n":"Property tax (10.146 mills)","v":2100000,"p":55,"note":""}],"v":2100000},{"id":"otherrev","n":"Other","c":0,"kids":[{"n":"Interest, rent, donations & misc.","v":936050,"p":36,"note":""},{"n":"Permits & service fees","v":544000,"p":56,"note":""},{"n":"Vehicle shop charges (paid by city departments)","v":416875,"p":309,"note":""},{"n":"Business & liquor licenses","v":69000,"p":55,"note":""}],"v":1965925},{"id":"fccfees","n":"Community Center fees","c":5,"kids":[{"n":"Passes, admissions & programs","v":1407000,"p":204,"note":""}],"v":1407000},{"id":"impact","n":"Impact fees & fines","c":4,"kids":[{"n":"Transportation impact fees (for Fremont St)","v":1200000,"p":251,"note":""},{"n":"Court fines, chip seal fees & assessments","v":56500,"p":56,"note":""}],"v":1256500},{"id":"othertax","n":"Other taxes","c":6,"kids":[{"n":"Franchise fees (utilities' use of streets)","v":550000,"p":55,"note":""},{"n":"Lodging taxes (tourism, econ. dev., public art)","v":390000,"p":192,"note":"Marketing $195,000 (p. 192), Economic Development $130,000 (p. 187), Public Places $65,000 (p. 199)"},{"n":"Specific ownership tax (vehicles)","v":210000,"p":55,"note":""},{"n":"Cigarette tax & penalties","v":10000,"p":55,"note":""}],"v":1160000},{"id":"grants","n":"Grants & state shares","c":7,"kids":[{"n":"Highway users tax (must go to streets)","v":550000,"p":55,"note":""},{"n":"State grants (ADU, housing, econ. dev.)","v":325000,"p":55,"note":"General Fund $250,000 (p. 55) and Economic Development Fund $75,000 (p. 187)"},{"n":"Lottery money for parks (Conservation Trust)","v":150000,"p":182,"note":""},{"n":"Other state & county shares","v":134250,"p":55,"note":"Severance and mineral lease, motor vehicle fees and county road tax $123,000 (p. 55), plus $11,250 to the Community Center (p. 204)"}],"v":1159250}],"net_spend":28924400,"net_income":28225675}</script>
+<script id="budget-csv" type="text/plain">section,item,year,amount,printed_page,note
+All funds - revenue by source,Taxes,2024 Actual,14413258,36,
+All funds - revenue by source,Taxes,2025 Actual,15457142,36,
+All funds - revenue by source,Taxes,2026 Budget,14352500,36,
+All funds - revenue by source,Taxes,2026 Estimated,14627500,36,
+All funds - revenue by source,Taxes,2027 Budget,15922500,36,
+All funds - revenue by source,Licenses,2024 Actual,74625,36,
+All funds - revenue by source,Licenses,2025 Actual,72895,36,
+All funds - revenue by source,Licenses,2026 Budget,66000,36,
+All funds - revenue by source,Licenses,2026 Estimated,66000,36,
+All funds - revenue by source,Licenses,2027 Budget,69000,36,
+All funds - revenue by source,"Intergovernmental (grants, state shares)",2024 Actual,3765203,36,
+All funds - revenue by source,"Intergovernmental (grants, state shares)",2025 Actual,3847585,36,
+All funds - revenue by source,"Intergovernmental (grants, state shares)",2026 Budget,883000,36,
+All funds - revenue by source,"Intergovernmental (grants, state shares)",2026 Estimated,6574500,36,
+All funds - revenue by source,"Intergovernmental (grants, state shares)",2027 Budget,1159250,36,
+All funds - revenue by source,"Charges for services (utility bills, fees)",2024 Actual,8337445,36,
+All funds - revenue by source,"Charges for services (utility bills, fees)",2025 Actual,8953587,36,
+All funds - revenue by source,"Charges for services (utility bills, fees)",2026 Budget,8801900,36,
+All funds - revenue by source,"Charges for services (utility bills, fees)",2026 Estimated,8801900,36,
+All funds - revenue by source,"Charges for services (utility bills, fees)",2027 Budget,8882375,36,
+All funds - revenue by source,Fines & assessments (incl. impact fees),2024 Actual,893773,36,
+All funds - revenue by source,Fines & assessments (incl. impact fees),2025 Actual,971763,36,
+All funds - revenue by source,Fines & assessments (incl. impact fees),2026 Budget,56500,36,
+All funds - revenue by source,Fines & assessments (incl. impact fees),2026 Estimated,56500,36,
+All funds - revenue by source,Fines & assessments (incl. impact fees),2027 Budget,1256500,36,
+All funds - revenue by source,"Miscellaneous (interest, rents, donations)",2024 Actual,1740696,36,
+All funds - revenue by source,"Miscellaneous (interest, rents, donations)",2025 Actual,1354430,36,
+All funds - revenue by source,"Miscellaneous (interest, rents, donations)",2026 Budget,852550,36,
+All funds - revenue by source,"Miscellaneous (interest, rents, donations)",2026 Estimated,852550,36,
+All funds - revenue by source,"Miscellaneous (interest, rents, donations)",2027 Budget,936050,36,
+All funds - revenue by source,Transfers between city funds,2024 Actual,4318171,36,
+All funds - revenue by source,Transfers between city funds,2025 Actual,7959314,36,
+All funds - revenue by source,Transfers between city funds,2026 Budget,2061325,36,
+All funds - revenue by source,Transfers between city funds,2026 Estimated,4419725,36,
+All funds - revenue by source,Transfers between city funds,2027 Budget,2402300,36,
+All funds - revenue by source,Other financing sources,2024 Actual,848764,36,
+All funds - revenue by source,Other financing sources,2025 Actual,257532,36,
+All funds - revenue by source,Other financing sources,2026 Budget,0,36,
+All funds - revenue by source,Other financing sources,2026 Estimated,0,36,
+All funds - revenue by source,Other financing sources,2027 Budget,0,36,
+All funds - spending by type,Salaries,2024 Actual,7421758,36,
+All funds - spending by type,Salaries,2025 Actual,7684378,36,
+All funds - spending by type,Salaries,2026 Budget,8573400,36,
+All funds - spending by type,Salaries,2026 Estimated,8573400,36,
+All funds - spending by type,Salaries,2027 Budget,9501425,36,
+All funds - spending by type,Benefits,2024 Actual,2676331,36,
+All funds - spending by type,Benefits,2025 Actual,2922823,36,
+All funds - spending by type,Benefits,2026 Budget,3294800,36,
+All funds - spending by type,Benefits,2026 Estimated,3294970,36,
+All funds - spending by type,Benefits,2027 Budget,3801825,36,
+All funds - spending by type,Professional services,2024 Actual,1224074,36,
+All funds - spending by type,Professional services,2025 Actual,1096531,36,
+All funds - spending by type,Professional services,2026 Budget,1383725,36,
+All funds - spending by type,Professional services,2026 Estimated,1685725,36,
+All funds - spending by type,Professional services,2027 Budget,1700050,36,
+All funds - spending by type,"Property services (repairs, maintenance)",2024 Actual,1184935,36,
+All funds - spending by type,"Property services (repairs, maintenance)",2025 Actual,1586175,36,
+All funds - spending by type,"Property services (repairs, maintenance)",2026 Budget,1789750,36,
+All funds - spending by type,"Property services (repairs, maintenance)",2026 Estimated,1798950,36,
+All funds - spending by type,"Property services (repairs, maintenance)",2027 Budget,1407750,36,
+All funds - spending by type,Other purchased services,2024 Actual,2215964,36,
+All funds - spending by type,Other purchased services,2025 Actual,2273520,36,
+All funds - spending by type,Other purchased services,2026 Budget,2644975,36,
+All funds - spending by type,Other purchased services,2026 Estimated,2644975,36,
+All funds - spending by type,Other purchased services,2027 Budget,2706050,36,
+All funds - spending by type,Supplies,2024 Actual,1673423,36,
+All funds - spending by type,Supplies,2025 Actual,1832190,36,
+All funds - spending by type,Supplies,2026 Budget,2172075,36,
+All funds - spending by type,Supplies,2026 Estimated,2185575,36,
+All funds - spending by type,Supplies,2027 Budget,2155325,36,
+All funds - spending by type,Contingency,2024 Actual,0,36,
+All funds - spending by type,Contingency,2025 Actual,0,36,
+All funds - spending by type,Contingency,2026 Budget,405800,36,
+All funds - spending by type,Contingency,2026 Estimated,395850,36,
+All funds - spending by type,Contingency,2027 Budget,675875,36,
+All funds - spending by type,Special projects,2024 Actual,321802,36,
+All funds - spending by type,Special projects,2025 Actual,373169,36,
+All funds - spending by type,Special projects,2026 Budget,396300,36,
+All funds - spending by type,Special projects,2026 Estimated,396300,36,
+All funds - spending by type,Special projects,2027 Budget,926100,36,
+All funds - spending by type,Capital projects & equipment,2024 Actual,8534637,36,
+All funds - spending by type,Capital projects & equipment,2025 Actual,10847572,36,
+All funds - spending by type,Capital projects & equipment,2026 Budget,3390575,36,
+All funds - spending by type,Capital projects & equipment,2026 Estimated,10462375,36,
+All funds - spending by type,Capital projects & equipment,2027 Budget,3903300,36,
+All funds - spending by type,Land acquisition,2024 Actual,381237,36,
+All funds - spending by type,Land acquisition,2025 Actual,2484691,36,
+All funds - spending by type,Land acquisition,2026 Budget,0,36,
+All funds - spending by type,Land acquisition,2026 Estimated,1826800,36,
+All funds - spending by type,Land acquisition,2027 Budget,0,36,
+All funds - spending by type,Debt service,2024 Actual,2023934,36,
+All funds - spending by type,Debt service,2025 Actual,2058578,36,
+All funds - spending by type,Debt service,2026 Budget,2110150,36,
+All funds - spending by type,Debt service,2026 Estimated,2110150,36,
+All funds - spending by type,Debt service,2027 Budget,2146700,36,
+All funds - spending by type,Transfers between city funds,2024 Actual,4318171,36,
+All funds - spending by type,Transfers between city funds,2025 Actual,7959314,36,
+All funds - spending by type,Transfers between city funds,2026 Budget,2061325,36,
+All funds - spending by type,Transfers between city funds,2026 Estimated,4419725,36,
+All funds - spending by type,Transfers between city funds,2027 Budget,2402300,36,
+Funds - 2027,General Fund - Revenue,2027 Budget,15419300,46,
+Funds - 2027,General Fund - Spending,2027 Budget,16141950,46,
+Funds - 2026,General Fund - Spending,2026 Budget,14669025,46,
+Funds - 2027,Community Center Fund - Starting balance,2027 Budget,4899268,204,
+Funds - 2027,Community Center Fund - Revenue,2027 Budget,4286750,204,
+Funds - 2027,Community Center Fund - Spending,2027 Budget,4286750,204,
+Funds - 2027,Community Center Fund - Ending balance,2027 Budget,4899268,204,
+Funds - 2026,Community Center Fund - Spending,2026 Budget,4105700,204,
+Funds - 2027,Sewer Fund - Starting balance,2027 Budget,9676374,278,
+Funds - 2027,Sewer Fund - Revenue,2027 Budget,5180000,278,
+Funds - 2027,Sewer Fund - Spending,2027 Budget,5180000,278,
+Funds - 2027,Sewer Fund - Ending balance,2027 Budget,9676374,278,
+Funds - 2026,Sewer Fund - Spending,2026 Budget,5232225,278,
+Funds - 2027,Capital Projects Fund - Starting balance,2027 Budget,4504149,247,
+Funds - 2027,Capital Projects Fund - Revenue,2027 Budget,2195000,247,
+Funds - 2027,Capital Projects Fund - Spending,2027 Budget,2195000,247,
+Funds - 2027,Capital Projects Fund - Ending balance,2027 Budget,4504149,247,
+Funds - 2026,Capital Projects Fund - Spending,2026 Budget,765000,247,
+Funds - 2027,Trash Fund - Starting balance,2027 Budget,304438,303,
+Funds - 2027,Trash Fund - Revenue,2027 Budget,1403000,303,
+Funds - 2027,Trash Fund - Spending,2027 Budget,1403000,303,
+Funds - 2027,Trash Fund - Ending balance,2027 Budget,304438,303,
+Funds - 2026,Trash Fund - Spending,2026 Budget,1340000,303,
+Funds - 2027,Debt Service Fund - Starting balance,2027 Budget,770304,257,
+Funds - 2027,Debt Service Fund - Revenue,2027 Budget,748400,257,
+Funds - 2027,Debt Service Fund - Spending,2027 Budget,748400,257,
+Funds - 2027,Debt Service Fund - Ending balance,2027 Budget,770304,257,
+Funds - 2026,Debt Service Fund - Spending,2026 Budget,745600,257,
+Funds - 2027,Fleet Maintenance Fund - Starting balance,2027 Budget,155682,309,
+Funds - 2027,Fleet Maintenance Fund - Revenue,2027 Budget,416875,309,
+Funds - 2027,Fleet Maintenance Fund - Spending,2027 Budget,416875,309,
+Funds - 2027,Fleet Maintenance Fund - Ending balance,2027 Budget,155682,309,
+Funds - 2026,Fleet Maintenance Fund - Spending,2026 Budget,435400,309,
+Funds - 2027,Marketing and Promotion Fund - Starting balance,2027 Budget,241745,192,
+Funds - 2027,Marketing and Promotion Fund - Revenue,2027 Budget,207000,192,
+Funds - 2027,Marketing and Promotion Fund - Spending,2027 Budget,305775,192,
+Funds - 2027,Marketing and Promotion Fund - Ending balance,2027 Budget,142970,192,
+Funds - 2026,Marketing and Promotion Fund - Spending,2026 Budget,261175,192,
+Funds - 2027,Economic Development Fund - Starting balance,2027 Budget,99899,187,
+Funds - 2027,Economic Development Fund - Revenue,2027 Budget,205000,187,
+Funds - 2027,Economic Development Fund - Spending,2027 Budget,242100,187,
+Funds - 2027,Economic Development Fund - Ending balance,2027 Budget,62799,187,
+Funds - 2026,Economic Development Fund - Spending,2026 Budget,232100,187,
+Funds - 2027,Housing Authority Fund - Starting balance,2027 Budget,172939,242,
+Funds - 2027,Housing Authority Fund - Revenue,2027 Budget,205100,242,
+Funds - 2027,Housing Authority Fund - Spending,2027 Budget,205100,242,
+Funds - 2027,Housing Authority Fund - Ending balance,2027 Budget,172939,242,
+Funds - 2026,Housing Authority Fund - Spending,2026 Budget,255100,242,
+Funds - 2027,Irrigation Water Fund - Starting balance,2027 Budget,250900,266,
+Funds - 2027,Irrigation Water Fund - Revenue,2027 Budget,136550,266,
+Funds - 2027,Irrigation Water Fund - Spending,2027 Budget,136550,266,
+Funds - 2027,Irrigation Water Fund - Ending balance,2027 Budget,250900,266,
+Funds - 2026,Irrigation Water Fund - Spending,2026 Budget,136600,266,
+Funds - 2027,Public Places Fund - Starting balance,2027 Budget,278503,199,
+Funds - 2027,Public Places Fund - Revenue,2027 Budget,65000,199,
+Funds - 2027,Public Places Fund - Spending,2027 Budget,65000,199,
+Funds - 2027,Public Places Fund - Ending balance,2027 Budget,278503,199,
+Funds - 2026,Public Places Fund - Spending,2026 Budget,45000,199,
+Funds - 2027,Conservation Trust Fund - Starting balance,2027 Budget,385359,182,
+Funds - 2027,Conservation Trust Fund - Revenue,2027 Budget,150000,182,
+Funds - 2027,Conservation Trust Fund - Spending,2027 Budget,0,182,
+Funds - 2027,Conservation Trust Fund - Ending balance,2027 Budget,535359,182,
+Funds - 2026,Conservation Trust Fund - Spending,2026 Budget,0,182,
+Funds - 2027,Devils Canyon Center Fund - Starting balance,2027 Budget,204222,262,
+Funds - 2027,Devils Canyon Center Fund - Revenue,2027 Budget,0,262,
+Funds - 2027,Devils Canyon Center Fund - Spending,2027 Budget,0,262,
+Funds - 2027,Devils Canyon Center Fund - Ending balance,2027 Budget,204222,262,
+Funds - 2026,Devils Canyon Center Fund - Spending,2026 Budget,0,262,
+General Fund - spending by program,Police (Public Safety) > Patrol and traffic,2026 Budget,2608275,130,
+General Fund - spending by program,Police (Public Safety) > Patrol and traffic,2027 Budget,2954025,130,
+General Fund - spending by program,Police (Public Safety) > Administration (incl. 911 dispatch),2026 Budget,987400,122,
+General Fund - spending by program,Police (Public Safety) > Administration (incl. 911 dispatch),2027 Budget,1169550,122,
+General Fund - spending by program,Police (Public Safety) > Investigations,2026 Budget,278825,127,
+General Fund - spending by program,Police (Public Safety) > Investigations,2027 Budget,311075,127,
+General Fund - spending by program,Police (Public Safety) > Support services,2026 Budget,167825,133,
+General Fund - spending by program,Police (Public Safety) > Support services,2027 Budget,166400,133,
+General Fund - spending by program,Public Works > Road maintenance,2026 Budget,1579775,144,
+General Fund - spending by program,Public Works > Road maintenance,2027 Budget,1199225,144,
+General Fund - spending by program,Public Works > Building maintenance,2026 Budget,475050,150,
+General Fund - spending by program,Public Works > Building maintenance,2027 Budget,509975,150,
+General Fund - spending by program,Public Works > Traffic safety,2026 Budget,335475,147,
+General Fund - spending by program,Public Works > Traffic safety,2027 Budget,388675,147,
+General Fund - spending by program,Public Works > Administration,2026 Budget,268375,141,
+General Fund - spending by program,Public Works > Administration,2027 Budget,198675,141,
+General Fund - spending by program,Public Works > Mountain water,2026 Budget,35100,153,
+General Fund - spending by program,Public Works > Mountain water,2027 Budget,34725,153,
+General Fund - spending by program,"Non-Departmental (transfers, insurance, contingency) > Non-departmental",2026 Budget,1712000,180,
+General Fund - spending by program,"Non-Departmental (transfers, insurance, contingency) > Non-departmental",2027 Budget,2240050,180,
+General Fund - spending by program,Parks and Recreation > Parks,2026 Budget,992825,173,
+General Fund - spending by program,Parks and Recreation > Parks,2027 Budget,983975,173,
+General Fund - spending by program,Parks and Recreation > Special events,2026 Budget,213400,170,
+General Fund - spending by program,Parks and Recreation > Special events,2027 Budget,171250,170,
+General Fund - spending by program,Parks and Recreation > Open space and trails,2026 Budget,185950,176,
+General Fund - spending by program,Parks and Recreation > Open space and trails,2027 Budget,176325,176,
+General Fund - spending by program,Parks and Recreation > Athletics,2026 Budget,146900,167,
+General Fund - spending by program,Parks and Recreation > Athletics,2027 Budget,158425,167,
+General Fund - spending by program,Parks and Recreation > Administration,2026 Budget,136425,161,
+General Fund - spending by program,Parks and Recreation > Administration,2027 Budget,157750,161,
+General Fund - spending by program,Parks and Recreation > Activities,2026 Budget,13075,164,
+General Fund - spending by program,Parks and Recreation > Activities,2027 Budget,7000,164,
+General Fund - spending by program,Administration > Finance,2026 Budget,769875,91,
+General Fund - spending by program,Administration > Finance,2027 Budget,858000,91,
+General Fund - spending by program,Administration > Administrative services & HR,2026 Budget,297975,97,
+General Fund - spending by program,Administration > Administrative services & HR,2027 Budget,377100,97,
+General Fund - spending by program,Administration > Information technology,2026 Budget,216150,94,
+General Fund - spending by program,Administration > Information technology,2027 Budget,289000,94,
+General Fund - spending by program,Administration > City Clerk,2026 Budget,148825,88,
+General Fund - spending by program,Administration > City Clerk,2027 Budget,136475,88,
+General Fund - spending by program,General Government > City Manager's Office,2026 Budget,1221075,69,
+General Fund - spending by program,General Government > City Manager's Office,2027 Budget,833250,69,
+General Fund - spending by program,General Government > Communication and engagement,2026 Budget,280075,81,
+General Fund - spending by program,General Government > Communication and engagement,2027 Budget,393875,81,
+General Fund - spending by program,General Government > Legal,2026 Budget,135000,75,
+General Fund - spending by program,General Government > Legal,2027 Budget,155000,75,
+General Fund - spending by program,General Government > Municipal Court,2026 Budget,128475,78,
+General Fund - spending by program,General Government > Municipal Court,2027 Budget,129175,78,
+General Fund - spending by program,General Government > City Council,2026 Budget,115100,66,
+General Fund - spending by program,General Government > City Council,2027 Budget,123350,66,
+General Fund - spending by program,General Government > Elections,2026 Budget,30000,72,
+General Fund - spending by program,General Government > Elections,2027 Budget,0,72,
+General Fund - spending by program,Community Development > Planning,2026 Budget,581675,112,
+General Fund - spending by program,Community Development > Planning,2027 Budget,663825,112,
+General Fund - spending by program,Community Development > Building inspections,2026 Budget,422275,115,
+General Fund - spending by program,Community Development > Building inspections,2027 Budget,536575,115,
+General Fund - spending by program,Community Development > Code compliance,2026 Budget,73425,109,
+General Fund - spending by program,Community Development > Code compliance,2027 Budget,70525,109,
+General Fund - spending by program,Engineering > Engineering,2026 Budget,762425,102,
+General Fund - spending by program,Engineering > Engineering,2027 Budget,748675,102,
+Community Center Fund - spending by program,"Administration (incl. $728,400 bond transfer)",2026 Budget,1688675,217,
+Community Center Fund - spending by program,"Administration (incl. $728,400 bond transfer)",2027 Budget,1859425,217,
+Community Center Fund - spending by program,Aquatics,2026 Budget,877450,220,
+Community Center Fund - spending by program,Aquatics,2027 Budget,952700,220,
+Community Center Fund - spending by program,Building maintenance & capital,2026 Budget,989975,240,
+Community Center Fund - spending by program,Building maintenance & capital,2027 Budget,862150,240,
+Community Center Fund - spending by program,Youth activities,2026 Budget,221375,223,
+Community Center Fund - spending by program,Youth activities,2027 Budget,229500,223,
+Community Center Fund - spending by program,Fitness/wellness,2026 Budget,88275,232,
+Community Center Fund - spending by program,Fitness/wellness,2027 Budget,144675,232,
+Community Center Fund - spending by program,Senior programs,2026 Budget,140800,235,
+Community Center Fund - spending by program,Senior programs,2027 Budget,128950,235,
+Community Center Fund - spending by program,Child care,2026 Budget,63275,229,
+Community Center Fund - spending by program,Child care,2027 Budget,65775,229,
+Community Center Fund - spending by program,Athletics,2026 Budget,35875,226,
+Community Center Fund - spending by program,Athletics,2027 Budget,43575,226,
+Sewer Fund - spending by program,Debt service (plant loan),2026 Budget,1364950,296,
+Sewer Fund - spending by program,Debt service (plant loan),2027 Budget,1398700,296,
+Sewer Fund - spending by program,Treatment,2026 Budget,1340325,293,
+Sewer Fund - spending by program,Treatment,2027 Budget,1327400,293,
+Sewer Fund - spending by program,Collections (incl. $450K camera van),2026 Budget,659025,290,
+Sewer Fund - spending by program,Collections (incl. $450K camera van),2027 Budget,1139600,290,
+Sewer Fund - spending by program,"Administration (incl. contingency, transfer)",2026 Budget,467925,287,
+Sewer Fund - spending by program,"Administration (incl. contingency, transfer)",2027 Budget,694300,287,
+Sewer Fund - spending by program,Capital projects,2026 Budget,1400000,301,
+Sewer Fund - spending by program,Capital projects,2027 Budget,620000,301,
+General Fund - revenue,City sales tax (2%),2024 Actual,3720533,55,
+General Fund - revenue,City sales tax (2%),2025 Actual,4043957,55,
+General Fund - revenue,City sales tax (2%),2026 Budget,3700000,55,
+General Fund - revenue,City sales tax (2%),2026 Estimated,3700000,55,
+General Fund - revenue,City sales tax (2%),2027 Budget,4200000,55,
+General Fund - revenue,County sales tax (city share),2024 Actual,3453933,55,
+General Fund - revenue,County sales tax (city share),2025 Actual,3592596,55,
+General Fund - revenue,County sales tax (city share),2026 Budget,3450000,55,
+General Fund - revenue,County sales tax (city share),2026 Estimated,3450000,55,
+General Fund - revenue,County sales tax (city share),2027 Budget,3600000,55,
+General Fund - revenue,Property tax,2024 Actual,2094299,55,
+General Fund - revenue,Property tax,2025 Actual,1862704,55,
+General Fund - revenue,Property tax,2026 Budget,2100000,55,
+General Fund - revenue,Property tax,2026 Estimated,2100000,55,
+General Fund - revenue,Property tax,2027 Budget,2100000,55,
+General Fund - revenue,Use tax on vehicles,2024 Actual,794206,55,
+General Fund - revenue,Use tax on vehicles,2025 Actual,823787,55,
+General Fund - revenue,Use tax on vehicles,2026 Budget,750000,55,
+General Fund - revenue,Use tax on vehicles,2026 Estimated,750000,55,
+General Fund - revenue,Use tax on vehicles,2027 Budget,800000,55,
+General Fund - revenue,City public safety sales tax (new 0.2%),2024 Actual,0,55,
+General Fund - revenue,City public safety sales tax (new 0.2%),2025 Actual,0,55,
+General Fund - revenue,City public safety sales tax (new 0.2%),2026 Budget,0,55,
+General Fund - revenue,City public safety sales tax (new 0.2%),2026 Estimated,0,55,
+General Fund - revenue,City public safety sales tax (new 0.2%),2027 Budget,550000,55,
+General Fund - revenue,"Franchise fees (Xcel, GVRP, cable)",2024 Actual,525997,55,
+General Fund - revenue,"Franchise fees (Xcel, GVRP, cable)",2025 Actual,502804,55,
+General Fund - revenue,"Franchise fees (Xcel, GVRP, cable)",2026 Budget,550000,55,
+General Fund - revenue,"Franchise fees (Xcel, GVRP, cable)",2026 Estimated,550000,55,
+General Fund - revenue,"Franchise fees (Xcel, GVRP, cable)",2027 Budget,550000,55,
+General Fund - revenue,County public safety sales tax,2024 Actual,519129,55,
+General Fund - revenue,County public safety sales tax,2025 Actual,540144,55,
+General Fund - revenue,County public safety sales tax,2026 Budget,510000,55,
+General Fund - revenue,County public safety sales tax,2026 Estimated,510000,55,
+General Fund - revenue,County public safety sales tax,2027 Budget,525000,55,
+General Fund - revenue,Use tax on building materials,2024 Actual,274388,55,
+General Fund - revenue,Use tax on building materials,2025 Actual,674699,55,
+General Fund - revenue,Use tax on building materials,2026 Budget,325000,55,
+General Fund - revenue,Use tax on building materials,2026 Estimated,325000,55,
+General Fund - revenue,Use tax on building materials,2027 Budget,325000,55,
+General Fund - revenue,Specific ownership tax,2024 Actual,220321,55,
+General Fund - revenue,Specific ownership tax,2025 Actual,230396,55,
+General Fund - revenue,Specific ownership tax,2026 Budget,210000,55,
+General Fund - revenue,Specific ownership tax,2026 Estimated,210000,55,
+General Fund - revenue,Specific ownership tax,2027 Budget,210000,55,
+General Fund - revenue,"Other taxes (cigarette, penalties)",2024 Actual,14349,55,
+General Fund - revenue,"Other taxes (cigarette, penalties)",2025 Actual,12852,55,
+General Fund - revenue,"Other taxes (cigarette, penalties)",2026 Budget,10000,55,
+General Fund - revenue,"Other taxes (cigarette, penalties)",2026 Estimated,10000,55,
+General Fund - revenue,"Other taxes (cigarette, penalties)",2027 Budget,10000,55,
+General Fund - revenue,Licenses and permits,2024 Actual,74625,55,
+General Fund - revenue,Licenses and permits,2025 Actual,72895,55,
+General Fund - revenue,Licenses and permits,2026 Budget,66000,55,
+General Fund - revenue,Licenses and permits,2026 Estimated,66000,55,
+General Fund - revenue,Licenses and permits,2027 Budget,69000,55,
+General Fund - revenue,Highway users tax (state),2024 Actual,531192,55,
+General Fund - revenue,Highway users tax (state),2025 Actual,540057,55,
+General Fund - revenue,Highway users tax (state),2026 Budget,450000,55,
+General Fund - revenue,Highway users tax (state),2026 Estimated,450000,55,
+General Fund - revenue,Highway users tax (state),2027 Budget,550000,55,
+General Fund - revenue,"Grants (ADU, housing, economic development)",2024 Actual,5000,55,
+General Fund - revenue,"Grants (ADU, housing, economic development)",2025 Actual,32452,55,
+General Fund - revenue,"Grants (ADU, housing, economic development)",2026 Budget,85000,55,
+General Fund - revenue,"Grants (ADU, housing, economic development)",2026 Estimated,291500,55,
+General Fund - revenue,"Grants (ADU, housing, economic development)",2027 Budget,250000,55,
+General Fund - revenue,Other intergovernmental,2024 Actual,254779,55,
+General Fund - revenue,Other intergovernmental,2025 Actual,154551,55,
+General Fund - revenue,Other intergovernmental,2026 Budget,123000,55,
+General Fund - revenue,Other intergovernmental,2026 Estimated,123000,55,
+General Fund - revenue,Other intergovernmental,2027 Budget,123000,55,
+General Fund - revenue,"Charges for services (permits, rec fees)",2024 Actual,442158,56,
+General Fund - revenue,"Charges for services (permits, rec fees)",2025 Actual,739585,56,
+General Fund - revenue,"Charges for services (permits, rec fees)",2026 Budget,477000,56,
+General Fund - revenue,"Charges for services (permits, rec fees)",2026 Estimated,477000,56,
+General Fund - revenue,"Charges for services (permits, rec fees)",2027 Budget,544000,56,
+General Fund - revenue,Fines and forfeits,2024 Actual,68364,56,
+General Fund - revenue,Fines and forfeits,2025 Actual,49116,56,
+General Fund - revenue,Fines and forfeits,2026 Budget,56500,56,
+General Fund - revenue,Fines and forfeits,2026 Estimated,56500,56,
+General Fund - revenue,Fines and forfeits,2027 Budget,56500,56,
+General Fund - revenue,Interest on deposits,2024 Actual,760405,56,
+General Fund - revenue,Interest on deposits,2025 Actual,650919,56,
+General Fund - revenue,Interest on deposits,2026 Budget,450000,56,
+General Fund - revenue,Interest on deposits,2026 Estimated,450000,56,
+General Fund - revenue,Interest on deposits,2027 Budget,500000,56,
+General Fund - revenue,"Rents, donations, miscellaneous",2024 Actual,132617,56,
+General Fund - revenue,"Rents, donations, miscellaneous",2025 Actual,114834,56,
+General Fund - revenue,"Rents, donations, miscellaneous",2026 Budget,87500,56,
+General Fund - revenue,"Rents, donations, miscellaneous",2026 Estimated,87500,56,
+General Fund - revenue,"Rents, donations, miscellaneous",2027 Budget,100000,56,
+General Fund - revenue,Transfers from utility & rec funds,2024 Actual,251125,57,
+General Fund - revenue,Transfers from utility & rec funds,2025 Actual,251125,57,
+General Fund - revenue,Transfers from utility & rec funds,2026 Budget,256125,57,
+General Fund - revenue,Transfers from utility & rec funds,2026 Estimated,256125,57,
+General Fund - revenue,Transfers from utility & rec funds,2027 Budget,356800,57,
+General Fund - revenue,"Sale of property, insurance",2024 Actual,848546,57,
+General Fund - revenue,"Sale of property, insurance",2025 Actual,245397,57,
+General Fund - revenue,"Sale of property, insurance",2026 Budget,0,57,
+General Fund - revenue,"Sale of property, insurance",2026 Estimated,0,57,
+General Fund - revenue,"Sale of property, insurance",2027 Budget,0,57,
+Fees and rates,"Sewer, single-family home (monthly)",2026,54.65,279,
+Fees and rates,"Sewer, single-family home (monthly)",2027,55.75,279,
+Fees and rates,"Sewer, senior rate (monthly, age/income qualified)",2026,21.95,279,
+Fees and rates,"Sewer, senior rate (monthly, age/income qualified)",2027,22.4,279,
+Fees and rates,"Sewer, commercial base (monthly)",2026,62.7,279,
+Fees and rates,"Sewer, commercial base (monthly)",2027,63.95,279,
+Fees and rates,Trash collection (monthly),2026,20.8,38,
+Fees and rates,Trash collection (monthly),2027,21.75,38,
+Fees and rates,Irrigation water maintenance (yearly),2026,150,38,
+Fees and rates,Irrigation water maintenance (yearly),2027,150,38,
+Fees and rates,"Sewer plant investment fee (new connection, 1-inch tap)",2026,7000,280,
+Fees and rates,"Sewer plant investment fee (new connection, 1-inch tap)",2027,7000,280,
+Capital - 2027,"Fremont Street construction, phase 1 (Capital Projects)",2027 Budget,2000000,251,$1.2M transportation impact fees + $800K General Fund
+Capital - 2027,Sewer camera van replacement (Sewer),2027 Budget,450000,43,
+Capital - 2027,Wastewater treatment feasibility study (Sewer),2027 Budget,450000,43,Needs assessment for the treatment plant
+Capital - 2027,"Police vehicles (4, fully outfitted) (General)",2027 Budget,320000,43,
+Capital - 2027,Community Center library roof (partial) (Community Center),2027 Budget,175000,43,
+Capital - 2027,Maple Street bridge sewer replacement (Sewer),2027 Budget,150000,43,
+Capital - 2027,Sidewalk replacements (General),2027 Budget,100000,43,
+Capital - 2027,Building security (card readers) (Capital Projects),2027 Budget,75000,252,
+Capital - 2027,Little Salt Wash Park irrigation + water shares (Capital Projects),2027 Budget,75000,253,
+Capital - 2027,Pool and hot tub tile resurfacing (Community Center),2027 Budget,60000,43,
+Capital - 2027,Treadmill replacements (Community Center),2027 Budget,55000,43,
+Capital - 2027,Variable message boards (2) (General),2027 Budget,50000,43,
+Capital - 2027,Civic Center & Circle Park electrical (Capital Projects),2027 Budget,45000,250,For festivals and events
+Capital - 2027,Public Works shop evaporative cooler (General),2027 Budget,36500,43,
+Capital - 2027,Public Works side-by-side (General),2027 Budget,31500,43,
+Capital - 2027,Fremont Street sewer extension (Sewer),2027 Budget,20000,43,
+Capital - 2027,"Computer equipment (general, police, wastewater) (Various)",2027 Budget,42100,43,
+Capital - 2027,Flag pole (General),2027 Budget,10000,43,
+Capital - 2027,Civic Center floor tile (General),2027 Budget,8200,43,
+Debt,Community Center bonds (2019 refunding) - outstanding principal,Start of 2027,7450000,42,Final payment 2039
+Debt,"Wastewater plant loan (CWRPDA, 2010) - outstanding principal",Start of 2027,9125000,42,Final payment 2032
+Staffing (full-time equivalents),All funds,2024 Actual,119.79,324,
+Staffing (full-time equivalents),General Fund,2024 Actual,69.94,323,
+Staffing (full-time equivalents),All funds,2025 Actual,117.78,324,
+Staffing (full-time equivalents),General Fund,2025 Actual,70.3,323,
+Staffing (full-time equivalents),All funds,2026 Budget,126.3,324,
+Staffing (full-time equivalents),General Fund,2026 Budget,74.38,323,
+Staffing (full-time equivalents),All funds,2027 Budget,129.44,324,
+Staffing (full-time equivalents),General Fund,2027 Budget,77.89,323,
+Spending by service (net of transfers) - Sewer & trash,Sewer: plant loan payments,2027 Budget,1398700,296,
+Spending by service (net of transfers) - Sewer & trash,Sewer: treatment plant,2027 Budget,1327400,293,
+Spending by service (net of transfers) - Sewer & trash,Sewer: collection lines (incl. $450K camera van),2027 Budget,1139600,290,
+Spending by service (net of transfers) - Sewer & trash,Sewer: capital projects (incl. $450K plant study),2027 Budget,620000,301,
+Spending by service (net of transfers) - Sewer & trash,Sewer: administration & contingency,2027 Budget,500900,287,Excludes transfer to General Fund
+Spending by service (net of transfers) - Sewer & trash,Trash: Waste Management contract,2027 Budget,1323000,303,
+Spending by service (net of transfers) - Streets & construction,Fremont Street construction,2027 Budget,2000000,251,
+Spending by service (net of transfers) - Streets & construction,Road maintenance,2027 Budget,1199225,144,
+Spending by service (net of transfers) - Streets & construction,Engineering,2027 Budget,748675,102,
+Spending by service (net of transfers) - Streets & construction,Building maintenance,2027 Budget,509975,150,
+Spending by service (net of transfers) - Streets & construction,"Traffic safety (signs, striping)",2027 Budget,388675,147,
+Spending by service (net of transfers) - Streets & construction,Public Works administration,2027 Budget,198675,141,
+Spending by service (net of transfers) - Streets & construction,Other construction projects,2027 Budget,195000,247,"Park electrical, building security, Little Salt Wash irrigation"
+Spending by service (net of transfers) - Streets & construction,Mountain water,2027 Budget,34725,153,
+Spending by service (net of transfers) - Police & fire,Police patrol & traffic,2027 Budget,2954025,130,
+Spending by service (net of transfers) - Police & fire,Police administration (incl. 911 dispatch),2027 Budget,1169550,122,
+Spending by service (net of transfers) - Police & fire,Police investigations,2027 Budget,311075,127,
+Spending by service (net of transfers) - Police & fire,Police support services,2027 Budget,166400,133,
+Spending by service (net of transfers) - Police & fire,Lower Valley Fire share of new tax,2027 Budget,275000,179,
+Spending by service (net of transfers) - Community Center,Building maintenance & capital,2027 Budget,862150,240,
+Spending by service (net of transfers) - Community Center,Aquatics,2027 Budget,952700,220,
+Spending by service (net of transfers) - Community Center,Bond payments,2027 Budget,748400,257,
+Spending by service (net of transfers) - Community Center,Administration,2027 Budget,1047750,217,"Excludes transfers to the debt fund, General Fund and capital fund"
+Spending by service (net of transfers) - Community Center,Youth activities,2027 Budget,229500,223,
+Spending by service (net of transfers) - Community Center,Fitness & wellness,2027 Budget,144675,232,
+Spending by service (net of transfers) - Community Center,Senior programs,2027 Budget,128950,235,
+Spending by service (net of transfers) - Community Center,Child care,2027 Budget,65775,229,
+Spending by service (net of transfers) - Community Center,Athletics,2027 Budget,43575,226,
+Spending by service (net of transfers) - Administration & council,Finance,2027 Budget,858000,91,
+Spending by service (net of transfers) - Administration & council,Administrative services & HR,2027 Budget,377100,97,
+Spending by service (net of transfers) - Administration & council,Information technology,2027 Budget,289000,94,
+Spending by service (net of transfers) - Administration & council,City Clerk,2027 Budget,136475,88,
+Spending by service (net of transfers) - Administration & council,City Manager's Office,2027 Budget,833250,69,
+Spending by service (net of transfers) - Administration & council,Communication and engagement,2027 Budget,393875,81,
+Spending by service (net of transfers) - Administration & council,Legal,2027 Budget,155000,75,
+Spending by service (net of transfers) - Administration & council,Municipal Court,2027 Budget,129175,78,
+Spending by service (net of transfers) - Administration & council,City Council,2027 Budget,123350,66,
+Spending by service (net of transfers) - Administration & council,Elections,2027 Budget,0,72,
+"Spending by service (net of transfers) - Planning, housing & tourism",Planning,2027 Budget,663825,112,
+"Spending by service (net of transfers) - Planning, housing & tourism",Building inspections,2027 Budget,536575,115,
+"Spending by service (net of transfers) - Planning, housing & tourism",Tourism marketing,2027 Budget,305775,192,
+"Spending by service (net of transfers) - Planning, housing & tourism",Housing (Oaks payment),2027 Budget,205100,242,
+"Spending by service (net of transfers) - Planning, housing & tourism",Code compliance,2027 Budget,70525,109,
+"Spending by service (net of transfers) - Planning, housing & tourism",Public art & placemaking,2027 Budget,55000,199,
+"Spending by service (net of transfers) - Planning, housing & tourism",Small business & economic development,2027 Budget,37000,187,Excludes transfer to Housing Authority
+Spending by service (net of transfers) - Parks & recreation,Parks,2027 Budget,983975,173,
+Spending by service (net of transfers) - Parks & recreation,Special events,2027 Budget,171250,170,
+Spending by service (net of transfers) - Parks & recreation,Open space and trails,2027 Budget,176325,176,
+Spending by service (net of transfers) - Parks & recreation,Athletics,2027 Budget,158425,167,
+Spending by service (net of transfers) - Parks & recreation,Administration,2027 Budget,157750,161,
+Spending by service (net of transfers) - Parks & recreation,Activities,2027 Budget,7000,164,
+Spending by service (net of transfers) - Other,"Insurance, contingency & shared costs",2027 Budget,873050,180,"Non-departmental, excluding transfers and the fire district share"
+Spending by service (net of transfers) - Other,Vehicle repair shop,2027 Budget,416875,309,Charged back to departments
+Spending by service (net of transfers) - Other,Irrigation water,2027 Budget,126425,266,Excludes transfer to General Fund
+Revenue by source (net of transfers) - Sales & use taxes,City sales tax (General Fund 2%),2027 Budget,4200000,55,
+Revenue by source (net of transfers) - Sales & use taxes,County sales tax (city share),2027 Budget,3600000,55,
+Revenue by source (net of transfers) - Sales & use taxes,Community Center 1% sales & use tax,2027 Budget,2662500,206,
+Revenue by source (net of transfers) - Sales & use taxes,Use tax on vehicles & building materials,2027 Budget,1125000,55,"Vehicles $800,000 and building materials $325,000 (p. 55)"
+Revenue by source (net of transfers) - Sales & use taxes,New city public safety tax (0.2%),2027 Budget,550000,55,Half goes to Lower Valley Fire
+Revenue by source (net of transfers) - Sales & use taxes,County public safety tax,2027 Budget,525000,55,
+Revenue by source (net of transfers) - Utility bills,Sewer charges & plant investment fees,2027 Budget,4975000,278,
+Revenue by source (net of transfers) - Utility bills,Trash charges,2027 Budget,1403000,303,
+Revenue by source (net of transfers) - Utility bills,Irrigation fees,2027 Budget,136500,266,
+Revenue by source (net of transfers) - Property tax,Property tax (10.146 mills),2027 Budget,2100000,55,
+Revenue by source (net of transfers) - Other,"Interest, rent, donations & misc.",2027 Budget,936050,36,
+Revenue by source (net of transfers) - Other,Permits & service fees,2027 Budget,544000,56,
+Revenue by source (net of transfers) - Other,Vehicle shop charges (paid by city departments),2027 Budget,416875,309,
+Revenue by source (net of transfers) - Other,Business & liquor licenses,2027 Budget,69000,55,
+Revenue by source (net of transfers) - Community Center fees,"Passes, admissions & programs",2027 Budget,1407000,204,
+Revenue by source (net of transfers) - Impact fees & fines,Transportation impact fees (for Fremont St),2027 Budget,1200000,251,
+Revenue by source (net of transfers) - Impact fees & fines,"Court fines, chip seal fees & assessments",2027 Budget,56500,56,
+Revenue by source (net of transfers) - Other taxes,Franchise fees (utilities' use of streets),2027 Budget,550000,55,
+Revenue by source (net of transfers) - Other taxes,"Lodging taxes (tourism, econ. dev., public art)",2027 Budget,390000,192,"Marketing $195,000 (p. 192), Economic Development $130,000 (p. 187), Public Places $65,000 (p. 199)"
+Revenue by source (net of transfers) - Other taxes,Specific ownership tax (vehicles),2027 Budget,210000,55,
+Revenue by source (net of transfers) - Other taxes,Cigarette tax & penalties,2027 Budget,10000,55,
+Revenue by source (net of transfers) - Grants & state shares,Highway users tax (must go to streets),2027 Budget,550000,55,
+Revenue by source (net of transfers) - Grants & state shares,"State grants (ADU, housing, econ. dev.)",2027 Budget,325000,55,"General Fund $250,000 (p. 55) and Economic Development Fund $75,000 (p. 187)"
+Revenue by source (net of transfers) - Grants & state shares,Lottery money for parks (Conservation Trust),2027 Budget,150000,182,
+Revenue by source (net of transfers) - Grants & state shares,Other state & county shares,2027 Budget,134250,55,"Severance and mineral lease, motor vehicle fees and county road tax $123,000 (p. 55), plus $11,250 to the Community Center (p. 204)"
+</script>
+<script id="app">
+const D = JSON.parse(document.getElementById('budget-data').textContent);
+const CSV = document.getElementById('budget-csv').textContent.trim();
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fm = (v, d=0) => (v<0?'−':'') + '$' + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fk = v => { const a=Math.abs(v); const s = a>=1e6 ? '$'+(a/1e6).toFixed(a>=1e7?1:(a>=1e6?1:2))+'M' : a>=1e3 ? '$'+Math.round(a/1e3)+'K' : '$'+Math.round(a); return (v<0?'−':'')+s; };
+const pp = p => p==null||p===''?'' : (Array.isArray(p)?(p.length>1?'Budget pp. ':'Budget p. ')+p.join(', '):'Budget p. '+p);
+const pct = (a,b) => b ? Math.round((a-b)/b*100) : null;
+const col = i => `var(--s${i})`;
+const DARKTEXT = new Set([4]); // yellow fill needs dark text
+
+const TOPICS = [
+ {id:'roads', title:'Roads and Fremont Street', keys:'roads streets potholes chip seal overlay paving pavement fremont traffic school maintenance asphalt',
+  sum:'2027 puts $2 million into building a new section of Fremont Street and pauses the city\'s yearly chip seal and overlay programs.',
+  stats:[['Fremont Street phase 1','$2,000,000',251],['Chip seal & patching','$303,300 → $0',144],['Overlay program','$560,000 → $0',255]],
+  qa:[
+   ['Is the city resurfacing any streets in 2027?','Not through its usual programs. The chip seal and patching budget goes from $303,300 to $0, and the street overlay program goes from $560,000 to $0. Routine road repair stays at $99,700. Public Works lists "a lack of chipsealing in 2027" as a reason its budget falls 22%.',[144,255,143]],
+   ['Why were those programs paused?','The City Manager\'s letter says the city has been active on preventive maintenance for roads, sidewalks and sewer in recent years but "diverted funds this year for a large construction project," which is Fremont Street.',[2]],
+   ['What is the Fremont Street project?','Phase 1 builds about 1,300 feet of new road from Wildcat Avenue to Skiff Avenue, with curb, gutter and sidewalks on both sides. Its stated purpose is more traffic capacity around the middle and high schools, where pickup and drop-off lines of more than 20 vehicles are common. A later phase would connect it to Highway 6&50.',[251,2]],
+   ['How is Fremont Street paid for?','$1.2 million from transportation impact fees (charged on new development) and $800,000 transferred from the General Fund.',[251]],
+   ['Is any road money restricted to streets?','Yes. The state highway users tax ($550,000 in 2027) must be spent on city streets. Interest earned on chip seal fees paid by developers ($304,337 held) is also restricted to streets.',[49,54]],
+   ['What do residents say about streets?','In the city\'s 2025 community survey, street maintenance was one of the three highest-priority areas for improvement, along with managing growth and traffic flow. (Outside source: survey summary, linked under Data & sources.)',[]],
+   ['Will the city track road condition?','Public Works plans to update its Pavement Condition Index annually and to contract for a pavement condition rating of city streets, and aims to crack-seal at least 12 miles a year.',[143]],
+  ]},
+ {id:'police', title:'Police and the new public safety tax', keys:'police public safety officer sales tax fire lower valley dispatch 911 0.2 deputy chief crime',
+  sum:'Police is the largest General Fund department. A new 0.2% sales tax approved by voters in April 2026 starts January 1, 2027, split evenly with Lower Valley Fire.',
+  stats:[['Police department, 2027','$4,601,050',117],['New city public safety tax','$550,000 budgeted',55],['Share passed to Lower Valley Fire','$275,000',179]],
+  qa:[
+   ['How much does the police department cost?','$4.60 million in 2027, up from $4.04 million in the 2026 budget. Patrol and traffic is $2.95 million of that.',[117,130]],
+   ['What changes in police staffing?','One additional traffic and patrol officer, and the Lieutenant position becomes a Deputy Police Chief. Sworn officers get an extra pay adjustment on top of the 4% raise all employees receive.',[3,4]],
+   ['Where does the new 0.2% sales tax go?','The budget expects $550,000 in 2027. Half ($275,000) is passed to the Lower Valley Fire Protection District; the city keeps the other half for police.',[55,179,48]],
+   ['Voters were told the tax would raise about $975,000. Why does the budget say $550,000?','The ballot question stated $975,000 a year. The budget does not explain the difference. Based on the city\'s 2% sales tax ($4.2 million) and use taxes, 0.2% works out to roughly $550,000, so the budget figure appears more realistic. Colorado ballot estimates are often set high because collections above the stated amount can require refunds. (Ballot language: outside source.)',[55]],
+   ['How close was the vote?','It passed 1,808 to 1,624 (about 53% to 47%) on April 7, 2026. (Outside source.)',[]],
+   ['What is the county public safety tax?','Mesa County voters approved a 0.37% tax in 2017; Fruita police receive 4.01% of it. The city expects $525,000 in 2027 but plans to use $673,348 from this source (911 dispatch $441,600, one new officer $132,276, and the sworn officer pay increase $99,472), leaving about $246,234 in that reserve.',[28,55]],
+   ['Which tax pays for the new officer?','The draft is inconsistent. The City Manager\'s letter says the new officer and sworn pay adjustment come from the new city public safety sales tax; the reserves section says they come from the county public safety tax.',[3,28]],
+   ['How much does 911 dispatch cost?','$441,600 in 2027, a 6% increase, paid to the regional dispatch center.',[52]],
+  ]},
+ {id:'staff', title:'Staff, pay and benefits', keys:'staff employees salaries pay raise benefits health insurance positions fte hiring personnel retirement',
+  sum:'Pay and benefits are the largest part of the budget. The city adds positions and gives all employees a 4% raise.',
+  stats:[['Salaries, all funds','$9.50M (+11%)',36],['Benefits, all funds','$3.80M (+15%)',36],['Staff (full-time equivalents)','117.8 in 2025 → 129.4 in 2027',324]],
+  qa:[
+   ['How much of the budget is staff?','Salaries and benefits are 58% of operating spending: $9.50 million in salaries and $3.80 million in benefits across all funds in 2027, up 11% and 15% from the 2026 budget.',[36,40]],
+   ['Why are personnel costs rising so much?','Several things at once: a 4% raise for all employees (with an extra adjustment for sworn officers), health insurance premiums up 4.5%, new and reclassified positions, and more budgeted staff. Budgeted staff grew from 117.8 full-time equivalents (2025 actual) to 129.4 (2027), partly because 2025 had vacancies. The General Fund went from 70.3 to 77.9.',[3,4,323,324]],
+   ['What positions are added or changed?','A police officer; a Communications and Marketing Specialist (replacing marketing work previously contracted to an outside firm); two seasonal parks workers converted to one full-time worker; a new Community Services Director in a reorganization; and the police Lieutenant reclassified to Deputy Chief.',[4]],
+   ['What about retirement and leave?','No change to retirement contributions: 6% for non-sworn full-time staff and 14% for sworn officers. The paid family and medical leave program continues; 12 employees have used it since 2025.',[4]],
+  ]},
+ {id:'fcc', title:'Fruita Community Center', keys:'community center fcc pool recreation gym library rec center bonds 1% sales tax expansion grand junction',
+  sum:'The Community Center has its own 1% sales tax approved by voters in 2008. That tax pays for operations and the building\'s bonds.',
+  stats:[['Community Center Fund, 2027','$4,286,750',204],['Sales and use tax','$2.7M (62% of revenue)',206],['Bond payments','$748K a year through 2039',258]],
+  qa:[
+   ['How is the Community Center paid for?','Mostly by its dedicated 1% sales and use tax (about $2.7 million, 62% of revenue) and user fees (about $1.4 million, 33%). The General Fund also transfers $95,000 a year for programs it used to run, such as the outdoor pool.',[206,179]],
+   ['Does the 1% tax ever go away?','Partly. When the bonds are paid off, and no later than January 1, 2039, the tax drops from 1.0% to 0.4%. The 0.4% continues with no end date to support operations.',[206,258]],
+   ['Why are fee revenues expected to fall?','The draft projects a 9% drop in user fees because Grand Junction\'s new recreation center opens at the end of 2026.',[206]],
+   ['Why does the fund have a growing balance?','Its restricted balance is about $3.0 million at the end of 2027, plus a $1 million building and equipment reserve. The draft includes a $75,000 study of a possible Community Center expansion; it doesn\'t say how an expansion would be paid for.',[204,3]],
+   ['What projects are planned?','A partial roof replacement over the library ($175,000), pool and hot tub tile resurfacing ($60,000) and replacing all treadmills ($55,000).',[43]],
+   ['How busy is it?','202,107 visits in 2025, its highest since opening.',[6]],
+  ]},
+ {id:'sewer', title:'Sewer bills and the treatment plant study', keys:'sewer wastewater bill rate treatment plant study feasibility needs assessment loan wwtf mixing zone river permit 450',
+  sum:'Sewer rates rise 2%. The sewer fund also pays for a $450,000 study of the wastewater treatment plant\'s future needs.',
+  stats:[['Single-family sewer bill','$54.65 → $55.75 a month',279],['Treatment plant study','$450,000',298],['Plant loan paid off','2032',295]],
+  qa:[
+   ['How much is my sewer bill going up?','For a single-family home, $1.10 a month ($54.65 to $55.75), a 2% increase. The senior rate goes from $21.95 to $22.40.',[279]],
+   ['Where does my sewer payment go?','About 64% to operations (collecting and treating wastewater), 32% to paying off the treatment plant loan, and 4% to capital improvements.',[279,280]],
+   ['What is the $450,000 treatment plant study?','A comprehensive needs assessment of the Wastewater Reclamation Facility. It will evaluate treatment capacity, process performance, equipment condition, hydraulic limits, regulatory compliance and projected demand, then recommend a phased plan of improvements, which could include redundancy, capacity expansion and process upgrades. It is paid from sewer fund revenues and expected to finish in fall 2027.',[298]],
+   ['Why is the study needed?','The draft cites aging infrastructure, growing flows and changing state permit requirements. Future permit limits for temperature, nutrients and metals may depend on how the plant\'s treated water mixes into the Colorado River, so the study includes a "mixing zone" study of temperature and dilution, partly to protect habitat for threatened and endangered species in that stretch of river.',[298,286]],
+   ['Is the plant running out of capacity?','Not yet, by the draft\'s figures. The plant is designed for 2.33 million gallons a day and currently treats just under 1.0 million. The study is about future requirements, equipment condition and permits as much as capacity.',[291]],
+   ['Could this lead to higher sewer rates?','The draft says the study "may impact future budget capitals and operations" but gives no cost estimate. The sewer fund holds about $9.7 million, including $686,000 set aside from plant investment fees for future capacity and a $650,000 plant equipment reserve. Loan payments, about $1.4 to $1.6 million a year, end after 2032.',[298,278,281,294,295]],
+   ['When will the plant loan be paid off?','2032. The 2010 state loan ($21.83 million originally) has $9.1 million of principal remaining. A 2021 refinancing saved about $1.8 million in interest.',[294,295]],
+  ]},
+ {id:'trash', title:'Trash service', keys:'trash garbage recycling waste management bill',
+  sum:'Trash rates rise about 5%. The city passes almost all of the fee through to its contractor.',
+  stats:[['Monthly trash charge','$20.80 → $21.75',38],['Paid to contractor','$1,323,000',303]],
+  qa:[
+   ['Why is my trash bill going up?','The monthly charge rises from $20.80 to $21.75. The City Manager\'s letter describes it as a pass-through increase from Waste Management, the city\'s contractor.',[38,8]],
+   ['Where does the trash money go?','Of $1.40 million collected, $1.32 million pays the contractor and $80,000 is transferred to the General Fund for billing and administration.',[303]],
+  ]},
+ {id:'housing', title:'Housing and ADUs', keys:'housing affordable adu accessory dwelling fee waiver oaks commons workforce prop 123 housing authority',
+  sum:'The city continues an ADU fee-waiver program, a commitment to the Oaks apartments, and work toward the Fruita Commons workforce housing project.',
+  stats:[['ADU incentive program','$200,000',53],['Oaks payment (2nd of 4)','$200,000',244],['Prop 123 units approved','134 (goal 108)',7]],
+  qa:[
+   ['What help is there for building an ADU?','The city runs an ADU fee-waiver assistance program and offers pre-approved ADU building plans, both launched in 2026. The General Fund budgets $200,000 for ADU incentive programs in 2027, with $150,000 expected from two state grants. Program rules and remaining funds are best confirmed with the Planning department.',[53,39,7]],
+   ['Why do I see different ADU amounts?','The draft lists $100,000 in the City Manager\'s letter, $150,000 in state ADU grants in revenue, and $200,000 in spending. A late change doubled the program from $100,000 to $200,000; the letter wasn\'t updated.',[5,39,53,325]],
+   ['What is the Oaks project?','A conversion of the former Family Health West facility into 62 apartments, all restricted to households at or below 100% of area median income. The city committed four payments of $200,000; the second is budgeted in 2027 and is due when the project receives its certificate of occupancy.',[5,189]],
+   ['What is Fruita Commons?','A planned workforce housing development of about 90 units (50 for sale, 40 rental). The city is seeking grants for site improvements, and it depends on a federal housing tax credit application in February 2027. The state awarded $1.5 million in Proposition 123 land banking funds for the site. (Grant: outside source.)',[5,244]],
+  ]},
+ {id:'property', title:'Property tax', keys:'property tax mill levy assessed value home house assessment rate bill',
+  sum:'The city\'s property tax rate is unchanged. The city receives about 13% of a typical Fruita property tax bill.',
+  stats:[['City mill levy','10.146 (unchanged)',48],['All taxing districts','77.919 mills',48],['City property tax revenue','$2.1M',55]],
+  qa:[
+   ['Is the city raising property taxes?','No. The city\'s rate stays at 10.146 mills, and property tax revenue is budgeted flat at $2.1 million. The draft says the rate has stayed the same for several decades and a voter-approved increase would be needed to raise it.',[48,31,32]],
+   ['Who gets my property tax?','Of the 77.919 total mills, School District 51 gets about 54%, Mesa County 13%, the City of Fruita 13%, Lower Valley Fire 11%, the library 4%, and smaller districts the rest.',[48]],
+   ['Why did the city\'s assessed value go down?','Total assessed value fell from $212 million to $209 million. The draft doesn\'t explain why; Colorado has been lowering residential assessment rates in recent years.',[48]],
+   ['Is there help for seniors?','The city offers a rebate to qualifying residents (age, income and other criteria) of the greater of $50 or 50% of their city property tax. The budget sets aside $500 for it.',[179]],
+  ]},
+ {id:'sales', title:'Sales tax and where it goes', keys:'sales tax use tax rate revenue growth city county 3% 3.2% grand junction shopping',
+  sum:'Sales and use taxes are the city\'s largest revenue. The city rate rises from 3.0% to 3.2% in 2027.',
+  stats:[['City sales tax (General Fund)','$4.2M',55],['City rate','3.0% → 3.2%',319],['Combined rate in Fruita','≈8.27% → 8.47%',null]],
+  qa:[
+   ['Where does each penny of city sales tax go?','In 2027, of the city\'s 3.2%: 2% to the General Fund, 1% to the Community Center, 0.1% to police and 0.1% to Lower Valley Fire.',[319,48]],
+   ['Is the city expecting sales tax to grow 14%?','The draft shows a 14% increase, but that compares with a "2026 estimate" that was never updated from the original 2026 budget ($3.7 million). The city collected $4.04 million in 2025, so the 2027 figure of $4.2 million is about 4% above 2025 actual. Through July 2026, city sales tax was running 5.6% above 2025.',[55,8]],
+   ['How does Fruita\'s rate compare?','Combined state, county and city sales tax in Fruita was 8.27% in 2026, rising to about 8.47% with the new tax. Grand Junction\'s combined rate is 8.66%. (Outside source.)',[]],
+   ['What is use tax?','A tax collected where items are used rather than where they\'re bought, mainly on vehicles and building materials. Building materials use tax was $674,699 in 2025 but is budgeted at $325,000, a cautious estimate.',[48,55]],
+  ]},
+ {id:'land', title:'Land purchases and redevelopment', keys:'land property purchase launch riverfront 2forks middle school redevelopment economic development mulberry plum raptor',
+  sum:'The city has been buying property for future projects and is planning two large redevelopments: the riverfront Launch site and the old Fruita Middle School.',
+  stats:[['Land purchases 2025 (actual)','$2,484,691',36],['Land purchases 2026 (estimated)','$1,826,800',36],['Land purchases budgeted 2027','$0',36]],
+  qa:[
+   ['What property has the city bought?','The draft mentions 162 S. Mulberry (to redevelop a blighted property), 166 S. Plum (a long-term land bank near the police station, now housing a wastewater employee), and 853 Raptor Road under contract for the Launch project.',[189,244]],
+   ['What is the Launch?','Redevelopment of about 40 acres of city-owned riverfront land that held the old sewer lagoons, in a public-private partnership with 2Forks Venture. Public amenities would include river access, a boat launch, open space and parking; private investment would add commercial space. The 2027 budget pays for special legal counsel to choose a public financing tool, and public improvements "will be funded by financing in the future."',[4,5]],
+   ['What about the old Fruita Middle School?','The legal budget rises 15% for special counsel on economic development projects, naming the Launch and "the redevelopment of the old Fruita Middle School." The draft doesn\'t include a purchase price or plan.',[74]],
+   ['Is there an economic development plan?','A $75,000 economic development master plan is budgeted, with $25,000 from a state grant.',[5]],
+  ]},
+ {id:'tourism', title:'Tourism, marketing and events', keys:'tourism marketing lodging tax events festival fireworks visitor guide arts',
+  sum:'Tourism marketing is paid by the lodging tax. Spending is more than the tax brings in, so the marketing fund\'s balance falls.',
+  stats:[['Marketing fund spending','$305,775',192],['Lodging tax','$195,000',192],['3rd of July fireworks','$34,000',5]],
+  qa:[
+   ['How is tourism marketing paid for?','By the lodging tax on overnight stays ($195,000 expected) plus $12,000 from an I-70 billboard lease. The fund spends $305,775, drawing its balance from $241,745 to $142,970.',[192,179]],
+   ['What changed?','Marketing work previously contracted out moves in-house with a new communications and marketing position. Funds also go to redesigning the Fruita Gravel Adventure Guide and Visitor Guide.',[4,5]],
+   ['What events are funded?','Among others, the 3rd of July fireworks ($34,000) and the Arts and Culture Board\'s HeART of Fruita program ($22,500, from money the board raises).',[5]],
+  ]},
+ {id:'savings', title:'Savings, reserves and debt', keys:'reserves reserve savings fund balance rainy day unassigned emergency tabor debt bonds loan healthy financial',
+  sum:'The General Fund keeps several kinds of reserves. The city is drawing on savings for one-time projects, and it has two long-term debts.',
+  stats:[['General Fund available, end of 2027','$10.9M (see Check this)',54],['Drawn from General Fund savings in 2027','$722,650',46],['Total debt incl. interest','$18.7M',42]],
+  qa:[
+   ['How much does the city have in savings?','The General Fund section says available funds will be $10.9 million at the end of 2027: $950,571 restricted (including a $400,000 TABOR emergency reserve), a $3.4 million operating reserve, $2.1 million assigned to purposes like vehicle replacement, and $4.4 million unassigned. The all-funds table on p. 44 shows $7.07 million instead, and the draft doesn\'t reconcile the two.',[54,44]],
+   ['Is that a healthy amount?','The Government Finance Officers Association recommends unrestricted General Fund savings of at least two months of operating spending, about $2.3 million for Fruita (operating spending is $13.8 million). Fruita\'s $4.4 million unassigned balance alone is about 3.8 months, before counting the operating reserve. (Benchmark: outside source.)',[46,54]],
+   ['Why is the city spending savings?','The 2027 General Fund spends $722,650 more than it takes in, for capital equipment replacements and one-time purchases. Larger draws in 2025 ($4.40 million) and the 2026 estimate ($4.44 million) went mainly to capital projects and land.',[46]],
+   ['What rules govern reserves?','State law (TABOR) requires an emergency reserve of 3% of spending. City policy keeps an operating reserve equal to 25% of operating costs, which City Council must approve using and which should be replaced afterward.',[28,29]],
+   ['How much debt does the city have?','Two debts totaling $18.7 million in remaining payments: the Community Center bonds (final payment 2039, paid by the Community Center sales tax) and the wastewater plant loan (final payment 2032, paid by sewer bills). 2027 payments total $2.15 million.',[42,258,295]],
+  ]},
+ {id:'transfers', title:'Transfers, impact fees and other accounting', keys:'transfers double counting impact fees fines 2124 grants intergovernmental contingency total budget',
+  sum:'Some numbers in the draft look alarming because of how city funds pay each other or how revenue is classified.',
+  stats:[['Internal transfers','$2.4M',36],['Development impact fees used','$1.2M',39],['Contingency, all funds','$675,875',41]],
+  qa:[
+   ['Is the budget really $31.3 million?','That headline counts $2.4 million twice, because city funds transfer money to each other (for example, the Community Center Fund sends its bond payment to the Debt Service Fund). Without transfers, spending is about $28.9 million.',[36]],
+   ['Why do "fines and assessments" jump 2,124%?','It isn\'t more fines. The category now includes $1.2 million of development impact fees used for Fremont Street. Court fines stay flat.',[39,36]],
+   ['Why do grants drop 82%?','2026 included large one-time grants for capital projects such as the Maple Street bridge. 2027 has four smaller state grants: two for ADUs, one for the economic development plan and one for housing planning.',[39,247,6]],
+   ['What is contingency?','Money set aside for unexpected costs that City Council must approve before it\'s spent: $300,000 in the General Fund and $330,000 in the Sewer Fund, among others.',[41,53,278]],
+  ]},
+];
+
+const AHEAD = [
+ ['Treatment plant improvements','The $450,000 needs assessment (finishing fall 2027) will produce a phased capital plan for the wastewater plant. Costs and any effect on sewer rates are unknown.',[298]],
+ ['Fremont Street phase 2','Connecting Fremont Street to Highway 6&50, with a new intersection, follows the 2027 work.',[2,251]],
+ ['The Launch financing','Public improvements at the riverfront Launch site are expected to be paid for with future financing; 2027 funds the legal work to choose the tool.',[4,5]],
+ ['Old Fruita Middle School','Special counsel is budgeted for its redevelopment. School District 51\'s facility assessment rated the building in poor condition, citing HVAC, electrical, roof and parking lot needs. (Assessment: outside source.)',[74]],
+ ['Road preservation','With chip seal and overlays paused in 2027, the next budgets will show whether preventive road work resumes.',[144,255]],
+ ['Housing commitments','Two more $200,000 Oaks payments after 2027, and the Fruita Commons project depending on a February 2027 tax credit application.',[189,244]],
+ ['Community Center expansion','A $75,000 expansion study is budgeted. The 1% Community Center tax drops to 0.4% once the bonds are paid off (no later than 2039).',[3,206,258]],
+ ['Mid-year changes','Budgets change during the year. The 2026 budget planned to draw $1.1 million from savings; the 2026 estimate is now $4.4 million, largely from grant-funded projects and land purchases added later.',[36]],
+];
+
+const ISSUES = [
+ ['The all-funds balance table looks out of date','The "Summary of Funds Available" table shows starting and ending balances that differ from the funds\' own pages for almost every fund. Examples: Community Center $3.99M vs $4.90M; Capital Projects $2.39M vs $4.50M; Housing Authority $27,114 vs $172,939; Sewer $9.01M vs $9.68M.',[44,204,247,242,278]],
+ ['General Fund ending balance: $7.1M or $10.9M?','The p. 44 table shows the General Fund ending 2027 with $7,069,591. The General Fund section says available funds will be $10.9 million. Because the p. 44 table appears stale for other funds, the $10.9 million may be the current figure, but the draft doesn\'t reconcile them.',[44,54]],
+ ['General Government department total','The department summary shows $1,737,150 for 2027, but its program pages add up to $1,634,650. The program pages match the General Fund total.',[59,62]],
+ ['ADU program amount','$100,000 in the City Manager\'s letter, $200,000 in the General Fund special projects, with $150,000 in grants.',[5,53,39]],
+ ['Which tax funds the new police officer?','The letter says the new city public safety tax; the reserves section says the county public safety tax.',[3,28]],
+ ['Public safety tax estimate','The ballot told voters about $975,000 a year; the budget expects $550,000. (Ballot: outside source.)',[55]],
+ ['"2026 Estimated" revenue not updated','For most taxes, the 2026 Estimated column repeats the 2026 budget, so percentage changes "from 2026 estimated" overstate growth. 2025 actual city sales tax was $4,043,957 against a 2026 estimate of $3,700,000.',[55]],
+ ['Negative interest on the plant loan','The wastewater loan schedule shows negative interest for 2030–2032, which totals −$121,100 in the debt table.',[295,42]],
+ ['Building materials use tax sentence','The letter says this tax is down 38.23% year over year while "exceeding budget projections," without explanation.',[8]],
+ ['Economic Development Fund revenue','Its summary shows $205,000 in 2027 revenue; the all-funds table and revenue detail show $215,000 (including a $10,000 transfer).',[187,188,44,327]],
+ ['Fremont Street description','The letter describes the project as J Road to Skiff Avenue; the project page says Wildcat Avenue to Skiff Avenue.',[2,251]],
+ ['Housing goal numbers','One page says the city exceeded its Proposition 123 goal with 134 units approved against 108; another calls 134 the 3-year goal.',[7,244]],
+];
+
+const SOURCES = [
+ ['Fruita public safety tax result (Grand Junction Daily Sentinel, Apr 2026)','https://www.gjsentinel.com/news/western_colorado/fruita-narrowly-passed-public-safety-sales-tax-measure/article_8967c626-bd3e-4c71-8764-ee3d7f944061.html'],
+ ['2026 municipal election and ballot language (City of Fruita)','https://www.fruita.org/m/newsflash/Home/Detail/56'],
+ ['2025 Fruita community survey summary (Citizen Portal)','https://cpo.soar.com/articles/6154942/Fruita-City/Mesa-County/Colorado/Fruita-survey-residents-rate-services-highly-but-raise-concerns-about-growth-and-development'],
+ ['Mesa County sales tax rates by city (Sales Tax Handbook)','https://www.salestaxhandbook.com/colorado/rates/mesa-county'],
+ ['2026 residential assessment rates (Weld County Assessor FAQ)','https://www.weld.gov/Government/Departments/Assessor/Frequently-Asked-Questions'],
+ ['State ADU grant awards (Colorado Politics, Nov 2025)','https://www.coloradopolitics.com/2025/11/21/colorado-awards-first-round-of-grants-to-promote-construction-of-granny-flats'],
+ ['Proposition 123 land banking awards (Governor\'s Office)','https://governorsoffice.colorado.gov/news/proposition-123-land-banking-funds-support-new-housing-options-coloradans-can-afford-across'],
+ ['School District 51 facility assessment (city meeting packet)','https://mccmeetingspublic.blob.core.usgovcloudapi.net/fruitaco-meet-39f4f8b637894dabab54ef9921eeea46/ITEM-Attachment-001-4be2dda45a3f4af997462477da0023b8.pdf'],
+];
+
+
+
+/* ---------- tooltips ---------- */
+const TIPS = {
+ draft:'Based on the City Manager\'s Recommended 2027 Budget, draft dated Nov 12, 2026 (332 pages). City Council usually adopts the budget in early December and may change it.',
+ netspend:`<b>${fm(D.net_spend)}</b> leaves out $2.4 million that city funds pay each other (for example, the Community Center Fund sending its bond payment to the Debt Service Fund). Counting those transfers, the draft's headline total is ${fm(D.all_funds.expense_total[4])}.<span class="pg">Budget p. 36</span>`,
+ balance:'Revenue and spending leave out internal transfers. The gap is paid from savings, mostly for one-time equipment and projects.<span class="pg">Budget pp. 36, 46</span>',
+ calc:'Property tax: your home value, minus 10% of the first $700,000, × 6.8% (Colorado\'s 2026 local-government assessment rate, outside source) × the city\'s 10.146 mills. Excludes senior exemptions. Sales tax: your monthly Fruita purchases × 12 × the city rate. Sewer and trash: monthly rates × 12. The change vs. 2026 leaves out property tax, which depends on your new valuation.<span class="pg">Budget pp. 38, 48, 279, 319</span>',
+ salestax:'Of the city\'s 3.2% rate in 2027: 2% to the General Fund, 1% to the Community Center (voter-approved in 2008), 0.1% to police and 0.1% to Lower Valley Fire (voter-approved April 2026). State and county taxes are on top; the combined rate in Fruita is about 8.47% (outside source).<span class="pg">Budget pp. 48, 319</span>',
+ proptax:'Shares of the 77.919 total mills on a Fruita property. The city\'s rate is 10.146 mills, unchanged; schools use a different assessment rate, so the dollar split on a real bill differs slightly.<span class="pg">Budget p. 48</span>',
+ netinc:'All city funds, 2027 budget, excluding $2.4M the funds pay each other. Groupings are built from the line items; tap a bar to see them.<span class="pg">Budget pp. 36, 55–57</span>',
+ salesgrowth:'The draft shows city sales tax up 14%, but that compares with a 2026 estimate that was never updated from the 2026 budget ($3.7M). Compared with what was actually collected in 2025, the 2027 budget is up about 4%. Through July 2026, collections were running 5.6% above 2025.<span class="pg">Budget pp. 8, 55</span>',
+ bytype:'All funds, 2027 budget, excluding internal transfers. Dark line marks the 2026 budget.<span class="pg">Budget p. 36</span>',
+ changes:'2027 budget compared with the 2026 budget column in the draft (which includes mid-year amendments), for individual programs.<span class="pg">Program pages cited in each bar</span>',
+ hist:'Each bar is General Fund revenue minus spending. 2025 and 2026 used savings mainly for capital projects and land; 2027 uses $722,650 for equipment and one-time purchases.<span class="pg">Budget p. 46</span>',
+ debt:'Community Center bonds: $7.45M principal left, paid by the Community Center sales tax. Wastewater plant loan: $9.125M principal left, paid by sewer bills.<span class="pg">Budget pp. 42, 258, 295</span>',
+ reserves:'The Government Finance Officers Association recommends unrestricted General Fund savings of at least two months of operating spending (outside source). Fruita\'s 2027 operating spending is $13.8M, so two months is about $2.3M. Component amounts are from the General Fund section; the p. 44 summary shows a lower total (see Check this).<span class="pg">Budget pp. 46, 54</span>',
+};
+const tip = $('#tip'); let tipFor = null;
+function showTip(el, html){
+  tip.innerHTML = html; tip.classList.add('on'); tipFor = el;
+  const r = el.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+  let x = Math.min(Math.max(8, r.left + r.width/2 - tw/2), innerWidth - tw - 8);
+  let y = r.bottom + 8; if (y + th > innerHeight - 8) y = Math.max(8, r.top - th - 8);
+  tip.style.left = x+'px'; tip.style.top = y+'px';
+}
+function hideTip(){ tip.classList.remove('on'); tipFor = null; }
+function tipHtml(el){ return el.dataset.tip ? TIPS[el.dataset.tip] : el._tip; }
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-tip],[data-tiph]');
+  if (t && !t.dataset.drill) { e.preventDefault(); if (tipFor===t) hideTip(); else showTip(t, tipHtml(t)); return; }
+  if (!e.target.closest('#tip')) hideTip();
+});
+document.addEventListener('mouseover', e=>{ const t=e.target.closest('[data-tiph]'); if(t && matchMedia('(hover:hover)').matches) showTip(t, t._tip); });
+document.addEventListener('mouseout', e=>{ const t=e.target.closest('[data-tiph]'); if(t && tipFor===t && !t.contains(e.relatedTarget)) hideTip(); });
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') hideTip(); });
+addEventListener('scroll', hideTip, {passive:true});
+function attachTip(el, html){ el._tip = html; el.dataset.tiph = '1'; }
+
+/* ---------- tabs ---------- */
+const VIEWS = ['overview','your-bill','money-in','money-out','whats-new','questions','health','data'];
+function route(){
+  let h = location.hash.slice(1); if (!VIEWS.includes(h)) h = 'overview';
+  VIEWS.forEach(v=>{ $('#v-'+v).classList.toggle('on', v===h); });
+  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+h ? 'page':'false'));
+  hideTip();
+  if (h==='money-out') drawTree();
+  window.scrollTo(0,0);
+}
+addEventListener('hashchange', route);
+function goTab(t){ if (location.hash !== '#'+t) location.hash = t; else route(); }
+
+/* ---------- overview ---------- */
+function waffle(el, legend, groups, total){
+  // largest-remainder allocation of 100 squares
+  const raw = groups.map(g=>g.v/total*100), fl = raw.map(Math.floor);
+  let left = 100 - fl.reduce((a,b)=>a+b,0);
+  raw.map((r,i)=>[r-fl[i],i]).sort((a,b)=>b[0]-a[0]).slice(0,left).forEach(([_,i])=>fl[i]++);
+  el.innerHTML = groups.map((g,i)=>Array.from({length:fl[i]},()=>`<i data-g="${i}" style="background:${col(g.c)}"></i>`).join('')).join('');
+  legend.innerHTML = groups.map((g,i)=>`<button type="button" class="lg" data-g="${i}"><span class="sw" style="background:${col(g.c)}"></span><span>${esc(g.n)}</span><span class="num"><b>$${fl[i]}</b> <span class="muted">· ${fk(g.v)}</span></span></button>`).join('');
+  const hl = i => { el.classList.toggle('dim', i!=null); el.querySelectorAll('i').forEach(c=>c.classList.toggle('hl', +c.dataset.g===i)); legend.querySelectorAll('.lg').forEach(b=>b.classList.toggle('on', +b.dataset.g===i)); };
+  legend.addEventListener('mouseover', e=>{ const b=e.target.closest('.lg'); if(b) hl(+b.dataset.g); });
+  legend.addEventListener('mouseleave', ()=>hl(null));
+  el.addEventListener('mouseover', e=>{ const c=e.target.closest('i'); if(c) hl(+c.dataset.g); });
+  el.addEventListener('mouseleave', ()=>hl(null));
+  return {groups, hl};
+}
+function overview(){
+  $('#ovSpend').textContent = fk(D.net_spend).replace('M',' million');
+  const wi = waffle($('#wIn'), $('#lIn'), D.income, D.net_income);
+  const wo = waffle($('#wOut'), $('#lOut'), D.services, D.net_spend);
+  $('#lIn').addEventListener('click', e=>{ const b=e.target.closest('.lg'); if(b){ selIn = +b.dataset.g; goTab('money-in'); drawIn(); } });
+  $('#lOut').addEventListener('click', e=>{ const b=e.target.closest('.lg'); if(b){ tmPath = [D.services[+b.dataset.g]]; goTab('money-out'); } });
+  const mx = Math.max(D.net_income, D.net_spend);
+  $('#bal').innerHTML = [['Money in',D.net_income,'var(--s3)'],['Money out',D.net_spend,'var(--s2)']].map(r=>`<div class="r"><span>${r[0]}</span><div class="t"><div class="f" style="width:${r[1]/mx*100}%;background:${r[2]}"></div></div><span class="num"><b>${fk(r[1])}</b></span></div>`).join('') +
+    `<p class="cap" style="margin:6px 0 0">Gap of <b>${fk(D.net_spend-D.net_income)}</b> comes from savings.</p>`;
+  const N = [
+   ['Sales tax','3.0% → 3.2%','New public safety tax starts Jan 1. Half goes to Lower Valley Fire.','questions','police'],
+   ['Roads','$863K → $0','Chip seal and overlay programs paused while Fremont Street is built.','questions','roads'],
+   ['Sewer bill','+$1.10/mo','Single-family rate rises 2%, to $55.75.','whats-new',null],
+   ['Staff','118 → 129','Budgeted positions (full-time equivalents), 2025 to 2027. All staff get a 4% raise.','questions','staff'],
+  ];
+  $('#news').innerHTML = N.map(n=>`<a href="#${n[3]}" data-topic="${n[4]||''}"><div class="card"><div class="k">${n[0]}</div><div class="mid" style="margin:4px 0">${n[1]}</div><div class="cap">${n[2]}</div></div></a>`).join('');
+  $('#news').addEventListener('click', e=>{ const a=e.target.closest('a'); if(a && a.dataset.topic){ setTimeout(()=>openTopic(a.dataset.topic),0);} });
+}
+
+/* ---------- your bill ---------- */
+const BILL = {sewer:'std', trash:'y', irr:'n'};
+function bill(){
+  const V = +$('#home').value, S = +$('#spend').value, pt = D.property_tax;
+  $('#homeO').textContent = fm(V); $('#spendO').textContent = fm(S);
+  const prop = (V - pt.reduction*Math.min(V,pt.reduction_cap))*pt.assess_rate*pt.city_mills/1000;
+  const F = Object.fromEntries(D.fees.map(f=>[f.item,f]));
+  const parts = [{n:'Property tax (city share)',v:prop,a:null,c:3,t:`About ${fm(prop)} a year at 10.146 mills (unchanged).<span class="pg">Budget p. 48</span>`},
+    {n:'Sales tax',v:S*12*.032,a:S*12*.03,c:1,t:`3.2% of ${fm(S*12)} in yearly Fruita purchases (was 3.0%).<span class="pg">Budget p. 319</span>`}];
+  if (BILL.sewer!=='none'){ const f = BILL.sewer==='std'?F['Sewer, single-family home (monthly)']:F['Sewer, senior rate (monthly, age/income qualified)']; parts.push({n:'Sewer',v:f.y2027*12,a:f.y2026*12,c:2,t:`$${f.y2026.toFixed(2)} → $${f.y2027.toFixed(2)} a month.<span class="pg">Budget p. ${f.p}</span>`}); }
+  if (BILL.trash==='y'){ const f=F['Trash collection (monthly)']; parts.push({n:'Trash',v:f.y2027*12,a:f.y2026*12,c:4,t:`$${f.y2026.toFixed(2)} → $${f.y2027.toFixed(2)} a month, a pass-through increase from Waste Management.<span class="pg">Budget pp. 8, 38</span>`}); }
+  if (BILL.irr==='y') parts.push({n:'Irrigation',v:150,a:150,c:6,t:'$150 a year, unchanged.<span class="pg">Budget p. 38</span>'});
+  const tot = parts.reduce((s,p)=>s+p.v,0), d = parts.filter(p=>p.a!=null).reduce((s,p)=>s+p.v-p.a,0);
+  $('#billTotal').textContent = fm(tot)+' a year';
+  $('#billDelta').innerHTML = `<span class="delta ${d>0?'up':''}">${d>=0?'+':''}${fm(d,2)} vs. 2026</span> <span class="cap">not counting property tax</span>`;
+  const st = $('#billStack'); st.innerHTML = parts.map(p=>`<div style="flex:${Math.max(p.v,1)};background:${col(p.c)}"></div>`).join('');
+  [...st.children].forEach((el,i)=>attachTip(el, `<b>${parts[i].n}: ${fm(parts[i].v)}</b><br>${parts[i].t}`));
+  $('#billLegend').innerHTML = parts.map(p=>`<div class="lg" style="cursor:default"><span class="sw" style="background:${col(p.c)}"></span><span>${p.n}</span><span class="num"><b>${fm(p.v)}</b>${p.a!=null&&p.v!==p.a?` <span class="muted">(${p.v>p.a?'+':''}${fm(p.v-p.a,2)})</span>`:''}</span></div>`).join('');
+  const split = D.sales_tax.split_2027.map((s,i)=>({n:s[0],r:s[1],v:S*12*s[1]/100,c:[1,3,6,2][i]}));
+  $('#taxStack').innerHTML = split.map(s=>`<div style="flex:${s.r};background:${col(s.c)}"></div>`).join('');
+  [...$('#taxStack').children].forEach((el,i)=>attachTip(el, `<b>${split[i].n}: ${split[i].r}%</b><br>${fm(split[i].v)} a year of your sales tax.`));
+  $('#taxLegend').innerHTML = split.map(s=>`<div class="lg" style="cursor:default"><span class="sw" style="background:${col(s.c)}"></span><span>${s.n} · ${s.r}%</span><span class="num">${fm(s.v)}</span></div>`).join('');
+  const sh = D.property_tax.shares, cmap=[1,0,3,2,7,5,4,6];
+  $('#propStack').innerHTML = sh.map((s,i)=>`<div style="flex:${s[1]};background:${s[0].startsWith('City')?'var(--s3)':col(cmap[i])};${s[0].startsWith('City')?'':'opacity:.55'}"></div>`).join('');
+  [...$('#propStack').children].forEach((el,i)=>attachTip(el, `<b>${sh[i][0]}: about ${sh[i][1]}%</b>`));
+  $('#propLegend').innerHTML = sh.slice(0,4).map((s,i)=>`<div class="lg" style="cursor:default"><span class="sw" style="background:${s[0].startsWith('City')?'var(--s3)':col(cmap[i])};${s[0].startsWith('City')?'':'opacity:.55'}"></span><span>${s[0]}</span><span class="num">${s[1]}%</span></div>`).join('') + `<div class="lg" style="cursor:default"><span class="sw" style="background:var(--line)"></span><span>Library, drainage, mosquito, water</span><span class="num">9%</span></div>`;
+}
+document.querySelectorAll('.seg').forEach(g=>g.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; BILL[g.dataset.k]=b.dataset.v; g.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed', String(x===b))); bill(); }));
+['#home','#spend'].forEach(s=>$(s).addEventListener('input',bill));
+
+/* ---------- money in ---------- */
+let selIn = 0;
+function drawIn(){
+  const G = D.income, mx = Math.max(...G.map(g=>g.v));
+  $('#inBars').innerHTML = G.map((g,i)=>`<div class="r ${i===selIn?'on':''}" role="button" tabindex="0" data-i="${i}"><span>${esc(g.n)}</span><div class="tr"><div class="f" style="width:${g.v/mx*100}%;background:${col(g.c)}"></div></div><span class="num"><b>${fk(g.v)}</b></span></div>`).join('');
+  const g = G[selIn], km = Math.max(...g.kids.map(k=>k.v));
+  $('#inDetail').innerHTML = `<div class="cap">${Math.round(g.v/D.net_income*100)}% of revenue</div><h3 style="font-size:1.25rem;margin:2px 0 4px">${esc(g.n)}</h3><div class="mid">${fm(g.v)}</div>
+   <div class="hb" style="margin-top:14px">${g.kids.map((k,j)=>`<div class="r" data-k="${j}"><span>${esc(k.n)}</span><div class="tr"><div class="f" style="width:${k.v/km*100}%;background:${col(g.c)}"></div></div><span class="num">${fk(k.v)}</span></div>`).join('')}</div><p class="hint">Hover or tap a row for its source.</p>`;
+  $('#inDetail').querySelectorAll('.r').forEach(r=>{ const k=g.kids[+r.dataset.k]; attachTip(r, `<b>${esc(k.n)}: ${fm(k.v)}</b>${k.note?'<br>'+esc(k.note):''}<span class="pg">${pp(k.p)}</span>`); });
+}
+$('#inBars').addEventListener('click', e=>{ const r=e.target.closest('.r'); if(r){ selIn=+r.dataset.i; drawIn(); } });
+$('#inBars').addEventListener('keydown', e=>{ if((e.key==='Enter'||e.key===' ')&&e.target.closest('.r')){ e.preventDefault(); selIn=+e.target.dataset.i; drawIn(); $('#inBars').querySelector(`[data-i="${selIn}"]`).focus(); } });
+function salesChart(){
+  const row = D.gf_revenue[0], ys = ['2024 actual','2025 actual','2026 budget','2026 "estimate"','2027 budget'], v = row.slice(1,6);
+  const W=640,H=230,pl=44,pb=34,mx=4600000, bw=(W-pl-10)/5;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" style="max-width:680px;display:block" role="img" aria-label="City sales tax by year">`;
+  [1e6,2e6,3e6,4e6].forEach(t=>{ const y=H-pb-(t/mx)*(H-pb-20); s+=`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${pl-6}" y="${y+4}" text-anchor="end">${fk(t)}</text>`; });
+  v.forEach((x,i)=>{ const h=x/mx*(H-pb-20), X=pl+i*bw+bw*.22, w=bw*.56, est=i===3;
+    s+=`<rect class="sb" data-i="${i}" x="${X}" y="${H-pb-h}" width="${w}" height="${h}" rx="4" fill="${i===4?'var(--s1)':est?'var(--line)':'var(--s1)'}" opacity="${i===4?1:est?1:.45}" ${est?'stroke="var(--flag)" stroke-dasharray="4 3"':''}/>`;
+    s+=`<text x="${X+w/2}" y="${H-pb-h-6}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${fk(x)}</text><text x="${X+w/2}" y="${H-12}" text-anchor="middle">${ys[i]}</text>`; });
+  $('#salesChart').innerHTML = s+'</svg><p class="cap" style="margin:4px 0 0">2027 budget is <b>+4%</b> over what was actually collected in 2025. The dashed "estimate" was never updated.</p>';
+  $('#salesChart').querySelectorAll('.sb').forEach(r=>attachTip(r, `<b>${ys[+r.dataset.i]}: ${fm(v[+r.dataset.i])}</b><span class="pg">Budget p. 55</span>`));
+}
+
+/* ---------- money out: treemap ---------- */
+let tmPath = [];
+function squarify(items, x, y, w, h){
+  const out=[], total=items.reduce((s,i)=>s+i.v,0); if(!total) return out;
+  const sc = (w*h)/total; let rest = items.map(i=>({...i, ar:i.v*sc}));
+  while(rest.length){
+    const short=Math.min(w,h); let row=[rest[0]], best=worst(row,short), k=1;
+    while(k<rest.length){ const t=row.concat(rest[k]), wv=worst(t,short); if(wv<=best){row=t;best=wv;k++;} else break; }
+    const ra=row.reduce((s,r)=>s+r.ar,0);
+    if(w>=h){ const cw=ra/h; let yy=y; row.forEach(r=>{const ch=r.ar/cw; out.push({...r,x,y:yy,w:cw,h:ch}); yy+=ch;}); x+=cw; w-=cw; }
+    else { const rh=ra/w; let xx=x; row.forEach(r=>{const cw=r.ar/rh; out.push({...r,x:xx,y,w:cw,h:rh}); xx+=cw;}); y+=rh; h-=rh; }
+    rest=rest.slice(row.length);
+  }
+  return out;
+  function worst(row,s){ const sum=row.reduce((a,r)=>a+r.ar,0), mx=Math.max(...row.map(r=>r.ar)), mn=Math.min(...row.map(r=>r.ar)); return Math.max(s*s*mx/(sum*sum), sum*sum/(s*s*mn)); }
+}
+function drawTree(){
+  const el=$('#tm'), W=el.clientWidth, H=el.clientHeight; if(!W) return;
+  const node = tmPath[tmPath.length-1];
+  const items = (node ? node.kids.map(k=>({...k, c:node.c})) : D.services).filter(i=>i.v>0).sort((a,b)=>b.v-a.v);
+  const total = items.reduce((s,i)=>s+i.v,0);
+  const rects = squarify(items,0,0,W,H);
+  el.innerHTML = rects.map((r,i)=>{ const small=r.w<90||r.h<46, tiny=r.w<44||r.h<26;
+    return `<div class="tile ${DARKTEXT.has(r.c)?'dark-text':''}" tabindex="0" role="button" data-i="${i}" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;background:${col(r.c)};${node?`filter:brightness(${1-((i%3)*0.08)})`:''}">${tiny?'':`<b>${esc(small?r.n.split(/[ (:]/)[0]:r.n)}</b>${small?'':`<span class="v">${fk(r.v)} · ${Math.round(r.v/total*100)}%</span>`}`}</div>`; }).join('');
+  el.querySelectorAll('.tile').forEach(t=>{ const r=rects[+t.dataset.i];
+    const ch = r.a!=null && r.a>0 ? `<div class="row"><span>2026 budget</span><span>${fm(r.a)}</span></div><div class="row"><span>Change</span><span>${r.v>=r.a?'+':''}${pct(r.v,r.a)}%</span></div>` : (r.a===0?'<div class="row"><span>2026 budget</span><span>$0 (new)</span></div>':'');
+    attachTip(t, `<b>${esc(r.n)}</b><div class="row"><span>2027 budget</span><span>${fm(r.v)}</span></div>${ch}${r.note?'<div>'+esc(r.note)+'</div>':''}${r.p?`<span class="pg">${pp(r.p)}</span>`:(r.kids?'<span class="pg">Tap to see what\'s inside</span>':'')}`);
+    if(!node){ t.dataset.drill='1'; t.addEventListener('click',()=>{ hideTip(); tmPath=[r]; drawTree(); }); t.addEventListener('keydown',e=>{ if(e.key==='Enter'){ tmPath=[r]; drawTree(); } }); }
+  });
+  $('#crumb').innerHTML = node ? `<button type="button" id="tmBack">← All spending</button><span class="muted">›</span><b>${esc(node.n)}</b><span class="muted num">${fm(node.v)}</span>` : `<b>All spending</b><span class="muted num">${fm(total)}</span>`;
+  if (node) $('#tmBack').onclick = ()=>{ tmPath=[]; drawTree(); };
+  $('#tmHint').textContent = node ? 'Hover or tap a box for 2026 vs. 2027 and its budget page.' : 'Tap a colored box to look inside it.';
+}
+addEventListener('resize', ()=>{ if($('#v-money-out').classList.contains('on')) drawTree(); });
+function typeBars(){
+  const E = D.all_funds.expense.filter(r=>r[1][4]>0 && !/Transfers/.test(r[0])).map(r=>({n:r[0],v:r[1][4],a:r[1][2]})).sort((a,b)=>b.v-a.v);
+  const mx=Math.max(...E.map(e=>Math.max(e.v,e.a)));
+  $('#typeBars').innerHTML = E.map((e,i)=>`<div class="r" data-i="${i}"><span>${esc(e.n)}</span><div class="tr"><div class="f" style="width:${e.v/mx*100}%;background:var(--s1)"></div><div class="g" style="width:${e.a/mx*100}%"></div></div><span class="num"><b>${fk(e.v)}</b></span></div>`).join('');
+  $('#typeBars').querySelectorAll('.r').forEach(r=>{ const e=E[+r.dataset.i]; attachTip(r, `<b>${esc(e.n)}</b><div class="row"><span>2027</span><span>${fm(e.v)}</span></div><div class="row"><span>2026 budget</span><span>${fm(e.a)}</span></div><span class="pg">Budget p. 36</span>`); });
+}
+
+/* ---------- what's new ---------- */
+const CH_NOTES = {
+ "City Manager's Office":"2026 included downtown land purchases; none budgeted for 2027.",
+ "Road maintenance":"Chip sealing and patching set to $0 (p. 143).",
+ "Patrol and traffic":"New officer, 4% raises and a sworn pay adjustment.",
+ "Non-departmental":"Adds the $275,000 Lower Valley Fire share of the new tax and more capital transfers.",
+ "Administration (incl. 911 dispatch)":"Dispatch up 6%; Deputy Chief reclassification.",
+ "Communication and engagement":"New communications staff; marketing brought in-house.",
+ "Collections (incl. $450K camera van)":"Replaces the sewer camera van ($450,000).",
+ "Capital projects":"2027 sewer capital is the $450K plant study plus two sewer line projects.",
+ "Administration (incl. contingency, transfer)":"Sewer contingency rises to $330,000.",
+ "Information technology":"IT services centralized in the General Fund.",
+ "Capital Projects Fund":"Fremont Street construction ($2M).",
+ "Elections":"No city election in 2027.",
+};
+function whatsNew(){
+  const F = Object.fromEntries(D.fees.map(f=>[f.item,f]));
+  const cards = [
+   ['Sewer (home)','$54.65','$55.75','/month','+2%',279],
+   ['Trash','$20.80','$21.75','/month','+5%',38],
+   ['City sales tax','3.0%','3.2%','','+0.2 pts',319],
+   ['Sewer (senior)','$21.95','$22.40','/month','+2%',279],
+   ['City property tax rate','10.146','10.146','mills','No change',48],
+   ['Irrigation','$150','$150','/year','No change',38],
+  ];
+  $('#feeCards').innerHTML = cards.map(c=>`<div class="card fee"><div class="cap">${c[0]}</div><div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin:4px 0">${c[1]!==c[2]?`<span class="from">${c[1]}</span><span class="muted">→</span>`:''}<span class="to num">${c[2]}</span><span class="cap">${c[3]}</span></div><span class="delta ${c[1]!==c[2]?'up':''}">${c[4]}</span> <span class="pg">Budget p. ${c[5]}</span></div>`).join('');
+  const all=[];
+  D.gf_depts.forEach(d=>d.programs.forEach(p=>all.push({n:p[0],ctx:d.name.replace(/ \(.+\)/,''),a:p[1],b:p[2],p:p[3]})));
+  D.fcc_programs.forEach(p=>all.push({n:p[0],ctx:'Community Center',a:p[1],b:p[2],p:p[3]}));
+  D.sewer_programs.forEach(p=>all.push({n:p[0],ctx:'Sewer',a:p[1],b:p[2],p:p[3]}));
+  const cap=D.funds.find(f=>f.id==='capital'); all.push({n:'Capital Projects Fund',ctx:'Construction',a:cap.exp2026.v,b:cap.exp.v,p:247});
+  all.forEach(x=>x.d=x.b-x.a);
+  const up=all.filter(x=>x.d>0).sort((a,b)=>b.d-a.d).slice(0,6), dn=all.filter(x=>x.d<0).sort((a,b)=>a.d-b.d).slice(0,6);
+  const L=[...up,...dn], mx=Math.max(...L.map(x=>Math.abs(x.d)));
+  const short = n => n.replace(/ \(incl\..*\)/,'');
+  $('#dv').innerHTML = L.map((x,i)=>{ const w=Math.abs(x.d)/mx*48; const left=x.d>0?50:50-w;
+    return `<div class="r" tabindex="0" data-i="${i}"><span>${esc(short(x.n))} <span class="pg">· ${esc(x.ctx)}</span></span><div class="ax"><div class="f" style="left:${left}%;width:${w}%;background:${x.d>0?'var(--s1)':'var(--s2)'}"></div><span class="lab" style="${x.d>0?`left:calc(${50+w}% + 4px)`:`right:calc(${50+w}% + 4px)`}">${x.d>0?'+':''}${fk(x.d)}</span></div></div>`; }).join('');
+  $('#dv').querySelectorAll('.r').forEach(r=>{ const x=L[+r.dataset.i]; attachTip(r, `<b>${esc(x.n)}</b> (${esc(x.ctx)})<div class="row"><span>2026</span><span>${fm(x.a)}</span></div><div class="row"><span>2027</span><span>${fm(x.b)}</span></div>${CH_NOTES[x.n]?'<div>'+esc(CH_NOTES[x.n])+'</div>':''}<span class="pg">Budget p. ${x.p}</span>`); });
+}
+
+/* ---------- questions ---------- */
+const TCOL = {roads:4,police:1,staff:6,fcc:3,sewer:2,trash:2,housing:7,property:3,sales:1,land:5,tourism:5,transfers:0,savings:6};
+let openId = null;
+function topics(){
+  $('#topics').innerHTML = TOPICS.map(t=>`<button type="button" class="tp" data-t="${t.id}" aria-expanded="false" style="--c:${col(TCOL[t.id]??0)}"><b>${esc(t.title)}</b><span>${t.qa.length} questions</span></button>`).join('') +
+    `<button type="button" class="tp" data-t="_ahead" aria-expanded="false" style="--c:var(--accent)"><b>Coming up</b><span>Not in this budget</span></button>` +
+    `<button type="button" class="tp" data-t="_check" aria-expanded="false" style="--c:var(--flag)"><b>Check this</b><span>${ISSUES.length} places the draft disagrees with itself</span></button>`;
+  $('#topics').addEventListener('click', e=>{ const b=e.target.closest('.tp'); if(b) openTopic(b.dataset.t, true); });
+}
+function openTopic(id, fromClick, q){
+  if (id==='_check'){ goTab('health'); $('#checkBox').open=true; setTimeout(()=>$('#checkBox').scrollIntoView({block:'start'}),50); return; }
+  if (id==='_ahead'){ goTab('health'); const d=$('#aheadList').parentElement; d.open=true; setTimeout(()=>d.scrollIntoView({block:'start'}),50); return; }
+  if (!location.hash.includes('questions')) goTab('questions');
+  if (fromClick && openId===id){ openId=null; $('#topicPanel').innerHTML=''; document.querySelectorAll('.tp').forEach(b=>b.setAttribute('aria-expanded','false')); return; }
+  const t = TOPICS.find(x=>x.id===id); openId=id;
+  document.querySelectorAll('.tp').forEach(b=>b.setAttribute('aria-expanded', String(b.dataset.t===id)));
+  $('#topicPanel').innerHTML = `<div class="card" style="border-top:4px solid ${col(TCOL[id]??0)}"><h3 style="font-size:1.2rem">${esc(t.title)}</h3><p class="muted" style="margin:4px 0 0;max-width:62ch">${esc(t.sum)}</p>
+   <div class="statrow">${t.stats.map(s=>`<div class="stat"><div class="v">${esc(s[1])}</div><div class="l">${esc(s[0])}${s[2]?` · p. ${s[2]}`:' · outside source'}</div></div>`).join('')}</div>
+   ${t.qa.map((x,i)=>`<details id="q-${t.id}-${i}"><summary>${esc(x[0])}</summary><div class="body"><p>${esc(x[1])}</p><span class="pg">${x[2].length?pp(x[2]):'Outside source; see Data tab.'}</span></div></details>`).join('')}</div>`;
+  if (q!=null){ const d=$('#q-'+id+'-'+q); d.open=true; setTimeout(()=>{ d.scrollIntoView({block:'center'}); d.classList.add('flash'); },60); }
+  else if (fromClick || !fromClick) setTimeout(()=>$('#topicPanel').scrollIntoView({block:'start', behavior:'smooth'}),60);
+}
+const SYN = {road:'roads street streets pothole paving chip seal overlay',bill:'rate rates fee fees cost',police:'police officer public safety',fire:'fire lower valley',sewer:'sewer wastewater',trash:'trash garbage',pool:'pool community center',adu:'adu accessory dwelling',reserve:'reserves savings fund balance',savings:'reserves savings fund balance',debt:'debt bonds loan',plant:'plant treatment wastewater study',raise:'raise pay salaries',jobs:'staff positions employees',rec:'recreation community center'};
+const IDX=[];
+TOPICS.forEach(t=>t.qa.forEach((q,i)=>IDX.push({k:t.title,title:q[0],text:q[1],hay:(t.keys+' '+t.title+' '+q[0]+' '+q[1]).toLowerCase(),t:t.id,q:i})));
+ISSUES.forEach(a=>IDX.push({k:'Check this',title:a[0],text:a[1],hay:(a[0]+' '+a[1]).toLowerCase(),t:'_check'}));
+AHEAD.forEach(a=>IDX.push({k:'Coming up',title:a[0],text:a[1],hay:(a[0]+' '+a[1]).toLowerCase(),t:'_ahead'}));
+function search(q){
+  q=q.toLowerCase().trim(); const out=$('#results');
+  $('#topics').hidden = q.length>1; $('#topicPanel').hidden = q.length>1;
+  if(q.length<2){out.innerHTML='';return;}
+  const stop=new Set(['the','is','a','an','of','to','and','my','for','in','on','what','why','how','does','do','are','will','be','it','city','fruita','going','up','much','there']);
+  const orig=q.split(/[^a-z0-9.%$]+/).filter(t=>t&&!stop.has(t));
+  const terms=orig.flatMap(t=>[t,...(SYN[t]||SYN[t.replace(/s$/,'')]||'').split(' ').filter(Boolean)]);
+  const os=new Set(orig);
+  const sc=IDX.map(it=>{let s=0; const tl=it.title.toLowerCase(); terms.forEach(t=>{const o=os.has(t); if(it.hay.includes(t)) s+=o?3:1; if(tl.includes(t)) s+=o?4:1;}); return [s,it];}).filter(x=>x[0]>0).sort((a,b)=>b[0]-a[0]).slice(0,6);
+  out.innerHTML = sc.length ? sc.map(([s,it],i)=>`<button type="button" class="res" data-i="${IDX.indexOf(it)}"><div class="k">${esc(it.k)}</div><b>${esc(it.title)}</b><div class="cap">${esc(it.text.length>150?it.text.slice(0,147)+'…':it.text)}</div></button>`).join('') : '<p class="cap">No matches. Try a simpler word like "roads", "sewer" or "police".</p>';
+}
+$('#results').addEventListener('click', e=>{ const b=e.target.closest('.res'); if(!b) return; const it=IDX[+b.dataset.i]; $('#q').value=''; search(''); openTopic(it.t,false,it.q); });
+$('#q').addEventListener('input', e=>search(e.target.value));
+
+/* ---------- health ---------- */
+function health(){
+  const r=D.gf_reserves, op=D.gf_history.operating_expense_2027;
+  const K=[[ '$10.9M','General Fund savings, end of 2027','reserves',true],[ (r.unassigned/(op/12)).toFixed(1)+' months','of spending in unassigned savings (2 recommended)','reserves'],['$722,650','General Fund savings used in 2027','hist'],['2032 · 2039','Sewer loan and Community Center bonds paid off','debt']];
+  $('#kpis').innerHTML = K.map(k=>`<div class="card"><div class="mid">${k[0]}</div><div class="cap">${k[1]} <button class="i" data-tip="${k[2]}" aria-label="More">i</button>${k[3]?' <span class="badge" style="cursor:pointer" data-go="check">?</span>':''}</div></div>`).join('');
+  $('#kpis').addEventListener('click',e=>{ if(e.target.closest('[data-go="check"]')){ $('#checkBox').open=true; $('#checkBox').scrollIntoView({block:'start'}); } });
+  // history chart
+  const h=D.gf_history, W=560, H=230, mid=110, mx=Math.max(...h.change.map(Math.abs)), bw=(W-20)/5;
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="General Fund change in savings by year"><line x1="0" x2="${W}" y1="${mid}" y2="${mid}" stroke="var(--faint)"/>`;
+  const lab=['2024 actual','2025 actual','2026 budget','2026 estimate','2027 budget'];
+  h.change.forEach((v,i)=>{ const bh=Math.abs(v)/mx*(mid-26), x=10+i*bw+bw*.2, y=v>=0?mid-bh:mid;
+    s+=`<rect class="hb2" data-i="${i}" x="${x}" y="${y}" width="${bw*.6}" height="${Math.max(bh,2)}" rx="4" fill="${v>=0?'var(--s3)':'var(--s2)'}" opacity="${i===2?.45:1}"/><text x="${x+bw*.3}" y="${v>=0?y-6:y+bh+15}" text-anchor="middle" style="fill:var(--ink);font-weight:700">${v>=0?'+':''}${fk(v)}</text><text x="${x+bw*.3}" y="${H-6}" text-anchor="middle">${lab[i]}</text>`; });
+  $('#histChart').innerHTML = s+'</svg><div class="legend" style="grid-template-columns:repeat(2,auto);justify-content:start;gap:4px 16px"><div class="lg" style="cursor:default"><span class="sw" style="background:var(--s3)"></span><span>Added to savings</span><span></span></div><div class="lg" style="cursor:default"><span class="sw" style="background:var(--s2)"></span><span>Used from savings</span><span></span></div></div>';
+  $('#histChart').querySelectorAll('.hb2').forEach(r=>{ const i=+r.dataset.i; attachTip(r, `<b>${lab[i]}</b><div class="row"><span>Revenue</span><span>${fm(h.revenue[i])}</span></div><div class="row"><span>Spending</span><span>${fm(h.expense[i])}</span></div><div class="row"><span>Difference</span><span>${fm(h.change[i])}</span></div><span class="pg">Budget p. 46</span>`); });
+  // debt timeline
+  const y0=2027,y1=2039, DW=560, rows=D.debt;
+  let d=`<svg viewBox="0 0 ${DW} 150" width="100%" role="img" aria-label="Debt payoff timeline">`;
+  for(let y=y0;y<=y1;y+=2){ const x=20+(y-y0)/(y1-y0+1)*(DW-40); d+=`<line x1="${x}" x2="${x}" y1="10" y2="118" stroke="var(--line)"/><text x="${x}" y="138" text-anchor="middle">${y}</text>`; }
+  rows.forEach((r,i)=>{ const x=20, w=(r.final-y0+1)/(y1-y0+1)*(DW-40), y=22+i*50;
+    d+=`<rect class="db" data-i="${i}" x="${x}" y="${y}" width="${w}" height="30" rx="5" fill="${i?'var(--s2)':'var(--s3)'}"/><text x="${x+10}" y="${y+20}" style="fill:#fff;font-weight:700">${i?'Sewer plant loan':'Community Center bonds'} · ${fk(r.principal)} left</text>`; });
+  $('#debtChart').innerHTML = d+'</svg>';
+  $('#debtChart').querySelectorAll('.db').forEach(r=>{ const x=rows[+r.dataset.i]; attachTip(r, `<b>${esc(x.name)}</b><div class="row"><span>Principal left</span><span>${fm(x.principal)}</span></div><div class="row"><span>2027 payment</span><span>${fm(x.pay2027)}</span></div><div class="row"><span>Final payment</span><span>${x.final}</span></div><div>Paid by: ${esc(x.paid_by)}</div><span class="pg">${pp(x.p)}</span>`); });
+  // reserves stacked bar with benchmark
+  const parts=[['Restricted',r.restricted,'var(--s0)','TABOR emergency reserve $400,000, street fees $304,337, county public safety $246,234'],['Operating reserve',r.operating_reserve,'var(--s1)','Policy: 25% of operating costs; council approval needed to use'],['Assigned',r.assigned,'var(--s7)','Vehicle replacement, health insurance and other set-asides'],['Unassigned',r.unassigned,'var(--s3)','Available for any purpose']];
+  const tot=parts.reduce((s,p)=>s+p[1],0), two=op/6;
+  $('#resChart').innerHTML = `<div style="position:relative;margin:30px 0 10px"><div class="stack" style="margin:0">${parts.map(p=>`<div style="flex:${p[1]};background:${p[2]}"></div>`).join('')}</div>
+    <div style="position:absolute;top:-24px;bottom:-6px;left:${(tot-r.unassigned)/tot*100}%;width:${two/tot*100}%;border:2px dashed var(--ink);border-radius:6px;pointer-events:none"></div>
+    <div class="cap" style="position:absolute;top:-26px;left:calc(${(tot-r.unassigned)/tot*100}% + 6px);white-space:nowrap">2-month minimum ≈ ${fk(two)}</div></div>
+    <div class="legend" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">${parts.map(p=>`<div class="lg" style="cursor:default"><span class="sw" style="background:${p[2]}"></span><span>${p[0]}</span><span class="num"><b>${fk(p[1])}</b></span></div>`).join('')}</div>
+    <p class="cap" style="margin:6px 0 0">Unassigned savings alone are about twice the recommended minimum.</p>`;
+  [...$('#resChart').querySelector('.stack').children].forEach((el,i)=>attachTip(el, `<b>${parts[i][0]}: ${fk(parts[i][1])}</b><br>${parts[i][3]}<span class="pg">Budget p. 54</span>`));
+  $('#checkCount').textContent = `${ISSUES.length} places where the draft disagrees with itself`;
+  $('#checkList').innerHTML = ISSUES.map(x=>`<div class="item"><b>${esc(x[0])}</b><p>${esc(x[1])}</p><span class="pg">${pp(x[2])}</span></div>`).join('');
+  $('#aheadList').innerHTML = AHEAD.map(x=>`<div class="item coming"><b>${esc(x[0])}</b><p>${esc(x[1])}</p><span class="pg">${pp(x[2])}</span></div>`).join('');
+  $('#fundTbl').innerHTML = `<table><thead><tr><th>Fund</th><th class="n">Start of 2027</th><th class="n">Revenue</th><th class="n">Spending</th><th class="n">End of 2027</th><th>Page</th></tr></thead><tbody>`+
+   D.funds.map(f=>`<tr><td>${esc(f.name)}</td><td class="n">${f.begin.v==null?'—':fm(f.begin.v)}</td><td class="n">${fm(f.rev.v)}</td><td class="n">${fm(f.exp.v)}</td><td class="n">${f.end.v==null?'$10.9M*':fm(f.end.v)}</td><td class="pg">${f.exp.p}</td></tr>`).join('')+`</tbody></table><p class="cap">*General Fund section figure; the p. 44 table shows $7,069,591.</p>`;
+}
+
+/* ---------- export ---------- */
+let DL=null;
+try { if (window.claude && typeof window.claude.use==='function') window.claude.use('downloads').then(ns=>{DL=ns;}).catch(()=>{}); } catch(e){}
+async function download(name, text, type){
+  const st=$('#dlStatus');
+  if (DL){ try{ await DL.save({filename:name,data:text}); st.textContent='Saved '+name+'.'; } catch(err){ st.textContent = err&&err.code==='declined' ? 'Download cancelled.' : 'Download isn\'t available here. Use Copy instead.'; } return; }
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type})); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1000); st.textContent='Download started. If nothing happened, use Copy instead.'; }
+  catch(err){ st.textContent='Downloads are blocked here. Use Copy instead.'; }
+}
+function pageSource(){ const root=document.documentElement.cloneNode(true); root.querySelectorAll('script').forEach(sc=>{ if(!['budget-data','budget-csv','app'].includes(sc.id)) sc.remove(); }); root.removeAttribute('data-theme'); root.querySelectorAll('.view').forEach(v=>v.classList.remove('on')); return '<!DOCTYPE html>\n'+root.outerHTML; }
+$('#dlCsv').onclick=()=>download('fruita-2027-budget-data.csv',CSV,'text/csv');
+$('#dlJson').onclick=()=>download('fruita-2027-budget-data.json',JSON.stringify(D,null,1),'application/json');
+$('#dlHtml').onclick=()=>download('fruita-2027-budget-explorer.html',pageSource(),'text/html');
+$('#cpCsv').onclick=async()=>{ try{ await navigator.clipboard.writeText(CSV); $('#dlStatus').textContent='Copied '+(CSV.split('\n').length-1)+' rows. Paste into a spreadsheet.'; }catch(e){ $('#dlStatus').textContent='Copy was blocked. Try Download.'; } };
+$('#srcList').innerHTML = SOURCES.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('');
+$('#suggest').innerHTML = ['Why is my sewer bill going up?','Is the city repaving streets?','Where does the new sales tax go?','What is the $450,000 plant study?','How much does the city have in savings?'].map(s=>`<button type="button" data-q="${esc(s)}">${esc(s)}</button>`).join('');
+$('#suggest').addEventListener('click',e=>{ const b=e.target.closest('[data-q]'); if(b){ $('#q').value=b.dataset.q; search(b.dataset.q); } });
+
+overview(); bill(); drawIn(); salesChart(); typeBars(); whatsNew(); topics(); health(); route();
+</script>
+</body>
+</html>
