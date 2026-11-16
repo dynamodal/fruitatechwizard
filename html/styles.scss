@@ -46,7 +46,11 @@ $border-radius: 1rem;
   border-bottom: 1px solid $line;
   .navbar-brand { font-weight: 800; @media (max-width: 575.98px) { font-size: 0.95rem; } }
   .navbar-logo { max-height: 42px; width: auto; @media (max-width: 575.98px) { max-height: 28px; margin-right: 0.35rem; } }
-  .nav-link { font-weight: 600; font-size: 1.05rem; }
+  .nav-link { font-weight: 600; font-size: 1.05rem; white-space: nowrap; }
+  // Just above the menu breakpoint, seven links plus the full site name are a tight fit
+  @media (min-width: 992px) and (max-width: 1199.98px) {
+    .nav-link { font-size: 0.95rem; padding-left: 0.4rem !important; padding-right: 0.4rem !important; }
+  }
 }
 
 .ftw-wrap { max-width: 1040px; margin: 0 auto; padding: 0 1rem; }

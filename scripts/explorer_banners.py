@@ -6,15 +6,20 @@ Quarto runs this after every render (post-render in _quarto.yml).
 Standalone explorers are self-contained HTML files kept as-is in the repo,
 one folder per version:
 
-    community/<project>/v1/index.html
-    community/<project>/v2/index.html
+    projects/<project>/v1/index.html
+    projects/<project>/v2/index.html
     ...
 
 The highest number is the latest. Each copy in _site gets a slim bar at the
 top that names its version and links to the project page (with all versions).
 Older versions also link to the latest, so a shared old link doesn't pass for
 the current numbers. The files in the repo are never changed.
+
+If the project has a projects/<project>/banner-note.txt, its text (one or two
+plain sentences, such as how it was made and who hasn't reviewed it) is shown
+first in the bar, on every version.
 """
+import html as htmlmod
 import os
 import re
 from pathlib import Path
@@ -27,6 +32,7 @@ STYLE = """<style>
   background:var(--ftw-b-bg);color:var(--ftw-b-fg);font:15px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   padding:8px 16px;display:flex;flex-wrap:wrap;gap:4px 14px;justify-content:center;text-align:center;overflow-wrap:anywhere}
 #ftw-explorer-banner a{color:var(--ftw-b-link);font-weight:700}
+#ftw-explorer-banner .note{flex-basis:100%}
 #ftw-explorer-banner.old{background:var(--ftw-b-old-bg)}
 #ftw-explorer-banner.old b{color:var(--ftw-b-old-fg)}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #ftw-explorer-banner{--ftw-b-bg:#2a2733;--ftw-b-fg:#f2ede1;--ftw-b-link:#b4a9ff;--ftw-b-old-bg:#3a2620;--ftw-b-old-fg:#f29470}}
@@ -34,7 +40,7 @@ STYLE = """<style>
 </style>"""
 
 
-def banner(n, latest):
+def banner(n, latest, note):
     if n == latest:
         body = (f"<span>Version {n}, the latest</span>"
                 '<a href="../">About this explorer and earlier versions</a>')
@@ -44,12 +50,14 @@ def banner(n, latest):
                 f'<a href="../v{latest}/">Open the latest version</a>'
                 '<a href="../">All versions</a>')
         cls = ' class="old"'
+    if note:
+        body = f'<span class="note">{htmlmod.escape(note)}</span>' + body
     return f'{START}\n{STYLE}\n<div id="ftw-explorer-banner"{cls} role="note">{body}</div>\n{END}'
 
 
 def main():
     site = Path(os.environ.get("QUARTO_PROJECT_OUTPUT_DIR", "_site"))
-    for project in sorted(p for p in site.glob("community/*") if p.is_dir()):
+    for project in sorted(p for p in site.glob("projects/*") if p.is_dir()):
         versions = {}
         for page in project.glob("v*/index.html"):
             m = re.fullmatch(r"v(\d+)", page.parent.name)
@@ -58,11 +66,14 @@ def main():
         if not versions:
             continue
         latest = max(versions)
+        # The note lives next to the project page in the source, not in _site
+        src = Path(os.environ.get("QUARTO_PROJECT_DIR", ".")) / project.relative_to(site) / "banner-note.txt"
+        note = " ".join(src.read_text(encoding="utf-8").split()) if src.is_file() else ""
         for n, page in versions.items():
             html = page.read_text(encoding="utf-8")
             # Drop a banner left by an earlier render (the latest may have changed)
             html = re.sub("\n?" + re.escape(START) + ".*?" + re.escape(END) + "\n?", "", html, flags=re.S)
-            html, count = re.subn(r"<body[^>]*>", lambda m: m.group(0) + "\n" + banner(n, latest) + "\n", html, count=1)
+            html, count = re.subn(r"<body[^>]*>", lambda m: m.group(0) + "\n" + banner(n, latest, note) + "\n", html, count=1)
             if count:
                 page.write_text(html, encoding="utf-8")
 
