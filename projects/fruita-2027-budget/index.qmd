@@ -11,7 +11,7 @@ This explorer lets you tap through it instead: where the money comes from, where
 Every number shows the budget page it came from, and the page number opens the city's PDF.
 
 ::: {.ftw-buttons}
-[<i class="bi bi-bar-chart-fill" aria-hidden="true"></i> Open the explorer](v2/)
+[<i class="bi bi-bar-chart-fill" aria-hidden="true"></i> Open the explorer](v3/)
 :::
 
 ::: {.ftw-callout .ftw-callout-info}
@@ -36,7 +36,21 @@ Each version stays here, so you can see how the numbers changed.
 The newest is at the top.
 
 ::: {.ftw-card .ftw-version}
-### Version 2 (latest)
+### Version 3 (latest)
+
+Posted November 16, 2026.
+Based on the same draft budget, dated November 12, 2026.
+
+- Fixes the staffing comparison.
+  Version 2 compared staff actually used in 2025 (117.8 full-time equivalents) with the 2027 budget (129.4), which made the increase look bigger.
+  Version 3 compares budget to budget: 126.3 in 2026 to 129.4 in 2027, about 2.5% more.
+- New questions on how staff are counted and where staff hours are added in 2027.
+
+[Open version 3](v3/)
+:::
+
+::: {.ftw-card .ftw-version}
+### Version 2
 
 Posted November 16, 2026.
 Based on the same draft budget, dated November 12, 2026.
